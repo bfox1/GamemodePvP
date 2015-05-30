@@ -7,6 +7,7 @@ import ml.gamemodepvp.lib.ModuleChat;
 import ml.gamemodepvp.world.helper.WorldListenerHelper;
 import ml.gamemodepvp.world.region.PlayerBuildingMode;
 import ml.gamemodepvp.world.region.Region;
+import ml.gamemodepvp.world.region.RegionPlayerProperties;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -37,14 +38,15 @@ public class WorldListener implements Listener  {
 
 
     @EventHandler
-    public void onPlayerPosition(PlayerMoveEvent e)
+    public void checkPlayerRegion(PlayerMoveEvent e)
     {
 
+        if(!e.getPlayer().isOp())
         if(WorldListenerHelper.isInRegion(this.core.getDataManager(), e.getPlayer()))
         {
             Region rg = WorldListenerHelper.getInRegion(this.core.getDataManager(), e.getPlayer());
 
-            if (!rg.isCanLeave() && !e.getPlayer().isOp())
+            if (!rg.isCanLeave())
             {
 
                 if (!rg.getHandler().checkBoundary((int)e.getTo().getX(), (int)e.getTo().getY(), (int)e.getTo().getZ()))
@@ -57,7 +59,9 @@ public class WorldListener implements Listener  {
 
                 }
             }
+
         }
+
 
     }
 
@@ -65,7 +69,30 @@ public class WorldListener implements Listener  {
     public void isPlayerPlacedBlock(BlockPlaceEvent e)
     {
         Player player = e.getPlayer();
+        Region region = this.core.getDataManager().getCurrentRegion(player);
+        //region.setPlayerProperties(player, new RegionPlayerProperties(player, region));
+        if(!player.isOp())
+        if(!region.isCanBuild())
+        {
+            try {
+                if (!region.getPlayerProperties(player).canBuild()) {
+                    e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
+
+                }
+                else
+                {
+                    e.setCancelled(false);
+                }
+            } catch (NullPointerException ef)
+            {
+
+            }
+            e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
+            e.setCancelled(true);
+        }
     }
+
+
 
     @EventHandler
     public void onWandClick(PlayerInteractEvent e)
@@ -93,5 +120,6 @@ public class WorldListener implements Listener  {
         }catch (NullPointerException n)
         {
         }
+
     }
 }

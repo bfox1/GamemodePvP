@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +45,9 @@ this.core = worldCore;
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
-        Player player = null;
-        if(!isConsole(commandSender))
-        {
-             player = (Player) commandSender;
-        }
+        Player player = (Player)commandSender;
+
+        //Creates Arena//
         if(command.getName().equalsIgnoreCase("createNewArena"))
         {
             WorldController wConfig = new WorldController();
@@ -60,6 +60,7 @@ this.core = worldCore;
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You can now use /teleportToWorld " + strings[0]));
             return true;
         }
+        //Special Teleports to World Command//
         if(command.getName().equalsIgnoreCase("teleporttoworld") && commandSender instanceof Player)
         {
 
@@ -68,6 +69,7 @@ this.core = worldCore;
             player.teleport(Bukkit.getWorld(strings[0]).getSpawnLocation());
             return true;
         }
+        //Deletes World//
         if(command.getName().equalsIgnoreCase("deleteworld"))
         {
             Bukkit.unloadWorld(strings[0], true);
@@ -78,6 +80,7 @@ this.core = worldCore;
             return true;
         }
 
+        //Set Arena Map Size
         if(command.getName().equalsIgnoreCase("setMapSize") && commandSender instanceof Player)
         {
             Region rg = new Region(player.getWorld().getName(), new RegionHandler(player.getWorld()));
@@ -105,6 +108,7 @@ this.core = worldCore;
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You have created a " + strings[0] + " region for your Arena!"));
             return true;
         }
+        //Removes Arena Map Border
         if(command.getName().equalsIgnoreCase("removeMapRegion") && commandSender instanceof Player)
         {
             Region rg = new Region(player.getWorld().getName(), new RegionHandler(player.getWorld()));
@@ -116,7 +120,7 @@ this.core = worldCore;
             return true;
             
         }
-
+        //Sets up Special Region
         if(command.getName().equalsIgnoreCase("setupRegion") && commandSender instanceof Player)
         {
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You are now in Region Building Mode!"));
@@ -129,7 +133,8 @@ this.core = worldCore;
             player.getInventory().addItem(wand);
             return true;
         }
-        if(command.getName().equalsIgnoreCase("createRegion")&& commandSender instanceof Player && this.manager.getRegionBuildingMode(player))
+        //Creates the New Region
+        if(command.getName().equalsIgnoreCase("createRegion")&& commandSender instanceof Player && this.manager.getRegionBuildingMode(player) && strings.length == 1)
         {
             HashMap<String, Region> hm = this.manager.loadRegionList(player);
             Region rg = new Region(strings[0], new RegionHandler(player.getWorld()));
@@ -155,7 +160,8 @@ this.core = worldCore;
             }
             return true;
         }
-        if(command.getName().equalsIgnoreCase("removeRegion"))
+        //Removes Special Region
+        if(command.getName().equalsIgnoreCase("removeRegion") && strings.length == 1)
         {
             HashMap<String, Region> hm = this.manager.loadRegionList(player);
             if(hm.containsKey(strings[0]))
@@ -167,6 +173,7 @@ this.core = worldCore;
             else player.sendMessage(ModuleChat.worldPrefixToPlayer("Unable to find Region!"));
         }
 
+        //Sets Region Flag
         if(command.getName().equalsIgnoreCase("setRegionFlag") && strings.length >= 3)
         {
             HashMap<String, Region> hashMap;
@@ -185,7 +192,7 @@ this.core = worldCore;
                 {
                     hashMap.put(rg.getRegionName(), rg);
                     //this.manager.addNewWorldRegion(hashMap, player.getWorld());
-                    player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " flag to " + strings[1] + "!"));
+                    player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " flag to " + strings[2] + "!"));
                     return true;
                 }
                 player.sendMessage(ModuleChat.worldPrefixToPlayer("You must have Inputed the wrong info."));
@@ -193,6 +200,7 @@ this.core = worldCore;
             return false;
         }
 
+        //Returns list of Regions for map
         if(command.getName().equalsIgnoreCase("getRegionList"))
         {
             HashMap<String, Region> hashMap;
@@ -212,16 +220,19 @@ this.core = worldCore;
             return true;
         }
 
-        /*if(command.getName().equalsIgnoreCase("setPlayerFlag") && strings.length >= 2)
+        if(command.getName().equalsIgnoreCase("setPlayerFlag") && strings.length == 3)
         {
             HashMap<String, Region> hashMap = new HashMap<String, Region>();
             if(!isConsole(commandSender)) hashMap = this.manager.loadRegionList(player);
             if(hashMap.containsKey(strings[0]))
             {
-                if(hashMap.get(strings[0]).setFlagType(strings[0], strings[1]));
+                if(hashMap.get(strings[0]).setPlayerFlag(strings[1], strings[2], player))
+                {
+                    player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for" flag to " + strings[2] + "!"));
+                }
             }
 
-        }*/
+        }
         player.sendMessage("USAGE: /command <possibility1> <possiblility2> etc.");
         return false;
     }

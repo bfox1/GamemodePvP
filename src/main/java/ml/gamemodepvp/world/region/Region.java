@@ -64,9 +64,14 @@ public class Region implements Serializable, InternalVersionID{
         return playerProperties;
     }
 
-    public void setPlayerProperties(Map<Player, RegionPlayerProperties> playerProperties) {
+    /**
+     * Sets player properties into Map.
+     * @param player
+     * @param region
+     */
+    public void setPlayerProperties(Player player, Region region) {
 
-        this.playerProperties = playerProperties;
+        this.playerProperties.put(player, new RegionPlayerProperties(player, region));
     }
 
     /**
@@ -171,6 +176,49 @@ public class Region implements Serializable, InternalVersionID{
         else if(string.equalsIgnoreCase("canbuild")){setCanBuild(flag); return true;}
         else if(string.equalsIgnoreCase("canenter")){this.canEnter = flag; return true;}
         else if(string.equalsIgnoreCase("canleave")){setCanLeave(flag); return true;}
+
+        return false;
+    }
+
+    /**
+     * Removes Player data from Map.
+     * @param player
+     */
+    public void removePlayerFromRegion(Player player)
+    {
+        if(getPlayerProperties().containsKey(player))
+            getPlayerProperties().remove(player);
+    }
+
+    /**
+     * Set Player Flag for region.
+     * @param string
+     * @param string1
+     * @param player
+     * @return
+     */
+    public boolean setPlayerFlag(String string, String string1, Player player) {
+        boolean flag;
+
+        if(string1.equalsIgnoreCase("true")) flag = true;
+        if(string1.equalsIgnoreCase("false")) flag = true;
+        else return false;
+
+        if(string.equalsIgnoreCase("canbuild")) {getPlayerProperties(player).canBuild_$eq(true); return true;}
+        if(string.equalsIgnoreCase("canenter")) {getPlayerProperties(player).canEnter_$eq(true); return true;}
+        if(string.equalsIgnoreCase("canuse")) {getPlayerProperties(player).canUse_$eq(true); return true;}
+        if(string.equalsIgnoreCase("canleave")) {getPlayerProperties(player).canLeave_$eq(true); return true;}
+
+        return false;
+    }
+
+    public boolean getPlayerFlag(String flagName, Player player)
+    {
+
+        if(flagName.equalsIgnoreCase("canbuild")) {getPlayerProperties(player).canBuild(); return true;}
+        if(flagName.equalsIgnoreCase("canenter")) {getPlayerProperties(player).canEnter(); return true;}
+        if(flagName.equalsIgnoreCase("canuse")) {getPlayerProperties(player).canUse(); return true;}
+        if(flagName.equalsIgnoreCase("canleave")) {getPlayerProperties(player).canLeave(); return true;}
 
         return false;
     }
