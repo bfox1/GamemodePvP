@@ -46,7 +46,7 @@ public class WorldListener implements Listener  {
         {
             Region rg = WorldListenerHelper.getInRegion(this.core.getDataManager(), e.getPlayer());
 
-            if (!rg.isCanLeave() && !rg.getPlayerFlag("canleave", e.getPlayer()))
+            if (!WorldListenerHelper.canLeave(rg, rg.getPlayerProperties(e.getPlayer())))
             {
 
                 if (!rg.getHandler().checkBoundary((int)e.getTo().getX(), (int)e.getTo().getY(), (int)e.getTo().getZ()))
@@ -69,26 +69,24 @@ public class WorldListener implements Listener  {
     public void isPlayerPlacedBlock(BlockPlaceEvent e)
     {
         Player player = e.getPlayer();
-        Region region = this.core.getDataManager().getCurrentRegion(player);
         //region.setPlayerProperties(player, new RegionPlayerProperties(player, region));
         if(!player.isOp())
-        if(!region.isCanBuild())
         {
-            try {
-                if (!region.getPlayerProperties(player).canBuild()) {
-                    e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
+            Region region = this.core.getDataManager().getCurrentRegion(player);
+            if (!region.isCanBuild()) {
+                try {
+                    if (!region.getPlayerProperties(player).canBuild()) {
+                        e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
+
+                    } else {
+                        e.setCancelled(false);
+                    }
+                } catch (NullPointerException ef) {
 
                 }
-                else
-                {
-                    e.setCancelled(false);
-                }
-            } catch (NullPointerException ef)
-            {
-
+                e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
+                e.setCancelled(true);
             }
-            e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
-            e.setCancelled(true);
         }
     }
 
@@ -100,7 +98,7 @@ public class WorldListener implements Listener  {
         try
         {
 
-            if(this.core.getDataManager().getRegionBuildingMode(e.getPlayer()) && e.getPlayer().isOp() || this.core.getDataManager().getCurrentRegion(e.getPlayer()).getPlayerProperties(e.getPlayer()).isBuilder())
+            if(this.core.getDataManager().getRegionBuildingMode(e.getPlayer()) && e.getPlayer().isOp())
             {
                 //System.out.println(e.getClickedBlock());
                 if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand"))

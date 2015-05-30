@@ -16,7 +16,13 @@ import scala.collection.JavaConversions._
 object WorldListenerHelper {
 
   def canLeave(region:Region, playerProperties:RegionPlayerProperties): Boolean =
-  {if(region.isCanLeave || playerProperties.canLeave)
+  {
+    if(playerProperties == null)
+    {
+      return region.isCanLeave
+    }
+
+    if(region.isCanLeave || playerProperties.canLeave)
   {
     true
   }

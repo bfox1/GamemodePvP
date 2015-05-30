@@ -5,7 +5,7 @@ package ml.gamemodepvp.core.lib;
  */
 public class DebugCore {
 
-    public static void returnDebugMessage(String msg)
+    public static void returnDebugMessage(Object msg)
     {
         System.out.println(msg);
     }

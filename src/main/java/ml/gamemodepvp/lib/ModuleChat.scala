@@ -21,6 +21,7 @@ object ModuleChat {
   def worldPrefixToPlayer(msg:String):String = modulePrefix("WORLD", GOLD) + msg
   def rankPrefixToPlayer(msg:String):String = modulePrefix("RANK", DARK_BLUE) + msg
   def ecoPrefixToPlayer(msg:String):String = modulePrefix("EcoMoney", DARK_GREEN) + msg
+  def permissionPrefixToPlayer(msg:String):String = modulePrefix("Permission", DARK_RED) + msg
 
 
 }

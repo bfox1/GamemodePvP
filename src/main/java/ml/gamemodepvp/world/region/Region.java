@@ -1,5 +1,6 @@
 package ml.gamemodepvp.world.region;
 
+import ml.gamemodepvp.core.lib.DebugCore;
 import ml.gamemodepvp.world.handler.RegionHandler;
 import ml.gamemodepvp.core.util.InternalVersionID;
 import org.bukkit.World;
@@ -33,7 +34,8 @@ public class Region implements Serializable, InternalVersionID{
 
 
 
-    private Map<Player, RegionPlayerProperties> playerProperties = new HashMap<Player, RegionPlayerProperties>();
+
+    private HashMap<Player, RegionPlayerProperties> playerProperties = new HashMap<Player, RegionPlayerProperties>();
 
 
 
@@ -43,6 +45,7 @@ public class Region implements Serializable, InternalVersionID{
     {
         this.handler = handler;
         this.regionName = regionName;
+        this.playerProperties = new HashMap<Player, RegionPlayerProperties>();
     }
 
     public String getRegionName() {
@@ -72,7 +75,9 @@ public class Region implements Serializable, InternalVersionID{
      */
     public void setPlayerProperties(Player player, Region region) {
 
-        this.playerProperties.put(player, new RegionPlayerProperties(player, region));
+        RegionPlayerProperties prop = new RegionPlayerProperties(player, region);
+        DebugCore.returnDebugMessage(region.getRegionName() + prop.toString());
+        this.playerProperties.put(player, prop);
     }
 
     /**

@@ -1,6 +1,7 @@
 package ml.gamemodepvp.world;
 
 import ml.gamemodepvp.core.CoreMain;
+import ml.gamemodepvp.core.lib.DebugCore;
 import ml.gamemodepvp.lib.ModuleChat;
 import ml.gamemodepvp.world.handler.RegionHandler;
 import ml.gamemodepvp.world.handler.WorldDataHandler;
@@ -48,7 +49,7 @@ this.core = worldCore;
         Player player = (Player)commandSender;
 
         //Creates Arena//
-        if(command.getName().equalsIgnoreCase("createNewArena"))
+        if(command.getName().equalsIgnoreCase("createNewArena") && player.hasPermission("gamemodepvp.world.createworld"))
         {
             WorldController wConfig = new WorldController();
 
@@ -174,7 +175,8 @@ this.core = worldCore;
         }
 
         //Sets Region Flag
-        if(command.getName().equalsIgnoreCase("setRegionFlag") && strings.length >= 3)
+
+        if(onCommandCreation(command, "setRegionFlag", player, "gamemodepvp.world.setregionflag", strings.length, 3))
         {
             HashMap<String, Region> hashMap;
             if(!isConsole(commandSender))
@@ -227,13 +229,15 @@ this.core = worldCore;
             if(!isConsole(commandSender)) hashMap = this.manager.loadRegionList(player);
             if(hashMap.containsKey(strings[0]))
             {
-                hashMap.get(strings[0]).setPlayerProperties(player, );
+                hashMap.get(strings[0]).setPlayerProperties(player, hashMap.get(strings[0]));
                 if(hashMap.get(strings[0]).setPlayerFlag(strings[1], strings[2], player))
                 {
                     player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for " + strings[1] + " flag to " + strings[2] + "!"));
                     return true;
                 }
             }
+            player.sendMessage(ModuleChat.worldPrefixToPlayer(ChatColor.RED + "No region Found"));
+            return false;
 
         }
         player.sendMessage("USAGE: /command <possibility1> <possiblility2> etc.");
@@ -245,5 +249,24 @@ this.core = worldCore;
         if(sender instanceof Player) return false;
 
         return true;
+    }
+
+    private boolean onCommandCreation(Command command,String commandName,Player player, String permissionName)
+    {
+        return onCommandCreation(command, commandName,player, permissionName,0, 0);
+    }
+
+    private boolean onCommandCreation(Command command, String commandName, Player player, String permissionName, int arrayAmount, int stringArgs)
+    {
+        if(!player.hasPermission(permissionName))
+        {
+            player.sendMessage(ModuleChat.permissionPrefixToPlayer("Sorry but you do not have permission to use this command."));
+            return false;
+        }
+        if(stringArgs == 0) {
+             return command.getName().equalsIgnoreCase(commandName) && player.hasPermission(permissionName);
+        }
+        else return command.getName().equalsIgnoreCase(commandName) && player.hasPermission(permissionName) && arrayAmount == stringArgs;
+
     }
 }
