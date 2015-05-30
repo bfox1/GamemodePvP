@@ -1,4 +1,4 @@
-package ml.gamemodepvp.core.util;
+package ml.gamemodepvp.init;
 
 import ml.gamemodepvp.classes.WncExecutor;
 import ml.gamemodepvp.classes.handler.KitGuiHandler;
@@ -52,6 +52,7 @@ public class CommandLoader{
         setupCommands("getRegionList", new WorldExecutor(main));
         setupCommands("removeregion", new WorldExecutor(main));
         setupCommands("setRegionFlag", new WorldExecutor(main));
+        setupCommands("setPlayerFlag", new WorldExecutor(main));
 
         //Classes Commands
         setupCommands("class", new WncExecutor(main, new KitGuiHandler()));

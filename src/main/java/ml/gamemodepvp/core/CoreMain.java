@@ -2,19 +2,16 @@ package ml.gamemodepvp.core;
 
 import ml.gamemodepvp.core.lib.CorePlayerData;
 import ml.gamemodepvp.core.lib.PlayerDataHandler;
-import ml.gamemodepvp.core.listeners.CoreListener;
-import ml.gamemodepvp.core.util.ListenerLoader;
+import ml.gamemodepvp.init.ListenerLoader;
 import ml.gamemodepvp.world.region.RegionDataManager;
-import ml.gamemodepvp.core.util.CommandLoader;
+import ml.gamemodepvp.init.CommandLoader;
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 
 

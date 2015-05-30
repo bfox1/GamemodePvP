@@ -1,4 +1,4 @@
-package ml.gamemodepvp.core.util;
+package ml.gamemodepvp.init;
 
 import ml.gamemodepvp.classes.WncListener;
 import ml.gamemodepvp.classes.handler.KitGuiHandler;

@@ -220,6 +220,7 @@ this.core = worldCore;
             return true;
         }
 
+        //Sets playerFlags
         if(command.getName().equalsIgnoreCase("setPlayerFlag") && strings.length == 3)
         {
             HashMap<String, Region> hashMap = new HashMap<String, Region>();
@@ -228,7 +229,7 @@ this.core = worldCore;
             {
                 if(hashMap.get(strings[0]).setPlayerFlag(strings[1], strings[2], player))
                 {
-                    player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for" flag to " + strings[2] + "!"));
+                    player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for " + strings[1] + " flag to " + strings[2] + "!"));
                 }
             }
 
