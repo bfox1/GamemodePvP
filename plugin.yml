@@ -32,17 +32,20 @@ commands:
   setupregion:
     description: Sets Region Building Mode on.
     permission: gamemodepvp.world.setupregion
-  pos1:
-    permission: gamemodepvp.world.pos1
-  pos2:
-    permission: gamemodepvp.world.pos2
   createregion:
+    description: Creates the Region defined
     permission: gamemodepvp.world.createregion
   removeregion:
+    description: Removes the defined region/
     permission: gamemodepvp.world.removeregion
 
   setregionflag:
+    description: Sets special flags for the region.
     permission: gamemodepvp.world.setregionflag
+
+  setplayerflag:
+    description: Sets special flags for player in specific region
+    permission: gamemodepvp.world.setplayerflag
 
   ecomoney:
     description: MONEY

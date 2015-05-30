@@ -15,21 +15,37 @@ import scala.collection.JavaConversions._
  */
 object WorldListenerHelper {
 
-  def canLeave(region:Region, playerProperties:RegionPlayerProperties) = {if(region.isCanLeave || playerProperties.canLeave) true}
+  def canLeave(region:Region, playerProperties:RegionPlayerProperties): Boolean =
+  {if(region.isCanLeave || playerProperties.canLeave)
+  {
+    true
+  }
+    false
+  }
 
-  def canEnter(region:Region, playerProperties:RegionPlayerProperties) ={ if(region.isCanEnter || playerProperties.canEnter) true}
+  def canEnter(region:Region, playerProperties:RegionPlayerProperties): Boolean =
+  {
+    if(region.isCanEnter || playerProperties.canEnter) true
+    false
+  }
 
-  def canBuild(region:Region, playerProp:RegionPlayerProperties) = {if(region.isCanBuild || playerProp.canBuild) true}
+  def canBuild(region:Region, playerProp:RegionPlayerProperties):Boolean = {
+    if(region.isCanBuild || playerProp.canBuild) true
+    false
+  }
 
-  def canUse(region:Region, playerProp:RegionPlayerProperties) ={if(region.isCanUse || playerProp.canUse) true}
+  def canUse(region:Region, playerProp:RegionPlayerProperties):Boolean ={
+    if (region.isCanUse || playerProp.canUse) true
+    false
+  }
 
 
-  def isMember(playerProp:RegionPlayerProperties) =
+  def isMember(playerProp:RegionPlayerProperties):Boolean =
   {
      playerProp.isMember
   }
 
-  def isBuilder(playerProp:RegionPlayerProperties) =
+  def isBuilder(playerProp:RegionPlayerProperties):Boolean =
   {
      playerProp.isBuilder
   }

@@ -46,7 +46,7 @@ public class WorldListener implements Listener  {
         {
             Region rg = WorldListenerHelper.getInRegion(this.core.getDataManager(), e.getPlayer());
 
-            if (!rg.isCanLeave())
+            if (!rg.isCanLeave() && !rg.getPlayerFlag("canleave", e.getPlayer()))
             {
 
                 if (!rg.getHandler().checkBoundary((int)e.getTo().getX(), (int)e.getTo().getY(), (int)e.getTo().getZ()))

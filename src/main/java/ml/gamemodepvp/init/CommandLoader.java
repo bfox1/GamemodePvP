@@ -45,8 +45,6 @@ public class CommandLoader{
         setupCommands("deleteworld", new WorldExecutor(main));
         setupCommands("setMapSize", new WorldExecutor(main));
         setupCommands("removeMapRegion", new WorldExecutor(main));
-        setupCommands("pos1", new WorldExecutor(main));
-        setupCommands("pos2", new WorldExecutor(main));
         setupCommands("createRegion", new WorldExecutor(main));
         setupCommands("setupRegion", new WorldExecutor(main));
         setupCommands("getRegionList", new WorldExecutor(main));

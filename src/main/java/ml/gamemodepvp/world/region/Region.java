@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class Region implements Serializable, InternalVersionID{
 
 
 
-    private Map<Player, RegionPlayerProperties> playerProperties;
+    private Map<Player, RegionPlayerProperties> playerProperties = new HashMap<Player, RegionPlayerProperties>();
 
 
 
@@ -204,10 +205,10 @@ public class Region implements Serializable, InternalVersionID{
         if(string1.equalsIgnoreCase("false")) flag = true;
         else return false;
 
-        if(string.equalsIgnoreCase("canbuild")) {getPlayerProperties(player).canBuild_$eq(true); return true;}
-        if(string.equalsIgnoreCase("canenter")) {getPlayerProperties(player).canEnter_$eq(true); return true;}
-        if(string.equalsIgnoreCase("canuse")) {getPlayerProperties(player).canUse_$eq(true); return true;}
-        if(string.equalsIgnoreCase("canleave")) {getPlayerProperties(player).canLeave_$eq(true); return true;}
+        if(string.equalsIgnoreCase("canbuild")) {getPlayerProperties(player).canBuild_$eq(flag); return true;}
+        if(string.equalsIgnoreCase("canenter")) {getPlayerProperties(player).canEnter_$eq(flag); return true;}
+        if(string.equalsIgnoreCase("canuse")) {getPlayerProperties(player).canUse_$eq(flag); return true;}
+        if(string.equalsIgnoreCase("canleave")) {getPlayerProperties(player).canLeave_$eq(flag); return true;}
 
         return false;
     }

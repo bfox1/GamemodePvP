@@ -227,9 +227,11 @@ this.core = worldCore;
             if(!isConsole(commandSender)) hashMap = this.manager.loadRegionList(player);
             if(hashMap.containsKey(strings[0]))
             {
+                hashMap.get(strings[0]).setPlayerProperties(player, );
                 if(hashMap.get(strings[0]).setPlayerFlag(strings[1], strings[2], player))
                 {
                     player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for " + strings[1] + " flag to " + strings[2] + "!"));
+                    return true;
                 }
             }
 

@@ -52,6 +52,11 @@ public final class RegionDataManager {
         return WorldListenerHelper.getInRegion(this, player);
     }
 
+    public Region getRegionData(String regionName)
+    {
+
+    }
+
     public void renameRegion(String worldName, String oldname, String newName)
     {
         HashMap<String, Region> hashMap = loadRegionList(worldName);
@@ -60,6 +65,7 @@ public final class RegionDataManager {
             hashMap.put(newName, hashMap.get(oldname));
         }
     }
+
 
 
 
