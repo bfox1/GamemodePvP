@@ -8,7 +8,6 @@ import ml.gamemodepvp.world.helper.WorldListenerHelper;
 import ml.gamemodepvp.world.region.PlayerBuildingMode;
 import ml.gamemodepvp.world.region.Region;
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_8_R2.Item;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +18,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Array;
@@ -75,21 +75,12 @@ public class WorldListener implements Listener  {
 
             if(this.core.getDataManager().getRegionBuildingMode(e.getPlayer()))
             {
-                if(e.getAction() == Action.LEFT_CLICK_AIR)
-                {
-                    DebugCore.returnDebugMessage("hmm. Air?");
-                }
-                else if(e.getAction() == Action.LEFT_CLICK_BLOCK)
-                {
-                    DebugCore.returnDebugMessage("hmmm... Block?");
-                }
                 //System.out.println(e.getClickedBlock());
-               // if(e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) this.core.getDataManager().setRegionPosition1(e.getPlayer(), e.getClickedBlock().getLocation());
-               // else if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) this.core.getDataManager().setRegionPosition2(e.getPlayer(), e.getClickedBlock().getLocation());
+                if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) {this.core.getDataManager().setRegionPosition1(e.getPlayer(), e.getClickedBlock().getLocation()); e.setCancelled(true);}
+                else if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) {this.core.getDataManager().setRegionPosition2(e.getPlayer(), e.getClickedBlock().getLocation()); e.setCancelled(true);}
             }
         }catch (NullPointerException n)
         {
-            System.out.print("Something went wrong?");
         }
     }
 }

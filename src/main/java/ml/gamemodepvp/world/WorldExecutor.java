@@ -146,7 +146,12 @@ this.core = worldCore;
             this.manager.setRegionBuildingMode(false, player);
             for(int i = 0; i< player.getInventory().getSize(); i++)
             {
-                if(player.getInventory().getItem(i).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) player.getInventory().setItem(i, null);
+                if(player.getInventory().getItem(i) != null)
+                if(player.getInventory().getItem(i).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand"))
+                {
+                    ItemStack stack = player.getInventory().getItem(i);
+                    player.getInventory().removeItem(stack);
+                }
             }
             return true;
         }
