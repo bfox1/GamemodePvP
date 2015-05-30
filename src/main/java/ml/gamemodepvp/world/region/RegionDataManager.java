@@ -3,6 +3,7 @@ package ml.gamemodepvp.world.region;
 
 import ml.gamemodepvp.core.CoreMain;
 
+import ml.gamemodepvp.world.helper.WorldListenerHelper;
 import ml.gamemodepvp.world.util.SerializableLocation;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -44,6 +45,11 @@ public final class RegionDataManager {
     public void purgeWorldRegionData(World world)
     {
 
+    }
+
+    public Region getCurrentRegion(Player player)
+    {
+        return WorldListenerHelper.getInRegion(this, player);
     }
 
     public void renameRegion(String worldName, String oldname, String newName)
@@ -138,6 +144,11 @@ public final class RegionDataManager {
         return loadRegionList(player.getWorld().getName());
     }
 
+    /**
+     * For Direct boolean to set if Player can Create a region Flag
+     * @param isRegionBuildingMode
+     * @param player
+     */
     public void setRegionBuildingMode(boolean isRegionBuildingMode, Player player) {
 
 
@@ -146,6 +157,12 @@ public final class RegionDataManager {
         buildingMode.setBuildMode(isRegionBuildingMode);
         ps.add(buildingMode);
     }
+
+    /**
+     * To get the Region Boolean from player
+     * @param player
+     * @return
+     */
     public boolean getRegionBuildingMode(Player player)
     {
         for(int i = 0; i< ps.toArray().length; i++)
@@ -158,6 +175,11 @@ public final class RegionDataManager {
         return false;
     }
 
+    /**
+     * Sets Position 1 for Region
+     * @param player
+     * @param position
+     */
     public void setRegionPosition1(Player player, Location position)
     {
         for(int i = 0; i< ps.toArray().length; i++)
@@ -166,6 +188,11 @@ public final class RegionDataManager {
         }
     }
 
+    /**
+     * Sets Postion 2 for Region
+     * @param player
+     * @param position
+     */
     public void setRegionPosition2(Player player, Location position)
     {
         for(int i = 0; i< ps.toArray().length; i++)
@@ -174,6 +201,11 @@ public final class RegionDataManager {
         }
     }
 
+    /**
+     * Returns the Location data from Pos1 and Pos2
+     * @param player
+     * @return
+     */
     public Location[] getRegionCuboid(Player player)
     {
         for(int i = 0; i< ps.toArray().length; i++)

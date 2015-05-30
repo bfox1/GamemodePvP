@@ -73,11 +73,22 @@ public class WorldListener implements Listener  {
         try
         {
 
-            if(this.core.getDataManager().getRegionBuildingMode(e.getPlayer()))
+            if(this.core.getDataManager().getRegionBuildingMode(e.getPlayer()) && e.getPlayer().isOp() || this.core.getDataManager().getCurrentRegion(e.getPlayer()).getPlayerProperties(e.getPlayer()).isBuilder())
             {
                 //System.out.println(e.getClickedBlock());
-                if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) {this.core.getDataManager().setRegionPosition1(e.getPlayer(), e.getClickedBlock().getLocation()); e.setCancelled(true);}
-                else if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand")) {this.core.getDataManager().setRegionPosition2(e.getPlayer(), e.getClickedBlock().getLocation()); e.setCancelled(true);}
+                if(e.getAction() == Action.LEFT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand"))
+                {
+                    this.core.getDataManager().setRegionPosition1(e.getPlayer(), e.getClickedBlock().getLocation());
+                    e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Position 1 has been set at " + e.getClickedBlock().getLocation().toString()));
+                    e.setCancelled(true);
+                }
+                else if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand"))
+                {
+                    this.core.getDataManager().setRegionPosition2(e.getPlayer(), e.getClickedBlock().getLocation());
+                    e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Position 2 has been set at " + e.getClickedBlock().getLocation().toString()));
+
+                    e.setCancelled(true);
+                }
             }
         }catch (NullPointerException n)
         {

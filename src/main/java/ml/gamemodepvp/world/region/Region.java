@@ -69,30 +69,58 @@ public class Region implements Serializable, InternalVersionID{
         this.playerProperties = playerProperties;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public boolean isCanUse() {
         return canUse;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public void setCanUse(boolean canUse) {
         this.canUse = canUse;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public boolean isCanLeave() {
         return canLeave;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public void setCanLeave(boolean canLeave) {
         this.canLeave = canLeave;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public boolean isCanBuild() {
         return canBuild;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public void setCanBuild(boolean canBuild) {
         this.canBuild = canBuild;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public World getWorld()
     {
         return this.getHandler().getWorld();
@@ -103,19 +131,35 @@ public class Region implements Serializable, InternalVersionID{
         return this.INTERNAL_VERSION_ID;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public boolean isCanEnter() {
         return canEnter;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public void setCanEnter(boolean canEnter) {
         this.canEnter = canEnter;
     }
 
+    /**
+     * This is a Region Flag, To access Player, use getPlayerProperties()
+     * @return
+     */
     public RegionPlayerProperties getPlayerProperties(Player player)
     {
-        return getPlayerProperties().get(player);
+        return playerProperties.get(player);
     }
 
+    /**
+     * This sets flag Regions. If you want to set Player Flags, use getPlayerProperties
+     * @return
+     */
     public boolean setFlagType(String string, String flagString)
     {
         boolean flag;
