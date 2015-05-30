@@ -1,0 +1,78 @@
+name: GamemodePvP
+main: ml.gamemodepvp.core.CoreMain
+version: 0.2
+description: SuperSized GamemodePVP Plugin designed to Replicate a Cod style Gaming.
+author: bfox1
+depend: [ScalaLoader]
+
+commands:
+  class:
+    description: A Class selection Gui
+    permission: gamemodepvp.class
+    aliases: [c]
+  createNewArena:
+    description: Creates new ArenaVoid world
+    permission: gamemodepvp.world.createworld
+  teleporttoworld:
+    description: teleport to world destination
+    permission: gamemodepvp.world.teleportworld
+  deleteworld:
+    description: deletes world
+    permission: gamemodepvp.world.delworld
+
+  getregionlist:
+    description: Returns List of Regions for world.
+    permission: gamemodepvp.world.getregion
+  setmapsize:
+    description: Sets Arena Map Size
+    permission: gamemodepvp.world.mapsize
+  removeMapRegion:
+    description: Removes Region Specified
+    permission: gamemodepvp.world.removemapsize
+  setupregion:
+    description: Sets Region Building Mode on.
+    permission: gamemodepvp.world.setupregion
+  pos1:
+    permission: gamemodepvp.world.pos1
+  pos2:
+    permission: gamemodepvp.world.pos2
+  createregion:
+    permission: gamemodepvp.world.createregion
+  removeregion:
+    permission: gamemodepvp.world.removeregion
+
+  setregionflag:
+    permission: gamemodepvp.world.setregionflag
+
+  ecomoney:
+    description: MONEY
+    permission: gamemodepvp.ecomoney.money
+    aliases: [c]
+  savedata:
+    description: Saves player data.
+    permission: gamemodepvp.savedata
+  loaddata:
+    description: Saves player data.
+    permission: gamemodepvp.loaddata
+  register:
+    description: Registers your account throught the GamemodePVP Network!
+    permission: gamemodepvp.register
+    Usage: Hmm. Try /register <email> <password>?
+
+  setplayerrank:
+    description: Sets Players Rank.
+    permission: gamemodepvp.rank.setrank
+    usage: /setPlayerRank <name> <rankName>
+  removeplayerrank:
+    description: Removes players rank
+    permission: gamemodepvp.rank.removerank
+    usage: /removePlayerRank <name>
+
+permissions:
+  gamemodepvp.*:
+    description: Gives access to all GamemodePVP Permissions
+    children:
+      gamemodepvp.class: true
+    gmpvpwnc.class:
+    description: Opens Class Gui
+    default: true
