@@ -30,7 +30,7 @@ class KitGui(player:Player) {
     setItemDisplayer(0, createCustomItem(Material.COMPASS, ChatColor.DARK_RED +"CreateWeaponClass",
     setLore("Click here to create a new WeaponClass")))
   }
-
+fff
   def setItemDisplayer(slotIndex:Int, stack:ItemStack): Unit =
   {
     this.inventoryChest.setItem(slotIndex, stack)
