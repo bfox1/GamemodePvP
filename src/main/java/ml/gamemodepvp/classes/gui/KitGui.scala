@@ -34,7 +34,7 @@ class KitGui(player:Player) {
   def setItemDisplayer(slotIndex:Int, stack:ItemStack): Unit =
   {
     this.inventoryChest.setItem(slotIndex, stack)
-    print("HI")
+
   }
   def createCustomItem(material:Material, displayName:String, lore:util.List[String]):ItemStack =
   {
@@ -47,7 +47,7 @@ class KitGui(player:Player) {
   }
   def createCustomItem(material:Material, displayName:String):ItemStack =
   {
-
+       null
   }
 
   def setLore(isWeaponItem:Boolean,primary:String, secondary:String,tactical:String,grenade:String, perk:String):util.List[String] =
