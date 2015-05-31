@@ -36,8 +36,13 @@ object WorldListenerHelper {
   }
 
   def canBuild(region:Region, playerProp:RegionPlayerProperties):Boolean = {
-    if(region.isCanBuild || playerProp.canBuild) true
-    false
+
+      if(playerProp == null)
+      {
+        return region.isCanLeave
+      }
+
+      region.isCanBuild || playerProp.canBuild
   }
 
   def canUse(region:Region, playerProp:RegionPlayerProperties):Boolean ={

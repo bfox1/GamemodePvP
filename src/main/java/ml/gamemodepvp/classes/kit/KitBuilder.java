@@ -17,7 +17,7 @@ public class KitBuilder {
     private String kitName;
     private ItemStack[] otherItems;
 
-    public KitBuilder(WeaponBuilder weapon, String kitName, Food[] foodMap, Perks[] perkMap, ItemStack[] otherItems)
+    protected KitBuilder(WeaponBuilder weapon, String kitName, Food[] foodMap, Perks[] perkMap, ItemStack[] otherItems)
     {
         this.weapon = weapon;
         this.kitName = kitName;

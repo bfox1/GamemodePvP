@@ -3,6 +3,7 @@ package ml.gamemodepvp.classes.handler;
 import ml.gamemodepvp.classes.classadditives.Food;
 import ml.gamemodepvp.classes.classadditives.Perks;
 import ml.gamemodepvp.classes.kit.KitBuilder;
+import ml.gamemodepvp.classes.kit.KitHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

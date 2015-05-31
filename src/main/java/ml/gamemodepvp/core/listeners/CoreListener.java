@@ -42,7 +42,7 @@ public class CoreListener implements Listener {
             corePlayerData.getEmailAddress().equals(null);
         }catch (NullPointerException e)
         {
-
+            createEssentials(event);
             event.getPlayer().sendMessage(ChatColor.DARK_RED + "Please remember to setup your Player info by /register <Email> <password> \n " +
                     "for compatability throughout our GamemodePVP Network! Plus be able to \n" +
                     "access our forums!");

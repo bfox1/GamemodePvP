@@ -165,6 +165,7 @@ this.core = worldCore;
         if(command.getName().equalsIgnoreCase("removeRegion") && strings.length == 1)
         {
             HashMap<String, Region> hm = this.manager.loadRegionList(player);
+            if(hasPermission(player, "gamemodepvp.world.removeregion"))
             if(hm.containsKey(strings[0]))
             {
                 player.sendMessage(ModuleChat.worldPrefixToPlayer("Successfully Removed Region!"));
@@ -176,17 +177,10 @@ this.core = worldCore;
 
         //Sets Region Flag
 
-        if(onCommandCreation(command, "setRegionFlag", player, "gamemodepvp.world.setregionflag", strings.length, 3))
+        if(onCommandCreation(command, "setRegionFlag", player, strings.length, 3))
         {
-            HashMap<String, Region> hashMap;
-            if(!isConsole(commandSender))
-            {
-                hashMap = this.manager.loadRegionList(player);
-            }
-            else
-            {
-                hashMap = this.manager.loadRegionList(strings[3]);
-            }
+            HashMap<String, Region> hashMap = this.core.getDataManager().loadRegionList(player);
+            if(hasPermission(player, "gamemodepvp.world.setregionflag"))
             if(hashMap.containsKey(strings[0]))
             {
                 Region rg = hashMap.get(strings[0]);
@@ -226,7 +220,7 @@ this.core = worldCore;
         if(command.getName().equalsIgnoreCase("setPlayerFlag") && strings.length == 3)
         {
             HashMap<String, Region> hashMap = new HashMap<String, Region>();
-            if(!isConsole(commandSender)) hashMap = this.manager.loadRegionList(player);
+            hashMap = this.core.getDataManager().loadRegionList(player);
             if(hashMap.containsKey(strings[0]))
             {
                 hashMap.get(strings[0]).setPlayerProperties(player, hashMap.get(strings[0]));
@@ -251,22 +245,27 @@ this.core = worldCore;
         return true;
     }
 
-    private boolean onCommandCreation(Command command,String commandName,Player player, String permissionName)
+    private boolean onCommandCreation(Command command,String commandName,Player player)
     {
-        return onCommandCreation(command, commandName,player, permissionName,0, 0);
+        return onCommandCreation(command, commandName,player,0, 0);
     }
 
-    private boolean onCommandCreation(Command command, String commandName, Player player, String permissionName, int arrayAmount, int stringArgs)
+    private boolean onCommandCreation(Command command, String commandName, Player player, int arrayAmount, int stringArgs)
+    {
+        if(stringArgs == 0) {
+             return command.getName().equalsIgnoreCase(commandName);
+        }
+        else return command.getName().equalsIgnoreCase(commandName) && arrayAmount == stringArgs;
+    }
+
+
+    private boolean hasPermission(Player player, String permissionName)
     {
         if(!player.hasPermission(permissionName))
         {
             player.sendMessage(ModuleChat.permissionPrefixToPlayer("Sorry but you do not have permission to use this command."));
             return false;
         }
-        if(stringArgs == 0) {
-             return command.getName().equalsIgnoreCase(commandName) && player.hasPermission(permissionName);
-        }
-        else return command.getName().equalsIgnoreCase(commandName) && player.hasPermission(permissionName) && arrayAmount == stringArgs;
-
+        return true;
     }
 }

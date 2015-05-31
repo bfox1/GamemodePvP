@@ -3,7 +3,7 @@ main: ml.gamemodepvp.core.CoreMain
 version: 0.2
 description: SuperSized GamemodePVP Plugin designed to Replicate a Cod style Gaming.
 author: bfox1
-depend: [ScalaLoader]
+depend: [ScalaLoader, XStreamLoader]
 
 commands:
   class:
@@ -41,7 +41,8 @@ commands:
 
   setregionflag:
     description: Sets special flags for the region.
-    permission: gamemodepvp.world.setregionflag
+    permission: GamemodePvP.world.setregionflag
+    default: false
 
   setplayerflag:
     description: Sets special flags for player in specific region
@@ -49,8 +50,9 @@ commands:
 
   ecomoney:
     description: MONEY
-    permission: gamemodepvp.ecomoney.money
+    permission: GamemodePvP.ecomoney.money
     aliases: [c]
+    default: true
   savedata:
     description: Saves player data.
     permission: gamemodepvp.savedata
@@ -76,6 +78,21 @@ permissions:
     description: Gives access to all GamemodePVP Permissions
     children:
       gamemodepvp.class: true
-    gmpvpwnc.class:
-    description: Opens Class Gui
+      gamemodepvp.world.createworld: true
+      gamemodepvp.world.teleportworld: true
+      gamemodepvp.world.getregion: true
+      gamemodepvp.world.mapsize: true
+      gamemodepvp.world.removemapsize: true
+      gamemodepvp.world.setupregion: true
+      gamemodepvp.world.createregion: true
+      gamemodepvp.world.setregionflag: true
+      gamemodepvp.world.setplayerflag: true
+      gamemodepvp.ecomoney.money: true
+
+    GamemodePvP.ecomoney.money:
+    description: check Money and pay players
     default: true
+
+    gamemodepvp.world.setregionflag:
+    description: Sets Region flag
+    default: op

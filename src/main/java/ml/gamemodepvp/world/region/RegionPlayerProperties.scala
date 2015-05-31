@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
  * Created by bfox1 on 5/24/2015.
  * In God We Trust.
  */
- class RegionPlayerProperties(player:Player, region:Region)  {
+ class RegionPlayerProperties(player:Player, region:Region) extends Serializable {
   var isBuilder: Boolean = false
 
 
