@@ -46,3 +46,4 @@ out whats going on there.
 This is a Maven Project as you may know this project also requires ScalaLibrary/ScalaLoader, I will have a link to download soon. 
 It is a special plugin put together by myself and it is the only way to make the plugin playable.
 Plugin will also need a Add spigot.jar library for other things.
+-------
