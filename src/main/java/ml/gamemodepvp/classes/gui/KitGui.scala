@@ -22,7 +22,7 @@ class KitGui(player:Player) {
   }
 
   /**
-   * This Opens up the main Gui for All players.
+   * This Opens up the main Gui for players.
    */
   def setMainGuiDisplay(): Unit =
   {
@@ -31,25 +31,50 @@ class KitGui(player:Player) {
     setLore("Click here to create a new WeaponClass")))
   }
 
+
+  /**
+   * Sets the Display Item for the Inventory
+   * @param slotIndex
+   * @param stack
+   */
   def setItemDisplayer(slotIndex:Int, stack:ItemStack): Unit =
   {
     this.inventoryChest.setItem(slotIndex, stack)
-
   }
+
+  /**
+   * Returns the Custom Item for Display in a Gui.
+   * If display Item isnt in need of a Lore, Use the Second option.
+   * @param material
+   * @param displayName
+   * @param lore
+   * @return
+   */
   def createCustomItem(material:Material, displayName:String, lore:util.List[String]):ItemStack =
   {
-    var stack = new ItemStack(material)
-    var itemMeta = stack.getItemMeta
+    val stack = new ItemStack(material)
+    val itemMeta = stack.getItemMeta
     itemMeta.setDisplayName(displayName)
     itemMeta.setLore(lore)
     stack.setItemMeta(itemMeta)
-    return stack
+     stack
   }
   def createCustomItem(material:Material, displayName:String):ItemStack =
   {
        null
   }
 
+  /**
+   * For the sake of simplicity, This sets the Lore for Weapon Items. or Any other item that will require
+   * 5 lines of Text. For a more simpler lore, use the Single String setLore Method.
+   * @param isWeaponItem If Item is is a WeaponItem
+   * @param primary Primary Item this display weapon will give
+   * @param secondary Secondary Item this display item will give
+   * @param tactical Tactical Item this display item will give
+   * @param grenade Grenade Item this display item will give
+   * @param perk The Perk the player will have access to
+   * @return ArrayList
+   */
   def setLore(isWeaponItem:Boolean,primary:String, secondary:String,tactical:String,grenade:String, perk:String):util.List[String] =
   {
 

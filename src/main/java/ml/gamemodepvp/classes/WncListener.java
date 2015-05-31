@@ -30,5 +30,11 @@ public class WncListener implements Listener {
         provider.provideSetup();
     }
 
+    @EventHandler
+    public void menuSlot(InventoryClickEvent e)
+    {
+        //if(e.getInventory().conta)
+    }
+
 
 }
