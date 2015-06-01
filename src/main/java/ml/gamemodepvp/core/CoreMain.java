@@ -5,6 +5,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 import ml.gamemodepvp.classes.datasaver.KitSaver;
 import ml.gamemodepvp.classes.gui.KitGui;
 import ml.gamemodepvp.core.lib.CorePlayerData;
+import ml.gamemodepvp.core.lib.DebugCore;
 import ml.gamemodepvp.core.lib.PlayerDataHandler;
 import ml.gamemodepvp.init.ListenerLoader;
 import ml.gamemodepvp.world.region.RegionDataManager;
@@ -59,27 +60,28 @@ public class CoreMain extends JavaPlugin {
         CommandLoader ld = new CommandLoader(this);
         ld.load();
 
-        //Inventory iv = Bukkit.createInventory(null, 9,"TEST");
-        //ItemStack testStack = new ItemStack(Material.DIAMOND_AXE);
-        //ItemMeta meta = testStack.getItemMeta();
-       // meta.setDisplayName("HELLO");
-       // testStack.setItemMeta(meta);
-       // iv.addItem(testStack, new ItemStack(Material.DIAMOND), new ItemStack(Material.ANVIL), new ItemStack(Material.ARMOR_STAND));
-       // KitSaver sv = new KitSaver(iv);
-        //sv.yamlLoad(new File(this.getDataFolder(), "/test.yml"));
 
-        File file = new File(this.getDataFolder(), "/test.yml");
-        ItemStack[] ls = new KitSaver().loadKitData(file);
-
+        File file = new File(this.getDataFolder(), "/MainMenu.yml");
         if(!file.exists())
         {
-            try {
+            try
+            {
                 file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+                KitGui gui = new KitGui();
+                gui.setMainGuiDisplay();
+                KitSaver ks = new KitSaver(gui.inventoryChest());
+                ks.saveKitData(file);
+            } catch (IOException e)
+            {
+                DebugCore.returnDebugMessage("File not found, creating new one.");
             }
         }
-       // sv.saveKitData(new File(this.getDataFolder(), "/test.yml"));
+        else {
+            List ls = new KitSaver().loadKitData(file);
+
+            System.out.println(ls);
+        }
+
 
 
     }
