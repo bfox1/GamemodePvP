@@ -1,10 +1,11 @@
 package ml.gamemodepvp.classes.datasaver
 
 import java.io.{FileNotFoundException, File}
+import java.util
 
-import org.bukkit.configuration
-import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.inventory.Inventory
+import org.bukkit.{Bukkit, configuration}
+import org.bukkit.configuration.file.{FileConfiguration, YamlConfiguration}
+import org.bukkit.inventory.{ItemStack, Inventory}
 
 
 
@@ -13,6 +14,13 @@ import org.bukkit.inventory.Inventory
  */
 class KitSaver(inventory:Inventory) {
 
+  def this()
+  {
+    this(Bukkit.createInventory(null, 9))
+  }
+
+
+  val kitInvo = inventory
   def yamlLoad(file:File):YamlConfiguration =
   {
     try
@@ -22,7 +30,7 @@ class KitSaver(inventory:Inventory) {
       {
         case e: Exception =>
           println(file.getName + " Not found. Creating one for you.")
-          var yml = new YamlConfiguration
+          val yml = new YamlConfiguration
           yml.save(file)
           yml
       }
@@ -31,9 +39,36 @@ class KitSaver(inventory:Inventory) {
 
   def saveKitData(file:File): Unit =
   {
-    val yaml = yamlLoad(file)
-
+    val yaml : FileConfiguration = yamlLoad(file)
+    val stack = kitInvo.getContents
+    yaml.set("Inventory", "Inventory")
+    yaml.set("Inventory.Item", "Item")
+    yaml.set("Inventory.Item.lore", "Lore")
+    yaml.set("Inventory.Item", stack)
+    yaml.save(file)
 
   }
+
+  def loadKitData(file:File): Array[ItemStack] =
+  {
+    val yaml:FileConfiguration = YamlConfiguration.loadConfiguration(file)
+
+    //println(yaml.getList("Inventory.Item"))
+     val ls = yaml.getList("Inventory.Item")
+    val itemList:Array[ItemStack] = new Array[ItemStack](ls.size())
+    var it = 0
+    for(x <- ls)
+    {
+      val f :ItemStack = x
+      if(f != null) {
+        itemList(it) = f
+        it += 1
+      }
+
+    }
+    itemList
+  }
+
+
 
 }

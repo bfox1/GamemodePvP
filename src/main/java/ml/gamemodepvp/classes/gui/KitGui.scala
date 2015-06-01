@@ -12,6 +12,11 @@ import org.bukkit.inventory.ItemStack
  */
 class KitGui(player:Player) {
 
+  def this()
+  {
+    this(null)
+  }
+
   var customName = "Custom Classes"
   var inventoryChest = Bukkit.createInventory(null, 9,customName)
 

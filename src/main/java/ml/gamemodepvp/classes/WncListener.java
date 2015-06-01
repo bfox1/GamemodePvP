@@ -33,7 +33,7 @@ public class WncListener implements Listener {
     @EventHandler
     public void menuSlot(InventoryClickEvent e)
     {
-        //if(e.getInventory().conta)
+        if(e.getInventory().conta)
     }
 
 
