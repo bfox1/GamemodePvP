@@ -3,7 +3,7 @@ package ml.gamemodepvp.Modules.classes.gui
 import java.util
 
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.{Inventory, ItemStack}
 import org.bukkit.{Bukkit, ChatColor, Material}
 
 /**
@@ -29,11 +29,16 @@ class KitGui(player:Player) {
   /**
    * This Opens up the main Gui for players.
    */
-  def setMainGuiDisplay(): Unit =
+  private def setMainGuiDisplay(): Unit =
   {
 
     setItemDisplayer(0, createCustomItem(Material.COMPASS, ChatColor.DARK_RED +"CreateWeaponClass",
     setLore("Click here to create a new WeaponClass")))
+  }
+
+  def returnMainGui(): Inventory =
+  {
+    inventoryChest
   }
 
 

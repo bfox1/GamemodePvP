@@ -1,8 +1,10 @@
 package ml.gamemodepvp.Modules.classes;
 
 
+import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.classes.handler.ItemProvider;
 import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
+import ml.gamemodepvp.Modules.classes.kit.DisplayItemAction;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -12,28 +14,26 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class WncListener implements Listener {
 
-    public KitGuiHandler kit;
+    private CoreMain main;
 
-    public WncListener(KitGuiHandler handler)
+    public WncListener(CoreMain main)
     {
-        this.kit = handler;
+        this.main = main;
     }
 
     @EventHandler
     public void checkSlot(InventoryClickEvent e)
     {
-        e.getInventory();
-         this.kit = new KitGuiHandler();
-         this.kit.createGUI();
-        ItemProvider provider = new ItemProvider(this.kit,e);
-        provider.provideSetup();
     }
 
     @EventHandler
     public void menuSlot(InventoryClickEvent e)
     {
 
-        //if(e.getInventory().conta)
+        if(e.getInventory() == this.main.menuInventory)
+        {
+            DisplayItemAction.test2(DisplayItemAction.Action.ACTIVE()).;
+        }
     }
 
 

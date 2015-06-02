@@ -1,14 +1,12 @@
 package ml.gamemodepvp.Modules.classes.datasaver
 
-import java.io.File
-import java.util
+import java.io.{ByteArrayInputStream, IOException, ByteArrayOutputStream}
 
 import org.bukkit.Bukkit
-import org.bukkit.configuration.file.{FileConfiguration, YamlConfiguration}
-import org.bukkit.inventory.Inventory
 
-
-
+import org.bukkit.inventory.{ItemStack, Inventory}
+import org.bukkit.util.io.{BukkitObjectInputStream, BukkitObjectOutputStream}
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder
 
 
 /**
@@ -23,43 +21,57 @@ class KitSaver(inventory:Inventory) {
 
   val kitInvo = inventory
 
-  def yamlLoad(file: File): YamlConfiguration = {
-    try {
-      YamlConfiguration.loadConfiguration(file)
-    } catch {
-      case e: Exception =>
-        println(file.getName + " Not found. Creating one for you.")
-        val yml = new YamlConfiguration
-        yml.save(file)
-        yml
-    }
 
-  }
 
-  def saveKitData(file: File): Unit = {
-    val yaml: FileConfiguration = yamlLoad(file)
-    val stack = kitInvo.getContents
-    yaml.set("Inventory", "Inventory")
-    yaml.set("Inventory.Item", "Item")
-    yaml.set("Inventory.Item.lore", "Lore")
-    //yaml.set("Iventory", kitInvo)
-    for(x <- stack)
+
+
+}
+
+
+object BukkitSerialization
+{
+  def toBase64(invetory:Inventory):String =
+  {
+    try
     {
-      yaml.set("Inventory.Item", x)
-      yaml.set("Iventory.Item." + x.toString, x)
+      val outputStream = new ByteArrayOutputStream()
+      val dataOutput = new BukkitObjectOutputStream(outputStream)
+      dataOutput.writeInt(invetory.getSize)
+
+      for(i<- invetory.getSize)
+      {
+        dataOutput.writeObject(invetory.getItem(i))
+      }
+      dataOutput.close()
+
+       Base64Coder.encodeLines(outputStream.toByteArray)
+
+    } catch
+      {
+        case e:Exception => "ERROR"
+      }
+  }
+
+
+  def fromBase64(data:String):Inventory =
+  {
+    try {
+      val inputStream = new ByteArrayInputStream(Base64Coder.decodeLines(data))
+      val dataInput = new BukkitObjectInputStream(inputStream)
+      val inventory = Bukkit.getServer().createInventory(null, dataInput.readInt())
+
+      // Read the serialized inventory
+      for (i <- inventory.getSize) {
+        case it : ItemStack => dataInput.readObject()
+        inventory.setItem(i,  it)
     }
-    yaml.save(file)
-
+    dataInput.close();
+     inventory;
+  }
+    catch
+      {
+        case e:ClassNotFoundException => throw new IOException("UNable to decode class", e)
+      }
   }
 
-
-  def loadKitData(file: File): util.List[_] = {
-    val yaml: FileConfiguration = YamlConfiguration.loadConfiguration(file)
-
-    //println(yaml.get("Inventory"))
-    val ls = yaml.getList("Inventory.Item")
-
-
-    ls
-  }
 }

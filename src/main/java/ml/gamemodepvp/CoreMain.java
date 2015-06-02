@@ -1,7 +1,8 @@
 package ml.gamemodepvp;
 
-import ml.gamemodepvp.Modules.classes.datasaver.KitSaver;
+
 import ml.gamemodepvp.Modules.classes.gui.KitGui;
+
 import ml.gamemodepvp.Modules.core.CoreExecutor;
 import ml.gamemodepvp.database.playerdata.CorePlayerData;
 import ml.gamemodepvp.database.playerdata.PlayerDataHandler;
@@ -10,11 +11,20 @@ import ml.gamemodepvp.init.CommandLoader;
 import ml.gamemodepvp.init.ListenerLoader;
 import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.io.BukkitObjectInputStream;
+import org.bukkit.util.io.BukkitObjectOutputStream;
+import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
+import sun.misc.BASE64Encoder;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -31,6 +41,8 @@ public class CoreMain extends JavaPlugin {
 
     private final RegionDataManager manager = new RegionDataManager();
     public final PluginManager pm = this.getServer().getPluginManager();
+
+    public final Inventory menuInventory = new KitGui().returnMainGui();
 
 
 
@@ -52,30 +64,6 @@ public class CoreMain extends JavaPlugin {
 
         CommandLoader ld = new CommandLoader(this);
         ld.load();
-
-
-        File file = new File(this.getDataFolder(), "/MainMenu.yml");
-        if(!file.exists())
-        {
-            try
-            {
-                file.createNewFile();
-                KitGui gui = new KitGui();
-                gui.setMainGuiDisplay();
-                KitSaver ks = new KitSaver(gui.inventoryChest());
-                ks.saveKitData(file);
-            } catch (IOException e)
-            {
-                DebugCore.returnDebugMessage("File not found, creating new one.");
-            }
-        }
-        else {
-            List ls = new KitSaver().loadKitData(file);
-
-            System.out.println(ls);
-        }
-
-
 
     }
 
