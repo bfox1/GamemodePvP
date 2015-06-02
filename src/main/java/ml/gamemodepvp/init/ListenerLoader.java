@@ -1,13 +1,11 @@
 package ml.gamemodepvp.init;
 
-import ml.gamemodepvp.classes.WncListener;
-import ml.gamemodepvp.classes.handler.KitGuiHandler;
-import ml.gamemodepvp.core.listeners.CoreListener;
-import ml.gamemodepvp.core.CoreMain;
-import ml.gamemodepvp.core.listeners.LoadDataListener;
-import ml.gamemodepvp.economy.EcoListener;
-import ml.gamemodepvp.ranks.RankListener;
-import ml.gamemodepvp.world.WorldListener;
+import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.Modules.core.listeners.CoreListener;
+import ml.gamemodepvp.Modules.core.listeners.LoadDataListener;
+import ml.gamemodepvp.Modules.economy.EcoListener;
+import ml.gamemodepvp.Modules.ranks.RankListener;
+import ml.gamemodepvp.Modules.world.WorldListener;
 import org.bukkit.event.Listener;
 
 /**

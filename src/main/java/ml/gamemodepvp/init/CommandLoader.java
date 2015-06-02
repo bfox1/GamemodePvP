@@ -1,14 +1,12 @@
 package ml.gamemodepvp.init;
 
-import ml.gamemodepvp.classes.WncExecutor;
-import ml.gamemodepvp.classes.handler.KitGuiHandler;
-import ml.gamemodepvp.core.CoreExecutor;
-import ml.gamemodepvp.core.CoreMain;
-import ml.gamemodepvp.economy.EcoExecutor;
-import ml.gamemodepvp.world.WorldExecutor;
+import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.Modules.classes.WncExecutor;
+import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
+import ml.gamemodepvp.Modules.core.CoreExecutor;
+import ml.gamemodepvp.Modules.economy.EcoExecutor;
+import ml.gamemodepvp.Modules.world.WorldExecutor;
 import org.bukkit.command.CommandExecutor;
-
-import java.util.concurrent.Executor;
 
 /**
  * Created by bfox1 on 5/23/2015.

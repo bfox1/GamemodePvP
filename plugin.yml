@@ -1,5 +1,5 @@
 name: GamemodePvP
-main: ml.gamemodepvp.core.CoreMain
+main: ml.gamemodepvp.CoreMain
 version: 0.2
 description: SuperSized GamemodePVP Plugin designed to Replicate a Cod style Gaming.
 author: bfox1
