@@ -3,6 +3,7 @@ package ml.gamemodepvp;
 
 import ml.gamemodepvp.Modules.classes.gui.KitGui;
 
+import ml.gamemodepvp.Modules.classes.kit.KitBase;
 import ml.gamemodepvp.Modules.core.CoreExecutor;
 import ml.gamemodepvp.database.playerdata.CorePlayerData;
 import ml.gamemodepvp.database.playerdata.PlayerDataHandler;
@@ -42,7 +43,7 @@ public class CoreMain extends JavaPlugin {
     private final RegionDataManager manager = new RegionDataManager();
     public final PluginManager pm = this.getServer().getPluginManager();
 
-    public final Inventory menuInventory = new KitGui().returnMainGui();
+    public  KitBase menuInventory;
 
 
 
@@ -53,6 +54,9 @@ public class CoreMain extends JavaPlugin {
     public void onEnable() {
         this.manager.loadWorldData(this);
 
+        KitGui gui = new KitGui();
+        gui.returnMainGui();
+        this.menuInventory = new KitBase(gui);
         ListenerLoader lLoader = new ListenerLoader(this);
         lLoader.load();
 

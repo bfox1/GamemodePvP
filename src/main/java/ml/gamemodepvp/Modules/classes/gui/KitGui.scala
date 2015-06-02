@@ -39,9 +39,11 @@ class KitGui() {
   }
 
 
-  def getItemAction(displayStack:DisplayStack): Unit =
+  def fireItemAction(displayStack:DisplayStack): Unit =
   {
-    if(displayStack.getAction.fireAction())
+
+    displayStack.fireAction()
+
   }
 
 
@@ -66,7 +68,7 @@ class KitGui() {
   {
 
     setItemDisplayer(0, createCustomItem(Material.COMPASS, ChatColor.DARK_RED +"CreateWeaponClass",
-    setLore("Click here to create a new WeaponClass")))
+    setLore("Click here to create a new WeaponClass"), ItemAction.KIT, inventoryChest))
   }
 
   def returnMainGui(): Inventory =
@@ -93,9 +95,12 @@ class KitGui() {
    * @param material
    * @param displayName
    * @param lore
+   * @param itemAction The ItemAction Type
+   * @param objAction The Action to be Fired with corresponding ActionType. (ex. if itemAction = COMMAND, objAction = gamemode bfox1 1,
+   *                                                                              if itemAction = INVENTORY, objAction = kitgui.openGUI())
    * @return
    */
-  def createCustomItem(material:Material, displayName:String, lore:util.List[String]):DisplayStack =
+  def createCustomItem(material:Material, displayName:String, lore:util.List[String], itemAction:ItemAction, objAction:Object):DisplayStack =
   {
     val stack = new ItemStack(material)
     val itemMeta = stack.getItemMeta
@@ -103,7 +108,10 @@ class KitGui() {
     itemMeta.setLore(lore)
     stack.setItemMeta(itemMeta)
      stack
-    new DisplayStack(stack)
+    val displayStack = new DisplayStack(stack)
+    displayStack.setAction(itemAction)
+    displayStack.setActionPerameters(objAction)
+    displayStack
   }
   def createCustomItem(material:Material, displayName:String):ItemStack =
   {

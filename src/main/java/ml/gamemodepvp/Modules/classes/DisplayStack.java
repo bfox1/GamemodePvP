@@ -13,6 +13,8 @@ public class DisplayStack extends ItemStack
     private ItemStack stack;
     private ItemAction action;
 
+    private Object actionPerameters;
+
     public DisplayStack(Material material)
     {
         this.stack = new ItemStack(material);
@@ -41,5 +43,14 @@ public class DisplayStack extends ItemStack
 
     public void setAction(ItemAction action) {
         this.action = action;
+    }
+
+    public void fireAction()
+    {
+        action.fireAction(actionPerameters);
+    }
+
+    public void setActionPerameters(Object actionPerameters) {
+        this.actionPerameters = actionPerameters;
     }
 }
