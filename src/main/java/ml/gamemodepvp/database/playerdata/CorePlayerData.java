@@ -1,5 +1,7 @@
 package ml.gamemodepvp.database.playerdata;
 
+import ml.gamemodepvp.Modules.classes.gui.KitGui;
+import ml.gamemodepvp.Modules.classes.kit.KitBase;
 import ml.gamemodepvp.Modules.ranks.Rank;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -18,6 +20,8 @@ public class CorePlayerData implements Serializable{
     private int money;
 
     private Rank rank;
+
+    private KitGui base;
 
     private UUID id;
 
@@ -112,4 +116,11 @@ public class CorePlayerData implements Serializable{
         this.rank = rank;
     }
 
+    public KitGui getBase() {
+        return base;
+    }
+
+    public void setBase(KitGui base) {
+        this.base = base;
+    }
 }

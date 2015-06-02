@@ -2,6 +2,8 @@ package ml.gamemodepvp.Modules.classes.gui
 
 import java.util
 
+import ml.gamemodepvp.Modules.classes.DisplayStack
+import ml.gamemodepvp.Modules.classes.kit.ItemAction
 import org.bukkit.entity.Player
 import org.bukkit.inventory.{Inventory, ItemStack}
 import org.bukkit.{Bukkit, ChatColor, Material}
@@ -10,20 +12,51 @@ import org.bukkit.{Bukkit, ChatColor, Material}
  * Created by bfox1 on 5/30/2015.
  * In God We Trust.
  */
-class KitGui(player:Player) {
+class KitGui() {
 
-  def this()
-  {
-    this(null)
-  }
 
-  var customName = "Custom Classes"
+
+  var customName = "Default Classes"
+
   var inventoryChest = Bukkit.createInventory(null, 9,customName)
+
+  var displayStackList = new util.ArrayList[DisplayStack]()
 
   def setCustomName(name:String):Boolean =
   {
     this.customName = name
     true
+  }
+
+  def openGui(player:Player): Unit =
+  {
+    player.openInventory(this.inventoryChest)
+  }
+
+  def closeGui(player:Player): Unit =
+  {
+    player.closeInventory()
+  }
+
+
+  def getItemAction(displayStack:DisplayStack): Unit =
+  {
+    if(displayStack.getAction.fireAction())
+  }
+
+
+  /**
+   * Self reasoned.
+   * @param size
+   */
+  def setInventorySize(size:Int): Unit =
+  {
+    if(size == 9, 27, 54)
+    this.inventoryChest = Bukkit.createInventory(null, size, customName)
+    else
+    {
+      throw new Exception("Size of inventory isnt allowed! only 9, 27, 54")
+    }
   }
 
   /**
@@ -38,7 +71,8 @@ class KitGui(player:Player) {
 
   def returnMainGui(): Inventory =
   {
-    inventoryChest
+    setMainGuiDisplay()
+    this.inventoryChest
   }
 
 
@@ -47,9 +81,10 @@ class KitGui(player:Player) {
    * @param slotIndex
    * @param stack
    */
-  def setItemDisplayer(slotIndex:Int, stack:ItemStack): Unit =
+  def setItemDisplayer(slotIndex:Int, stack:DisplayStack): Unit =
   {
-    this.inventoryChest.setItem(slotIndex, stack)
+    this.inventoryChest.setItem(slotIndex, stack.getItemStack)
+    this.displayStackList.add(stack)
   }
 
   /**
@@ -60,7 +95,7 @@ class KitGui(player:Player) {
    * @param lore
    * @return
    */
-  def createCustomItem(material:Material, displayName:String, lore:util.List[String]):ItemStack =
+  def createCustomItem(material:Material, displayName:String, lore:util.List[String]):DisplayStack =
   {
     val stack = new ItemStack(material)
     val itemMeta = stack.getItemMeta
@@ -68,6 +103,7 @@ class KitGui(player:Player) {
     itemMeta.setLore(lore)
     stack.setItemMeta(itemMeta)
      stack
+    new DisplayStack(stack)
   }
   def createCustomItem(material:Material, displayName:String):ItemStack =
   {
@@ -108,7 +144,7 @@ class KitGui(player:Player) {
   }
   def setLore(primary:String):util.List[String] =
   {
-    var list = new util.ArrayList[String]()
+    val list = new util.ArrayList[String]()
 
     list.add(primary)
     list

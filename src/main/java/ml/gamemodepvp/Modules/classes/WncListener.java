@@ -2,12 +2,12 @@ package ml.gamemodepvp.Modules.classes;
 
 
 import ml.gamemodepvp.CoreMain;
-import ml.gamemodepvp.Modules.classes.handler.ItemProvider;
-import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
-import ml.gamemodepvp.Modules.classes.kit.DisplayItemAction;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.io.ObjectOutput;
 
 /**
  * Created by bfox1 on 4/24/2015.
@@ -32,7 +32,7 @@ public class WncListener implements Listener {
 
         if(e.getInventory() == this.main.menuInventory)
         {
-            DisplayItemAction.test2(DisplayItemAction.Action.ACTIVE()).;
+
         }
     }
 
