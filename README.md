@@ -43,7 +43,10 @@ Other then that, please, contribute what you like. Nothing is set and stoned, Im
 Ask me or any contributor that shows up if you have any questions on a part you wish to contribute to or need help figuring
 out whats going on there. 
 
-This is a Maven Project as you may know this project also requires ScalaLibrary/ScalaLoader, I will have a link to download soon. 
-It is a special plugin put together by myself and it is the only way to make the plugin playable.
-Plugin will also need a Add spigot.jar library for other things.
+
 -------
+#REQUIREMENTS
+-------
+You will need my Plugin ScalaLoader, Its fully up to date with the latest version of Scala. It can be found at <html>https://mega.co.nz/#!vdRnmIKR!2u30r50YZReaZI6tcR9ANeWruE9P-e6dXgfY_TUvbCY</html>
+
+Im assuming you already know how to obtain the Spigot.jar, as you will need its Source for some of Minecrafts Source Code.
