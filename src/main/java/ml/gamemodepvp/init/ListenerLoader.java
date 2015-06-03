@@ -1,6 +1,7 @@
 package ml.gamemodepvp.init;
 
 import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.Modules.classes.WncListener;
 import ml.gamemodepvp.Modules.core.listeners.CoreListener;
 import ml.gamemodepvp.Modules.core.listeners.LoadDataListener;
 import ml.gamemodepvp.Modules.economy.EcoListener;
@@ -28,7 +29,7 @@ public class ListenerLoader {
         setupListeners(new WorldListener(this.main));
         setupListeners(new EcoListener());
         setupListeners(new LoadDataListener(this.main));
-        //setupListeners(new WncListener(this.main));
+        setupListeners(new WncListener(this.main));
     }
 
     private void setupListeners(Listener ls)

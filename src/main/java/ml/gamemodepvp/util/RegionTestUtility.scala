@@ -63,8 +63,12 @@ object RegionTestUtility {
 
     val jmap:java.util.Map[String, Region] = manager.loadRegionList(player)
 
-    jmap.foreach(jmap =>
-    if(manager.checkIfRegion(jmap._2, player.getLocation))return true)
+    try {
+      jmap.foreach(jmap =>
+        if (manager.checkIfRegion(jmap._2, player.getLocation)) return true)
+    }catch {
+      case e: Exception => println("NO Region Located")
+    }
      false
   }
 

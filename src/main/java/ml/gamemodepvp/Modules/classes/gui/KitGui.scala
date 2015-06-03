@@ -12,7 +12,12 @@ import org.bukkit.{Bukkit, ChatColor, Material}
  * Created by bfox1 on 5/30/2015.
  * In God We Trust.
  */
-class KitGui() {
+class KitGui(player:Player) {
+
+  def this()
+  {
+    this(null)
+  }
 
 
 
@@ -21,6 +26,8 @@ class KitGui() {
   var inventoryChest = Bukkit.createInventory(null, 9,customName)
 
   var displayStackList = new util.ArrayList[DisplayStack]()
+
+  var kitPlayer = player
 
   def setCustomName(name:String):Boolean =
   {
@@ -45,6 +52,10 @@ class KitGui() {
     displayStack.fireAction()
 
   }
+  def fireItemAction(displayStack:DisplayStack, player:Player): Unit =
+  {
+    displayStack.fireActionToPlayer(player)
+  }
 
 
   /**
@@ -53,7 +64,7 @@ class KitGui() {
    */
   def setInventorySize(size:Int): Unit =
   {
-    if(size == 9, 27, 54)
+    if(size == 9 || size == 27 || size ==  54)
     this.inventoryChest = Bukkit.createInventory(null, size, customName)
     else
     {
@@ -68,7 +79,7 @@ class KitGui() {
   {
 
     setItemDisplayer(0, createCustomItem(Material.COMPASS, ChatColor.DARK_RED +"CreateWeaponClass",
-    setLore("Click here to create a new WeaponClass"), ItemAction.KIT, inventoryChest))
+    setLore("Click here to create a new WeaponClass"), ItemAction.INVENTORY, new KitGui(this.kitPlayer)))
   }
 
   def returnMainGui(): Inventory =

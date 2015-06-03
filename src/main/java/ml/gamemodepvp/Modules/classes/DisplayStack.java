@@ -2,6 +2,7 @@ package ml.gamemodepvp.Modules.classes;
 
 import ml.gamemodepvp.Modules.classes.kit.ItemAction;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -52,5 +53,10 @@ public class DisplayStack extends ItemStack
 
     public void setActionPerameters(Object actionPerameters) {
         this.actionPerameters = actionPerameters;
+    }
+
+    public void fireActionToPlayer(Player player)
+    {
+
     }
 }

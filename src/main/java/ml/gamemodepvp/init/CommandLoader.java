@@ -51,7 +51,8 @@ public class CommandLoader{
         setupCommands("setPlayerFlag", new WorldExecutor(main));
 
         //Classes Commands
-        setupCommands("class", new WncExecutor(main, new KitGuiHandler()));
+        setupCommands("class", new WncExecutor(main));
+        setupCommands("classMenu", new WorldExecutor(main));
     }
 
     public void setupCommands(String name, CommandExecutor executor)

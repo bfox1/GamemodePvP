@@ -4,6 +4,7 @@ package ml.gamemodepvp.Modules.classes;
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.classes.gui.KitGui;
 import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
+import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,13 +15,11 @@ import org.bukkit.entity.Player;
  * Created by bfox1 on 4/24/2015.
  */
 public class WncExecutor implements CommandExecutor {
-    private final CoreMain plugin;
-    private KitGuiHandler handler;
+    private  CoreMain plugin;
 
-    public WncExecutor(CoreMain plugin, KitGuiHandler handler)
+    public WncExecutor(CoreMain plugin)
     {
         this.plugin = plugin;
-        this.handler = handler;
     }
 
     @Override
@@ -42,15 +41,8 @@ public class WncExecutor implements CommandExecutor {
             return true;
         }
 
-        if(command.getName().equalsIgnoreCase("menu") && commandSender instanceof Player)
-        {
-            Player player = (Player)commandSender;
-            KitGui gui = new KitGui(player);
-            gui.customName_$eq(ChatColor.DARK_BLUE + "Main Menu");
-            gui.setMainGuiDisplay();
-            player.openInventory(gui.inventoryChest());
-            return true;
-        }
+        System.out.println(command.getName());
+
 
         return false;
 

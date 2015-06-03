@@ -7,6 +7,7 @@ import ml.gamemodepvp.Modules.world.util.SerializableLocation;
 import ml.gamemodepvp.Modules.world.util.WorldController;
 import ml.gamemodepvp.database.regiondata.RegionDataManager;
 import ml.gamemodepvp.database.worlddata.WorldDataHandler;
+import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.ModuleChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -229,6 +230,16 @@ this.core = worldCore;
             player.sendMessage(ModuleChat.worldPrefixToPlayer(ChatColor.RED + "No region Found"));
             return false;
 
+        }
+
+        if(command.getName().equalsIgnoreCase("classMenu"))
+        {
+
+            DebugCore.returnDebugMessage("Hmmm interesting");
+            System.out.println("TEST?");
+
+            this.core.menuInventory.kitGui().openGui(player);
+            return true;
         }
         player.sendMessage("USAGE: /command <possibility1> <possiblility2> etc.");
         return false;

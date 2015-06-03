@@ -10,6 +10,10 @@ commands:
     description: A Class selection Gui
     permission: gamemodepvp.class
     aliases: [c]
+
+  classmenu:
+    description: Opens Main Menu
+    permission: gamemodepvp.class.menu
   createNewArena:
     description: Creates new ArenaVoid world
     permission: gamemodepvp.world.createworld
@@ -78,6 +82,7 @@ permissions:
     description: Gives access to all GamemodePVP Permissions
     children:
       gamemodepvp.class: true
+      gamemodepvp.class.menu: true
       gamemodepvp.world.createworld: true
       gamemodepvp.world.teleportworld: true
       gamemodepvp.world.getregion: true

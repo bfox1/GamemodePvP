@@ -30,7 +30,7 @@ class KitSaver(inventory:Inventory) {
 
 object BukkitSerialization
 {
-  def toBase64(invetory:Inventory):String =
+ /* def toBase64(invetory:Inventory):String =
   {
     try
     {
@@ -72,6 +72,6 @@ object BukkitSerialization
       {
         case e:ClassNotFoundException => throw new IOException("UNable to decode class", e)
       }
-  }
+  }*/
 
 }
