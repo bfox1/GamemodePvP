@@ -22,6 +22,7 @@ import static org.bukkit.ChatColor.*;
 /**
  * Created by bfox1 on 4/24/2015.
  */
+@Deprecated
 public class KitGuiHandler {
 
 

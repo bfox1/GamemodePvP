@@ -3,14 +3,14 @@ package ml.gamemodepvp.Modules.classes;
 
 import ml.gamemodepvp.CoreMain;
 
-import ml.gamemodepvp.Modules.classes.gui.KitGui;
-import ml.gamemodepvp.util.DebugCore;
+import ml.gamemodepvp.Modules.classes.kit.InventoryConstructor;
+import ml.gamemodepvp.Modules.classes.kit.DisplayStack;
+import ml.gamemodepvp.Modules.classes.event.ItemAction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-
-import java.io.ObjectOutput;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by bfox1 on 4/24/2015.
@@ -30,20 +30,28 @@ public class WncListener implements Listener {
     }
 
     @EventHandler
-    public void menuSlot(InventoryClickEvent e)
+    public void onInventoryAction(InventoryClickEvent e)
     {
-        KitGui gui = this.main.menuInventory.kitGui();
-        gui.kitPlayer_$eq((Player)e.getWhoClicked());
+        InventoryConstructor gui = this.main.menuInventory.kitGui();
+        DisplayStack stack;
+        ItemStack clickedStack = e.getCurrentItem();
+        InventoryConstructor innerInventoryGui;
+        boolean clickedType = false;
         if(e.getInventory().getName() == gui.customName())
         {
             for(int i = 0; i < gui.displayStackList().size(); i++)
             {
-                DebugCore.returnDebugMessage(e.getClick().isLeftClick());
-                if(e.getCurrentItem().equals(gui.displayStackList().get(i).getItemStack()) && e.getClick().isLeftClick())
+                stack = gui.displayStackList().get(i);
+
+                if(clickedStack.equals(stack) && e.getClick().isLeftClick() && stack.getAction().equals(ItemAction.INVENTORY))
                 {
                     gui.closeGui((Player)e.getWhoClicked());
-                    gui.fireItemAction(gui.displayStackList().get(i));
+                    innerInventoryGui = (InventoryConstructor)stack.getActionPerameters();
+                    innerInventoryGui.kitPlayer_$eq((Player)e.getWhoClicked());
+                    stack.setActionPerameters(innerInventoryGui);
+                    gui.fireItemAction(stack);
                     e.setCancelled(true);
+                    break;
                 }
             }
         }

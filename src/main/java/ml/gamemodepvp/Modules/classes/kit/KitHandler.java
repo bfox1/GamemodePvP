@@ -39,10 +39,10 @@ public class KitHandler {
             {
 
 
-                    new WeaponBuilder(primaryWeapon[0].getType(),ChatColor.AQUA + weaponName[0], primaryWeapon[0].getItemMeta(), true, false),
-                    new WeaponBuilder(primaryWeapon[1].getType(),ChatColor.AQUA + weaponName[1], primaryWeapon[1].getItemMeta(), true, false),
-                    new WeaponBuilder(primaryWeapon[2].getType(),ChatColor.AQUA + weaponName[2], primaryWeapon[2].getItemMeta(), true, false),
-                    new WeaponBuilder(primaryWeapon[3].getType(),ChatColor.AQUA + weaponName[3], primaryWeapon[3].getItemMeta(), false, true)
+                  //  new WeaponBuilder(primaryWeapon[0].getType(),ChatColor.AQUA + weaponName[0], primaryWeapon[0].getItemMeta(), true, false),
+                   // new WeaponBuilder(primaryWeapon[1].getType(),ChatColor.AQUA + weaponName[1], primaryWeapon[1].getItemMeta(), true, false),
+                  //  new WeaponBuilder(primaryWeapon[2].getType(),ChatColor.AQUA + weaponName[2], primaryWeapon[2].getItemMeta(), true, false),
+                  //  new WeaponBuilder(primaryWeapon[3].getType(),ChatColor.AQUA + weaponName[3], primaryWeapon[3].getItemMeta(), false, true)
             };
 
     private WeaponEnchants[][] weaponEnchants =
@@ -86,10 +86,10 @@ public class KitHandler {
         Map<String, KitBuilder> kits = new HashMap<String, KitBuilder>();
         for(int i = 0; i< weaponEnchants.length; i++)
         {
-                defaultBuilder[i].addWeaponEnchants(weaponEnchants[i]);
+                //defaultBuilder[i].addWeaponEnchants(weaponEnchants[i]);
 
-                KitBuilder builder = new KitBuilder(defaultBuilder[i],ChatColor.AQUA +  weaponName[i], kitFood[i], kitPerks[i], otherItems[i]);
-            kits.put(weaponName[i], builder);
+               // KitBuilder builder = new KitBuilder(defaultBuilder[i],ChatColor.AQUA +  weaponName[i], kitFood[i], kitPerks[i], otherItems[i]);
+          //  kits.put(weaponName[i], builder);
         }
         return kits;
     }

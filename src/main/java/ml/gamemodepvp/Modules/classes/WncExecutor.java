@@ -2,10 +2,7 @@ package ml.gamemodepvp.Modules.classes;
 
 
 import ml.gamemodepvp.CoreMain;
-import ml.gamemodepvp.Modules.classes.gui.KitGui;
 import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
-import ml.gamemodepvp.util.DebugCore;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,21 +27,31 @@ public class WncExecutor implements CommandExecutor {
         {
             return true;
         }
-        if(commandSender instanceof Player) {
-            if (s.equalsIgnoreCase("class")) {
+            if (s.equalsIgnoreCase("class") && isPlayer(commandSender)) {
                 Player p = (Player) commandSender;
 
                 KitGuiHandler kit = new KitGuiHandler();
                 kit.createGUI();
                 kit.openGUI(p);
-            }
+                return true;
+           }
+
+
+        if(command.getName().equalsIgnoreCase("classMenu") && isPlayer(commandSender))
+        {
+
+            this.plugin.menuInventory.kitGui().openGui((Player)commandSender);
             return true;
         }
-
-        System.out.println(command.getName());
 
 
         return false;
 
+    }
+
+
+    private boolean isPlayer(CommandSender sender)
+    {
+        return sender instanceof Player;
     }
 }

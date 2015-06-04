@@ -1,11 +1,10 @@
-package ml.gamemodepvp.Modules.classes.kit;
+package ml.gamemodepvp.Modules.classes.event;
 
-import ml.gamemodepvp.Modules.classes.gui.KitGui;
+import ml.gamemodepvp.Modules.classes.kit.InventoryConstructor;
+import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -36,9 +35,9 @@ public enum ItemAction
                 @Override
                 public void fireAction(Object object)
                 {
-                    if(object instanceof KitGui)
+                    if(object instanceof InventoryConstructor)
                     {
-                        KitGui gui = (KitGui)object;
+                        InventoryConstructor gui = (InventoryConstructor)object;
                         Player player = gui.kitPlayer();
 
                         for(int i = 0; i < gui.inventoryChest().getSize(); i++)
@@ -60,10 +59,12 @@ public enum ItemAction
                  @Override
                  public void fireAction(Object obj)
                  {
-                    if(obj instanceof KitGui)
+                    if(obj instanceof InventoryConstructor && obj != null)
                     {
-                        KitGui gui = (KitGui)obj;
+                        InventoryConstructor gui = (InventoryConstructor)obj;
+                        gui.inventoryChest_$eq(Bukkit.createInventory(null, 9, "TESTINVENTORY"));
                         gui.inventoryChest().addItem(new ItemStack(Material.STAINED_CLAY));
+                        DebugCore.returnDebugMessage(gui.kitPlayer().toString());
                         gui.openGui(gui.kitPlayer());
                     }
                  }

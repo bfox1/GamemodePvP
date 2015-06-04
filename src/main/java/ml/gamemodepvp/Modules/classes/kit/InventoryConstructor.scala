@@ -1,9 +1,8 @@
-package ml.gamemodepvp.Modules.classes.gui
+package ml.gamemodepvp.Modules.classes.kit
 
 import java.util
 
-import ml.gamemodepvp.Modules.classes.DisplayStack
-import ml.gamemodepvp.Modules.classes.kit.ItemAction
+import ml.gamemodepvp.Modules.classes.event.ItemAction
 import org.bukkit.entity.Player
 import org.bukkit.inventory.{Inventory, ItemStack}
 import org.bukkit.{Bukkit, ChatColor, Material}
@@ -12,7 +11,7 @@ import org.bukkit.{Bukkit, ChatColor, Material}
  * Created by bfox1 on 5/30/2015.
  * In God We Trust.
  */
-class KitGui(player:Player) {
+ class InventoryConstructor(player:Player) {
 
   def this()
   {
@@ -28,23 +27,6 @@ class KitGui(player:Player) {
   var displayStackList = new util.ArrayList[DisplayStack]()
 
   var kitPlayer = player
-
-  def setCustomName(name:String):Boolean =
-  {
-    this.customName = name
-    true
-  }
-
-  def openGui(player:Player): Unit =
-  {
-    player.openInventory(this.inventoryChest)
-  }
-
-  def closeGui(player:Player): Unit =
-  {
-    player.closeInventory()
-  }
-
 
   def fireItemAction(displayStack:DisplayStack): Unit =
   {
@@ -72,33 +54,7 @@ class KitGui(player:Player) {
     }
   }
 
-  /**
-   * This Opens up the main Gui for players.
-   */
-  private def setMainGuiDisplay(): Unit =
-  {
 
-    setItemDisplayer(0, createCustomItem(Material.COMPASS, ChatColor.DARK_RED +"CreateWeaponClass",
-    setLore("Click here to create a new WeaponClass"), ItemAction.INVENTORY, new KitGui(this.kitPlayer)))
-  }
-
-  def returnMainGui(): Inventory =
-  {
-    setMainGuiDisplay()
-    this.inventoryChest
-  }
-
-
-  /**
-   * Sets the Display Item for the Inventory
-   * @param slotIndex
-   * @param stack
-   */
-  def setItemDisplayer(slotIndex:Int, stack:DisplayStack): Unit =
-  {
-    this.inventoryChest.setItem(slotIndex, stack.getItemStack)
-    this.displayStackList.add(stack)
-  }
 
   /**
    * Returns the Custom Item for Display in a Gui.
@@ -143,7 +99,7 @@ class KitGui(player:Player) {
   def setLore(isWeaponItem:Boolean,primary:String, secondary:String,tactical:String,grenade:String, perk:String):util.List[String] =
   {
 
-    var list = new util.ArrayList[String]()
+    val list = new util.ArrayList[String]()
     if(isWeaponItem) {
       list.add(ChatColor.DARK_RED + "Primary: " + primary)
       list.add(ChatColor.DARK_RED + "Secondary: " + secondary)
