@@ -1,6 +1,7 @@
 package ml.gamemodepvp.Modules.classes.classadditives;
 
 
+import net.minecraft.server.v1_8_R2.ItemMapEmpty;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -10,44 +11,77 @@ import java.util.List;
 
 /**
  * Created by bfox1 on 4/24/2015.
+ * In God We Trust.
  */
 public class WeaponBuilder {
 
 
+    /**
+     * Weapon Builder is to assist in the create of ANY Item being added to the Kit. This class isnt meant to be used
+     * for Display ItemStacks!.
+     */
 
-    private String itemName;
     private boolean isAvailable = false;
     private boolean hasOthers = false;
-    private List itemLore;
     private ItemStack stack;
 
-    public WeaponBuilder(ItemStack stack, String itemName, List lore , boolean isAvailable, boolean hasOthers)
+    public WeaponBuilder(ItemStack stack, String itemName, List lore, boolean isAvailable, boolean hasOthers)
     {
 
-        this.itemName = itemName;
+
         this.isAvailable = isAvailable;
         this.hasOthers = hasOthers;
-        this.itemLore = lore;
 
-        this.stack = constructItemStack(stack);
+        this.stack = constructItemStack(stack, itemName, lore);
+    }
+
+    public WeaponBuilder(ItemStack stack, String itemName, boolean isAvailable)
+    {
+
+
+        this.stack = constructItemStack(stack, itemName, null);
     }
 
 
-    public ItemStack constructItemStack(ItemStack stack)
+    /**
+     * Item Must have Custom name! Lore isnt required, instead type in null
+     * @param stack
+     * @param itemName
+     * @param lore
+     * @return
+     */
+    public ItemStack constructItemStack(ItemStack stack, String itemName, List lore)
     {
 
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(this.itemName);
-        meta.setLore(this.itemLore);
+        meta.setDisplayName(itemName);
+        if(lore != null) meta.setLore(lore);
         stack.setItemMeta(meta);
         return stack;
     }
 
+    public ItemStack getItemStack()
+    {
+        return this.stack;
+    }
+
+
+
+    /**
+     * Sets the Weapons ItemStack and reconstructs it.
+     * @param stack
+     */
+    public void setItemStack(ItemStack stack)
+    {
+        this.stack = constructItemStack(stack, stack.getItemMeta().getDisplayName(), stack.getItemMeta().getLore());
+    }
 
 
     public void setItemName(String name)
     {
-        this.itemName = name;
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(name);
+        stack.setItemMeta(meta);
     }
 
 
@@ -57,7 +91,7 @@ public class WeaponBuilder {
 
 
     public String getItemName() {
-        return itemName;
+        return stack.getItemMeta().getDisplayName();
     }
 
 

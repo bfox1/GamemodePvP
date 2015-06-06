@@ -3,6 +3,7 @@ package ml.gamemodepvp.Modules.classes.kit
 import java.util
 
 import ml.gamemodepvp.Modules.classes.event.ItemAction
+import ml.gamemodepvp.database.playerdata.{PlayerDataHandler, CorePlayerData}
 import org.bukkit.entity.Player
 import org.bukkit.inventory.{Inventory, ItemStack}
 import org.bukkit.{Bukkit, ChatColor, Material}
@@ -83,6 +84,25 @@ import org.bukkit.{Bukkit, ChatColor, Material}
   def createCustomItem(material:Material, displayName:String):ItemStack =
   {
        null
+  }
+
+  /**
+   * Saves kit data to Player independently. You must have already required to load preexisting player data
+   * before useing this method.
+   * @param playerData
+   * @param ivConstructor
+   */
+
+  def saveKitData(playerData:CorePlayerData, ivConstructor:InventoryConstructor): Unit =
+  {
+    playerData.setInventoryConstructor(ivConstructor)
+    val  handler = new PlayerDataHandler(playerData)
+    handler.saveData()
+  }
+
+  def loadKitData(playerData:CorePlayerData): InventoryConstructor =
+  {
+    playerData.getInventoryConstructor
   }
 
   /**

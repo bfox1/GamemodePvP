@@ -115,11 +115,11 @@ public class CorePlayerData implements Serializable{
         this.rank = rank;
     }
 
-    public InventoryConstructor getBase() {
+    public InventoryConstructor getInventoryConstructor() {
         return base;
     }
 
-    public void setBase(InventoryConstructor base) {
+    public void setInventoryConstructor(InventoryConstructor base) {
         this.base = base;
     }
 }
