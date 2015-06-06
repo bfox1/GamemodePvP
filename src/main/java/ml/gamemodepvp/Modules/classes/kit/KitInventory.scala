@@ -110,7 +110,7 @@ class KitInventory(player:Player) extends InventoryConstructor(player)
       if(x != null)
       player.getInventory.addItem(x)
     }
-    
+
   }
 
 }
