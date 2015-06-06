@@ -13,6 +13,15 @@ import org.bukkit.inventory.ItemStack
  */
 class KitInventory(player:Player) extends InventoryConstructor(player)
 {
+
+  var playerKitInventory = Array[KitBuilder]()
+
+  def this()
+  {
+    this(null)
+  }
+
+
   /**
    * KitInventory Generates the inventory Gui of player by itemStack. This does NOT open gui. Refer to Inventory gui
    * for accessing chest.
@@ -24,17 +33,30 @@ class KitInventory(player:Player) extends InventoryConstructor(player)
 
   }
 
+  /**
+   * This generator will add Display Item and save the Kit to that Item in the inventory.
+   * @param displayStack
+   * @param primary
+   * @param secondary
+   * @param tactical
+   * @param lethal
+   * @param perks
+   * @param stack
+   * @return
+   */
 
-  def kitGenerator(stack:DisplayStack, primary:WeaponBuilder, secondary:WeaponBuilder, tactical:WeaponBuilder, lethal:WeaponBuilder, perks:Perks): Unit =
+  def kitGenerator(displayStack:DisplayStack, primary:WeaponBuilder, secondary:WeaponBuilder, tactical:WeaponBuilder, lethal:WeaponBuilder, perks:Perks, stack:Array[ItemStack]): Unit =
   {
-    val kitBuilder = new KitBuilder(stack,primary, secondary, tactical, lethal, perks)
+    val kitBuilder = new KitBuilder(displayStack,primary, secondary, tactical, lethal, perks, stack)
 
-    val builder = kitBuilder.getKitWeaponList
-    for(x<-builder)
+    this.displayStackList.add(displayStack)
+    this.inventoryChest.addItem(displayStack.getItemStack)
+    var it = 0
+    while (this.playerKitInventory(it) != null)
     {
-      this.inventoryChest.addItem(x.getItemStack)
+      it += 1
     }
-
+    this.playerKitInventory(it) = kitBuilder
   }
 
 
@@ -45,6 +67,7 @@ class KitInventory(player:Player) extends InventoryConstructor(player)
     val weaponBuilder = new WeaponBuilder(stack, name, lore, false,false)
 
 
+    if(enchants != null)
     for(x<-enchants)
     {
       weaponBuilder.addWeaponEnchants(x)
@@ -74,9 +97,20 @@ class KitInventory(player:Player) extends InventoryConstructor(player)
     ls
   }
 
-  def kitGeneratorFromPlayer(): Unit =
+  def applyClass(builder:KitBuilder): Unit =
   {
-
+    for(x <- builder.getKitWeaponList)
+    {
+      if(x != null)
+      player.getInventory.addItem(x.getItemStack)
+    }
+    if(builder.getOtherAdditives != null)
+    for(x <-builder.getOtherAdditives)
+    {
+      if(x != null)
+      player.getInventory.addItem(x)
+    }
+    
   }
 
 }

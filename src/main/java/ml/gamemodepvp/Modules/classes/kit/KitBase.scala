@@ -15,14 +15,6 @@ class KitBase(gui:InventoryConstructor) {
   val kitGui = gui
 
 
-  def saveKitData(data:CorePlayerData): Unit =
-  {
-    data.setBase(this.kitGui)
-    val outputData = new PlayerDataHandler(data)
-    outputData.saveData()
-
-  }
-
 
 
 }

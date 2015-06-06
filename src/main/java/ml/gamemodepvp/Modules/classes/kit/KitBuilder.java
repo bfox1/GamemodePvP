@@ -12,9 +12,10 @@ import org.bukkit.inventory.ItemStack;
 public class KitBuilder {
 
     private WeaponBuilder primary, secondary, tactical, lethal;
+    private ItemStack[] otherAdditives;
     private Perks perks;
     private DisplayStack stack;
-    protected KitBuilder(DisplayStack stack,WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical, WeaponBuilder lethal, Perks perks)
+    protected KitBuilder(DisplayStack stack,WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical, WeaponBuilder lethal, Perks perks, ItemStack[] otherAdditives)
     {
         this.stack = stack;
         this.primary = primary;
@@ -22,6 +23,12 @@ public class KitBuilder {
         this.tactical = tactical;
         this.lethal = lethal;
         this.perks = perks;
+        this.otherAdditives = otherAdditives;
+    }
+
+    public KitBuilder()
+    {
+
     }
 
 
@@ -77,5 +84,9 @@ public class KitBuilder {
         else if(weaponType.equals("tactical")) list[2].setItemStack(stack);
         else if(weaponType.equals("lethal")) list[3].setItemStack(stack);
 
+    }
+
+    public ItemStack[] getOtherAdditives() {
+        return otherAdditives;
     }
 }

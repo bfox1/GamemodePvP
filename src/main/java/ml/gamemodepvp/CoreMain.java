@@ -31,7 +31,7 @@ public class CoreMain extends JavaPlugin {
     private final RegionDataManager manager = new RegionDataManager();
     public final PluginManager pm = this.getServer().getPluginManager();
 
-    public  KitBase menuInventory;
+    public  InventoryConstructor menuInventory;
 
 
 
@@ -44,7 +44,7 @@ public class CoreMain extends JavaPlugin {
 
         InventoryConstructor gui = new InventoryConstructor();
 
-        this.menuInventory = new KitBase(gui);
+        this.menuInventory = gui;
         ListenerLoader lLoader = new ListenerLoader(this);
         lLoader.load();
 
