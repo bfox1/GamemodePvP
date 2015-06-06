@@ -43,7 +43,7 @@ public class CoreMain extends JavaPlugin {
         this.manager.loadWorldData(this);
 
         InventoryConstructor gui = new InventoryConstructor();
-        gui.returnMainGui();
+
         this.menuInventory = new KitBase(gui);
         ListenerLoader lLoader = new ListenerLoader(this);
         lLoader.load();
@@ -63,7 +63,7 @@ public class CoreMain extends JavaPlugin {
     public void onDisable() {
 
         this.manager.saveWorldData(this);
-        saveData();
+
 
     }
 
@@ -72,30 +72,5 @@ public class CoreMain extends JavaPlugin {
         return this.manager;
     }
 
-    public void saveData()
-    {
-        if(this.data != null)
-        for(int i = 0; i< this.data.size(); i++)
-        {
-            PlayerDataHandler dataHandler = new PlayerDataHandler(this.data.get(i));
-            dataHandler.saveData();
-        }
-    }
 
-    public void removeFromList(CorePlayerData data1)
-    {
-        this.data.remove(data1);
-    }
-
-    public void addToList(CorePlayerData data1)
-    {
-
-        //this.data.add(data1);
-    }
-
-    public void setupCommands(String name)
-    {
-
-        getCommand(name).setExecutor(new CoreExecutor(this));
-    }
 }
