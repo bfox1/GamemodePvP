@@ -5,4 +5,9 @@ package ml.gamemodepvp.Modules.gamemodes;
  * In God We Trust.
  */
 public class Mode {
+
+    /**
+     * Mode sets and defines special properties for the Arena and how its played on. This also has a bit
+     * of control on the SpawnLocation as to either Teams or FFA and how player will spawn.
+     */
 }
