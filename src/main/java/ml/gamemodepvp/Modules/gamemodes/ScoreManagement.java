@@ -8,7 +8,6 @@ public class ScoreManagement {
 
     /**
      * ScoreManagement will handle the ScoreBoard of the Arena it is assigned to. Having access to ALL players located
-     * within the arena and being able to send correct ScoreBoard to the players
-     * 
+     * within the arena and being able to send correct ScoreBoard data to player
      */
 }
