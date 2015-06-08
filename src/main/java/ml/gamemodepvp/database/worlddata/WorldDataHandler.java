@@ -20,6 +20,11 @@ public class WorldDataHandler {
         this.wc = wc;
     }
 
+    public WorldDataHandler()
+    {
+
+    }
+
 
     public void saveWorldData()
     {
@@ -43,6 +48,23 @@ public class WorldDataHandler {
             e.printStackTrace();
         }
     }
+
+    public void loadWorldDatas(String string, WorldCreator creator)
+    {
+        try{
+            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File("plugins/GamemodePvP/worlddata" + string + ".ser")));
+            this.wc = (WorldController)stream.readObject();
+            this.wc.setWc(creator, string);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void loadWorldData()
     {

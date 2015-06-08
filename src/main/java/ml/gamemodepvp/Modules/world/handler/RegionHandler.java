@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Created by bfox1 on 5/10/2015.
@@ -22,6 +23,8 @@ public class RegionHandler implements Serializable{
     private SerializableLocation position2;
 
     private transient boolean isWithinX, isWithinY, isWithinZ;
+
+    private HashMap<String, SerializableLocation> locationHashMap = new HashMap<String, SerializableLocation>();
 
 
     public RegionHandler(World world)
@@ -48,11 +51,17 @@ public class RegionHandler implements Serializable{
 
     private Location setCenter()
     {
-        Location lc = new Location(this.world, 0, 64, 0);
-        return lc;
+        return new Location(this.world, 0, 64, 0);
     }
 
 
+    /**
+     * This Checks if the player is within the region.
+     * @param xPos xPos of Player
+     * @param y yPos of Player
+     * @param z zPos of Player
+     * @return boolean
+     */
     public boolean checkBoundary(int xPos, int y, int z)
     {
          this.isWithinX = false;
@@ -153,16 +162,23 @@ public class RegionHandler implements Serializable{
         return this.world;
     }
 
-    private boolean isPositive(int x)
+    public void setLocationHashMap(Location location)
     {
-        if(x > 0) return true;
-        else if(x == 0) return false;
-        else return false;
+        this.locationHashMap.put(this.world.getName(), new SerializableLocation(location));
+    }
+
+    public HashMap<String, SerializableLocation> getLocationHashMap()
+    {
+        return this.locationHashMap;
     }
 
 
-
-
+    /**
+     * When player is touching boundary, he gets shoved back.
+     * @param getFrom
+     * @param getTo
+     * @param player
+     */
     public void bounceBack(Location getFrom, Location getTo, Player player)
     {
         if(!isWithinX) DirectionVector.getDirectionPath(getFrom, getTo, player, "x");
