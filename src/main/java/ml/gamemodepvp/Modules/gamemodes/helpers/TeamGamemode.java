@@ -7,4 +7,6 @@ package ml.gamemodepvp.Modules.gamemodes.helpers;
 public interface TeamGamemode {
 
      void setRespawnLocations();
+
+     void setSpawnLocations();
 }

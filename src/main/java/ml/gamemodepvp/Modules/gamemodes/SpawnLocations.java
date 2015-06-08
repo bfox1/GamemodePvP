@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class SpawnLocations {
 
     private Region region;
 
-    private Map<World, Location> locationsMap = new HashMap<World, Location>();
+    private Map<World, List<Location>> locationsMap = new HashMap<World, List<Location>>();
 
     public SpawnLocations(World world)
     {
@@ -57,12 +58,20 @@ public class SpawnLocations {
 
     public void setLocations(Location locations)
     {
-        this.locationsMap.put(this.world, locations);
+        //this.locationsMap.put(this.world, locations);
+        List<Location> loc = this.locationsMap.get(this.world);
+        int it = 0;
+        while(loc.get(it) != null)
+        {
+            it++;
+        }
+        loc.add(it,locations);
+        this.locationsMap.put(this.getWorld(), loc);
     }
 
-    public Map<World, Location> getLocationsMap()
+    public List<Location> getLocationList()
     {
-        return this.locationsMap;
+        return this.locationsMap.get(this.getWorld());
     }
 
     public World getWorld()
@@ -77,7 +86,7 @@ public class SpawnLocations {
 
 
 
-    private void saveLocations()
+    public void saveLocations()
     {
         FileConfiguration config = new YamlConfiguration();
         config.set("SpawnCoordinates", locationsMap);
@@ -99,10 +108,10 @@ public class SpawnLocations {
     }
 
 
-    private void loadLocations()
+    public void loadLocations()
     {
         FileConfiguration config = YamlConfiguration.loadConfiguration(new File("plugins/GamemodePvP/arenadata/" + this.getWorld().getName()));
-        this.locationsMap = (HashMap<World, Location>)config.get("SpawnCoordinates");
+        this.locationsMap = (HashMap)config.get("SpawnCoordinates");
     }
 
 

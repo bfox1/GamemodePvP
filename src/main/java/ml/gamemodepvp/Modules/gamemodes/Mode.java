@@ -13,7 +13,6 @@ public class Mode {
      * of control on the SpawnLocation as to either Teams or FFA and how player will spawn.
      */
 
-    private World world;
 
     public Mode()
     {

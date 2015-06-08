@@ -1,4 +1,4 @@
-package ml.gamemodepvp.Modules.gamemodes.freeforall;
+package ml.gamemodepvp.Modules.gamemodes.modes.freeforall;
 
 import ml.gamemodepvp.Modules.gamemodes.Mode;
 
