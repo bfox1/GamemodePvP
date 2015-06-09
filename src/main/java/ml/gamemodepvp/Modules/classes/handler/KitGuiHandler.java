@@ -69,13 +69,7 @@ public class KitGuiHandler {
         }
     }
 
-    /**
-     * This sets the Class Items to Player.
-     * for defaults ONLY.
-     * @param player
-     * @param displayKit
-     */
-    public void setDefaultAssets(Player player, String displayKit)
+   /* public void setDefaultAssets(Player player, String displayKit)
     {
         setKit();
         applyAssets(player, displayKit, this.assault);
@@ -129,7 +123,7 @@ public class KitGuiHandler {
         }
     }
 
-
+*/
 
 
 

@@ -57,7 +57,7 @@ public class ItemProvider {
                         player.closeInventory();
                         String name = this.kit.getvChest().getItem(i).getItemMeta().getDisplayName();
                         System.out.println(name.substring(2) + "Next to Kit");
-                        this.kit.setDefaultAssets(player, name.substring(2));
+                       // this.kit.setDefaultAssets(player, name.substring(2));
                         //this.kit.setDefaultAssets(player, "Tank-t1");
                         player.sendMessage(ChatColor.DARK_RED + "[GameModePVP] - Classes: " + ChatColor.DARK_GREEN + "You were given the" +
                                 this.kit.getvChest().getItem(i).getItemMeta().getDisplayName() + "Class");

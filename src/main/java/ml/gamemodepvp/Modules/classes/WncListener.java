@@ -32,26 +32,26 @@ public class WncListener implements Listener {
     @EventHandler
     public void onInventoryAction(InventoryClickEvent e)
     {
-        InventoryConstructor gui = this.main.menuInventory.kitGui();
+       // InventoryConstructor gui = this.main.menuInventory.kitGui();
         DisplayStack stack;
         ItemStack clickedStack = e.getCurrentItem();
         InventoryConstructor innerInventoryGui;
         boolean clickedType = false;
-        if(e.getInventory().getName() == gui.customName())
+       // if(e.getInventory().getName() == gui.customName())
         {
-            for(int i = 0; i < gui.displayStackList().size(); i++)
+        //    for(int i = 0; i < gui.displayStackList().size(); i++)
             {
-                stack = gui.displayStackList().get(i);
+          //      stack = gui.displayStackList().get(i);
 
-                if(clickedStack.equals(stack) && e.getClick().isLeftClick() && stack.getAction().equals(ItemAction.INVENTORY))
+             //   if(clickedStack.equals(stack) && e.getClick().isLeftClick() && stack.getAction().equals(ItemAction.INVENTORY))
                 {
-                    gui.closeGui((Player)e.getWhoClicked());
-                    innerInventoryGui = (InventoryConstructor)stack.getActionPerameters();
-                    innerInventoryGui.kitPlayer_$eq((Player)e.getWhoClicked());
-                    stack.setActionPerameters(innerInventoryGui);
-                    gui.fireItemAction(stack);
-                    e.setCancelled(true);
-                    break;
+                   // gui.closeGui((Player)e.getWhoClicked());
+                  //  innerInventoryGui = (InventoryConstructor)stack.getActionPerameters();
+                   // innerInventoryGui.kitPlayer_$eq((Player)e.getWhoClicked());
+                  //  stack.setActionPerameters(innerInventoryGui);
+                  //  gui.fireItemAction(stack);
+                  //  e.setCancelled(true);
+                  //  break;
                 }
             }
         }

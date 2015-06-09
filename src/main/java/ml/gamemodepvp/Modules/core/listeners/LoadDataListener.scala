@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerJoinEvent
     {
       val handler: PlayerDataHandler = new PlayerDataHandler(new CorePlayerData(event.getPlayer))
       val playerData: CorePlayerData = handler.loadData()
-      this.main.addToList(playerData)
+      //this.main.addToList(playerData)
     }
     else
     {

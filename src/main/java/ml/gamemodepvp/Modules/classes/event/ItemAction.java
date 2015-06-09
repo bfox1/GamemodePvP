@@ -65,7 +65,8 @@ public enum ItemAction
                         gui.inventoryChest_$eq(Bukkit.createInventory(null, 9, "TESTINVENTORY"));
                         gui.inventoryChest().addItem(new ItemStack(Material.STAINED_CLAY));
                         DebugCore.returnDebugMessage(gui.kitPlayer().toString());
-                        gui.openGui(gui.kitPlayer());
+                        //gui.openGui(gui.kitPlayer());
+
                     }
                  }
             },

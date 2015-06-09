@@ -40,7 +40,7 @@ public class WncExecutor implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("classMenu") && isPlayer(commandSender))
         {
 
-            this.plugin.menuInventory.kitGui().openGui((Player)commandSender);
+           //this.plugin.menuInventory.kitGui().openGui((Player)commandSender);
             return true;
         }
 
