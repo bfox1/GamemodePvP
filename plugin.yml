@@ -77,6 +77,15 @@ commands:
     permission: gamemodepvp.rank.removerank
     usage: /removePlayerRank <name>
 
+  setlocation:
+    description: Sets the SpawnLocation for the Arena
+    permission: gamemodepvp.mode.setlocation
+    usage: /setlocation
+
+  startgame:
+    description: Test Command to start game.
+    permission: gamemodepvp.mode.startgame
+
 permissions:
   gamemodepvp.*:
     description: Gives access to all GamemodePVP Permissions

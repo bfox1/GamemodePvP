@@ -30,6 +30,7 @@ public class ListenerLoader {
         setupListeners(new EcoListener());
         setupListeners(new LoadDataListener(this.main));
         setupListeners(new WncListener(this.main));
+
     }
 
     private void setupListeners(Listener ls)

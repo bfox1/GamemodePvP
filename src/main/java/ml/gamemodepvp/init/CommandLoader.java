@@ -5,6 +5,7 @@ import ml.gamemodepvp.Modules.classes.WncExecutor;
 import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
 import ml.gamemodepvp.Modules.core.CoreExecutor;
 import ml.gamemodepvp.Modules.economy.EcoExecutor;
+import ml.gamemodepvp.Modules.gamemodes.modes.executor.FFACommandExecutor;
 import ml.gamemodepvp.Modules.world.WorldExecutor;
 import org.bukkit.command.CommandExecutor;
 
@@ -53,6 +54,9 @@ public class CommandLoader{
         //Classes Commands
         setupCommands("class", new WncExecutor(main));
         setupCommands("classMenu", new WorldExecutor(main));
+
+        setupCommands("setlocation", new FFACommandExecutor(main));
+        setupCommands("startgame", new FFACommandExecutor(main));
     }
 
     public void setupCommands(String name, CommandExecutor executor)

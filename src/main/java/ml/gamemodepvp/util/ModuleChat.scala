@@ -11,7 +11,7 @@ object ModuleChat {
 
   import org.bukkit.ChatColor._
 
-  def modulePrefix(module:String, chatColor:ChatColor):String =
+   def modulePrefix(module:String, chatColor:ChatColor):String =
   {
       "[" + chatColor + BOLD + module + WHITE + "] - " + chatColor + BOLD
   }
@@ -21,6 +21,8 @@ object ModuleChat {
   def rankPrefixToPlayer(msg:String):String = modulePrefix("RANK", DARK_BLUE) + msg
   def ecoPrefixToPlayer(msg:String):String = modulePrefix("EcoMoney", DARK_GREEN) + msg
   def permissionPrefixToPlayer(msg:String):String = modulePrefix("Permission", DARK_RED) + msg
+
+  def gamemodePrefixToPlayer(msg:String):String = modulePrefix("Gamemode", DARK_AQUA) + msg
 
 
 }

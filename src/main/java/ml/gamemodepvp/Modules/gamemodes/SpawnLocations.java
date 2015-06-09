@@ -111,6 +111,7 @@ public class SpawnLocations {
     public void loadLocations()
     {
         FileConfiguration config = YamlConfiguration.loadConfiguration(new File("plugins/GamemodePvP/arenadata/" + this.getWorld().getName()));
+        if(config.get("SpawnCoordinates") != null)
         this.locationsMap = (HashMap)config.get("SpawnCoordinates");
     }
 
