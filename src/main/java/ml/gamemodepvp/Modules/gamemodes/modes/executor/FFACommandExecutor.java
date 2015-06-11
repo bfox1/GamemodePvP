@@ -4,6 +4,7 @@ import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Gamemode;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
 import ml.gamemodepvp.Modules.gamemodes.modes.freeforall.FreeForAll;
+import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.ModuleChat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,7 +30,7 @@ public class FFACommandExecutor implements CommandExecutor {
     {
 
         Player player = (Player)sender;
-        if(command.getName().equalsIgnoreCase("setLocations") && sender instanceof Player && player.isOp())
+        if(command.getName().equalsIgnoreCase("setLocation") && sender instanceof Player && player.isOp())
         {
             SpawnLocations loc = new SpawnLocations(player.getWorld());
             loc.loadLocations();
@@ -44,6 +45,7 @@ public class FFACommandExecutor implements CommandExecutor {
 
         }
 
+        DebugCore.returnDebugMessage(command.getName() + " " + s);
         if(command.getName().equalsIgnoreCase("startGame"))
         {
             BukkitTask task = new GamemodeTask(new FreeForAll(player.getWorld())).runTask(main);

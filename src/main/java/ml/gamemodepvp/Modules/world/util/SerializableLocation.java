@@ -15,6 +15,8 @@ public class SerializableLocation implements Serializable {
     static final long serialVersionUID = 1337L;
 
     private int x, y, z;
+
+    private float yaw, pitch;
     private String world;
 
     public SerializableLocation(Location loc)
@@ -22,6 +24,8 @@ public class SerializableLocation implements Serializable {
         this.x = (int)loc.getX();
         this.y = (int)loc.getY();
         this.z = (int)loc.getZ();
+        this.yaw = loc.getYaw();
+        this.pitch = loc.getPitch();
         this.world = loc.getWorld().getName();
     }
 
@@ -29,7 +33,7 @@ public class SerializableLocation implements Serializable {
     {
         World w = Bukkit.getWorld(this.world);
         if(w == null) return null;
-        Location toRet = new Location(w ,this.x, this.y, this.z);
+        Location toRet = new Location(w ,this.x, this.y, this.z, this.yaw, this.pitch);
         return toRet;
     }
 

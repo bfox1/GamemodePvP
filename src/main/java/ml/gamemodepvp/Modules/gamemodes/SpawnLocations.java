@@ -1,6 +1,8 @@
 package ml.gamemodepvp.Modules.gamemodes;
 
 import ml.gamemodepvp.Modules.world.region.Region;
+import ml.gamemodepvp.Modules.world.util.SerializableLocation;
+import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.MathematicsUtility;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -10,6 +12,8 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,12 +65,22 @@ public class SpawnLocations {
         //this.locationsMap.put(this.world, locations);
         List<Location> loc = this.locationsMap.get(this.world);
         int it = 0;
-        while(loc.get(it) != null)
+        try
         {
-            it++;
+            while(loc.size() > it)
+            {
+                it++;
+            }
+            loc.add(it,locations);
+            this.locationsMap.put(this.getWorld(), loc);
+        }catch (NullPointerException e)
+        {
+
+            DebugCore.returnDebugMessage("SOMETING HAPPENED" + it + locations);
+            loc.add(it,locations);
+            this.locationsMap.put(this.getWorld(), loc);
         }
-        loc.add(it,locations);
-        this.locationsMap.put(this.getWorld(), loc);
+
     }
 
     public List<Location> getLocationList()
@@ -89,7 +103,10 @@ public class SpawnLocations {
     public void saveLocations()
     {
         FileConfiguration config = new YamlConfiguration();
-        config.set("SpawnCoordinates", locationsMap);
+        for(int i = 0; i < this.getLocationList().size(); i++)
+        {
+            config.set("SpawnCoordinates", new SerializableLocation(this.getLocationList().get(i)));
+        }
         try {
             config.save(new File("plugins/GamemodePvP/arenadata/" + this.getWorld().getName()));
         } catch (IOException e) {
@@ -112,7 +129,18 @@ public class SpawnLocations {
     {
         FileConfiguration config = YamlConfiguration.loadConfiguration(new File("plugins/GamemodePvP/arenadata/" + this.getWorld().getName()));
         if(config.get("SpawnCoordinates") != null)
-        this.locationsMap = (HashMap)config.get("SpawnCoordinates");
+        {
+            List<Location> list = new ArrayList<Location>();
+            for(int i = 0; i < config.getList("SpawnCoordinates").size(); i++)
+            {
+                list.add(i, ((SerializableLocation)config.getList("SpawnCoordinates").get(i)).getLocation());
+            }
+            this.locationsMap.put(this.world, list);
+        }
+        else
+        {
+            this.locationsMap = new HashMap<World, List<Location>>();
+        }
     }
 
 
