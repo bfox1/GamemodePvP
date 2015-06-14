@@ -1,5 +1,10 @@
 package ml.gamemodepvp.Modules.gamemodes;
 
+import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.management.LobbyManager;
+import ml.gamemodepvp.util.ChatUtility;
+import ml.gamemodepvp.util.GamemodePvPMessageUtility;
+import ml.gamemodepvp.util.ModuleChat;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -12,105 +17,73 @@ import java.util.UUID;
  * Created by bfox1 on 6/11/2015.
  * In God We Trust.
  */
-public class Lobby {
+public class Lobby  {
 
-    private boolean flag;
+    private boolean isActiveGame = false;
 
-    private boolean disable = false;
-
-    private Map<UUID, Player> playerMap = new HashMap<UUID, Player>();
-
-    private Map<String, Player> teamMap = new HashMap<String, Player>();
-
+    private String lobbyName;
     private Gamemode gamemode;
+    private CoreMain main;
 
+    private HashMap<UUID, Player> playerMapData = new HashMap<UUID, Player>();
 
-    public Lobby(boolean flag)
+    public Lobby(String lobbyName, Player player, CoreMain main)
     {
-        this.flag = flag;
+        this.lobbyName = lobbyName;
+        this.playerMapData.put(player.getUniqueId(), player);
+        this.main = main;
     }
 
-
-    public void createLobby()
+    public boolean isPlayerInLobby(Player player)
     {
-        if(flag)
-        {
-            monitorGameLobbyActivity();
-        } else
-        {
-            monitorWaitingLobbyActivity();
-        }
-
-
+        return playerMapData.containsKey(player.getUniqueId());
     }
 
-    public void startGame()
+    public Map<UUID, Player> getPlayerMapData()
     {
-        if(hasEnoughPlayers())
-        {
-
-        }
-
-    }
-
-    private boolean hasEnoughPlayers()
-    {
-        return gamemode.mode.getMinPlayerCount() > gamemode.getPlayerMap().size();
-    }
-
-    private int dividePlayers()
-    {
-        double playerSize = gamemode.getPlayerMap().size()/2;
-        return 0;
+        return this.playerMapData;
     }
 
 
 
-
-
-
-
-
-    public void monitorGameLobbyActivity() {
-        BukkitRunnable runnable = new BukkitRunnable() {
-            @Override
-            public void run()
-            {
-                if(disable)
-                {
-                    cancel();
-                }
-
-            }
-        };
-        runnable.run();
+    public boolean isLobbyEmpty()
+    {
+      return this.playerMapData.isEmpty();
     }
 
-    public void monitorWaitingLobbyActivity()
+    public void joinLobby(Player player)
     {
-        BukkitRunnable runnable = new BukkitRunnable() {
-            @Override
-            public void run()
-            {
-                if(disable)
-                {
-                    cancel();
-                }
+        this.playerMapData.put(player.getUniqueId(), player);
+        player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have been added to the Lobby!!"));
+    }
 
-            }
-        };
+    public void leaveLobby(Player player)
+    {
+        this.playerMapData.remove(player.getUniqueId());
+        player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have left the Lobby"));
+    }
 
-        runnable.run();
+    public void setLobbyName(String name)
+    {
+        this.lobbyName = name;
+    }
+
+    public String getLobbyName()
+    {
+        return this.lobbyName;
+    }
+
+    public Gamemode getGamemode()
+    {
+        return this.gamemode;
     }
 
 
-    public static Lobby getLobby(LobbyEnumeration enumeration)
-    {
-        if(enumeration == LobbyEnumeration.GAMELOBBY)
-        {
-            return new Lobby(true);
-        }
-        return new Lobby(false);
+    public boolean isActiveGame() {
+        return isActiveGame;
+    }
 
+    public void setActiveGame(boolean isActiveGame) {
+        this.isActiveGame = isActiveGame;
     }
 }

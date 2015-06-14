@@ -20,33 +20,37 @@ import java.util.UUID;
  */
 public class FreeForAll extends Gamemode {
 
+    private SpawnLocations spawnLocations;
+    private ScoreManagement scoreManagement;
+    private ModeEnumeration enumeration;
 
-    public FreeForAll(World world) {
-        super(world);
-    }
 
-    @Override
-    public void setLocations(SpawnLocations locations) {
+    public FreeForAll( SpawnLocations location, ScoreManagement management, ModeEnumeration enumeration) {
+        this.setLocations(location);
+        this.setScoreManagement(management);
+        this.setModeEnumeration(enumeration);
 
-    }
-
-    @Override
-    public void setMode(Mode mode) {
 
     }
 
     @Override
-    public void setScoreManagement(ScoreManagement management) {
+    public void setLocations(SpawnLocations locations)
+    {
+        this.spawnLocations = locations;
+    }
 
+
+    @Override
+    public void setScoreManagement(ScoreManagement management)
+    {
+        this.scoreManagement = management;
     }
 
     @Override
-    public void setTeams(boolean team) {
+    public void setModeEnumeration(ModeEnumeration enumeration) {
 
     }
 
-    @Override
-    public void setEnumMode(ModeEnumeration mode) {
 
-    }
+
 }

@@ -56,7 +56,8 @@ public class CommandLoader{
         setupCommands("classMenu", new WorldExecutor(main));
 
         setupCommands("setlocation", new FFACommandExecutor(main));
-        setupCommands("startgame", new FFACommandExecutor(main));
+        setupCommands("joinLobby", new FFACommandExecutor(main));
+        setupCommands("leaveLobby", new FFACommandExecutor(main));
     }
 
     public void setupCommands(String name, CommandExecutor executor)

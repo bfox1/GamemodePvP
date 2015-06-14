@@ -85,6 +85,9 @@ commands:
   startgame:
     description: Test Command to start game.
     permission: gamemodepvp.mode.startgame
+  joinLobby:
+
+  leaveLobby:
 
 permissions:
   gamemodepvp.*:

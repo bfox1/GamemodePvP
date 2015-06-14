@@ -24,8 +24,6 @@ public class GamemodeTask extends BukkitRunnable {
         if(mode instanceof FreeForAll)
         {
              FreeForAll ffa = (FreeForAll)mode;
-             ffa.lobbyUpdate();
-             ffa.startGame();
         }
     }
 }
