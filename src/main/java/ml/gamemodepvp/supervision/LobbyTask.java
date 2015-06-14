@@ -1,5 +1,6 @@
-package ml.gamemodepvp;
+package ml.gamemodepvp.supervision;
 
+import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.util.DebugCore;

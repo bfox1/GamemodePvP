@@ -104,6 +104,12 @@ public class LobbyManager {
      */
     public void addLobby(Lobby lobby)
     {
-        this.lobbyMap.put(lobby.getLobbyName(), lobby);
+        if(this.lobbyMap.size() <=maxLobbyCount)
+        {
+
+            this.lobbyMap.put(lobby.getLobbyName(), lobby);
+        }
+
+
     }
 }

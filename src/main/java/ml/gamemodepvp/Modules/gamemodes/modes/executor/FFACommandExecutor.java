@@ -1,11 +1,9 @@
 package ml.gamemodepvp.Modules.gamemodes.modes.executor;
 
 import ml.gamemodepvp.CoreMain;
-import ml.gamemodepvp.LobbyTask;
-import ml.gamemodepvp.Modules.gamemodes.Gamemode;
+import ml.gamemodepvp.supervision.LobbyTask;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
-import ml.gamemodepvp.Modules.gamemodes.modes.freeforall.FreeForAll;
 import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.LobbyValidate;
@@ -46,6 +44,11 @@ public class FFACommandExecutor implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("joinLobby") && strings.length == 1)
         {
+            LobbyValidate lobbyValidation = LobbyManager.getPlayerValidation(player, this.main.getLobbyManager());
+            if(lobbyValidation.isInLobby())
+            {
+                lobbyValidation.getLobby().leaveLobby(player);
+            }
             try {
                 Lobby lobby = this.main.getLobbyManager().getLobbyInfo(strings[0]);
                 lobby.joinLobby(player);
@@ -56,6 +59,7 @@ public class FFACommandExecutor implements CommandExecutor {
                 Lobby lobby = new Lobby(strings[0], player, this.main);
                 BukkitTask task = new LobbyTask(lobby, this.main).runTaskTimer(this.main, 0, 50L);
                 this.main.getLobbyManager().addLobby(lobby);
+
                 lobby.joinLobby(player);
             }
             return true;
