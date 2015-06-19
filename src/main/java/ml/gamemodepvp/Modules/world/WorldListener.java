@@ -2,6 +2,7 @@ package ml.gamemodepvp.Modules.world;
 
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.world.region.Region;
+import ml.gamemodepvp.events.LobbyJoinEvent;
 import ml.gamemodepvp.util.ModuleChat;
 import ml.gamemodepvp.util.RegionTestUtility;
 import net.md_5.bungee.api.ChatColor;
@@ -107,6 +108,12 @@ public class WorldListener implements Listener  {
         }catch (NullPointerException ignored)
         {
         }
+
+    }
+
+    @EventHandler
+    public void onLobbyJoin(LobbyJoinEvent event)
+    {
 
     }
 }

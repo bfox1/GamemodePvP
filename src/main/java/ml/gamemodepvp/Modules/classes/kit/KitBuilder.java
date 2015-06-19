@@ -2,6 +2,7 @@ package ml.gamemodepvp.Modules.classes.kit;
 
 
 
+import ml.gamemodepvp.Modules.classes.classadditives.DisplayStackBuilder;
 import ml.gamemodepvp.Modules.classes.classadditives.Perks;
 import ml.gamemodepvp.Modules.classes.classadditives.WeaponBuilder;
 import org.bukkit.inventory.ItemStack;
@@ -14,8 +15,8 @@ public class KitBuilder {
     private WeaponBuilder primary, secondary, tactical, lethal;
     private ItemStack[] otherAdditives;
     private Perks perks;
-    private DisplayStack stack;
-    protected KitBuilder(DisplayStack stack,WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical, WeaponBuilder lethal, Perks perks, ItemStack[] otherAdditives)
+    private DisplayStackBuilder stack;
+    protected KitBuilder(DisplayStackBuilder stack,WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical, WeaponBuilder lethal, Perks perks, ItemStack[] otherAdditives)
     {
         this.stack = stack;
         this.primary = primary;
@@ -32,11 +33,19 @@ public class KitBuilder {
     }
 
 
-    public DisplayStack getStack() {
+    /**
+     * Returns the DisplayItemStack Builder
+     * @return
+     */
+    public DisplayStackBuilder getStack() {
         return stack;
     }
 
-    public void setStack(DisplayStack stack) {
+    /**
+     * Sets the DisplayStackBuilder
+     * @param stack
+     */
+    public void setStack(DisplayStackBuilder stack) {
         this.stack = stack;
     }
 

@@ -12,14 +12,12 @@ import java.util.List;
 /**
  * Created by bfox1 on 4/24/2015.
  * In God We Trust.
+ * Weapon Builder is to assist in the creation of items for the kit. This class isnt designed to be used for a
+ * Display ItemStack
  */
 public class WeaponBuilder {
 
 
-    /**
-     * Weapon Builder is to assist in the create of ANY Item being added to the Kit. This class isnt meant to be used
-     * for Display ItemStacks!.
-     */
 
     private boolean isAvailable = false;
     private boolean hasOthers = false;
@@ -100,6 +98,10 @@ public class WeaponBuilder {
         return isAvailable;
     }
 
+    /**
+     * Adds Weapons Enchants to Weapon.
+     * @param e WeaponEnchants
+     */
     public void addWeaponEnchants(WeaponEnchants e)
     {
 
@@ -108,6 +110,11 @@ public class WeaponBuilder {
     }
 
 
+    /**
+     * Removes the Enchants off the weapon
+     * @param e
+     * @param meta
+     */
     public void removeWeaponEnchants(Enchantment e, ItemMeta meta)
     {
         if(meta.hasEnchant(e))
@@ -115,6 +122,11 @@ public class WeaponBuilder {
             meta.removeEnchant(e);
         }
     }
+
+    /**
+     * Removes ALL Enchants off weapon
+     * @param meta
+     */
     public void purgeWeaponEnchants(ItemMeta meta)
     {
         if(meta.hasEnchants())

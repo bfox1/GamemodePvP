@@ -2,6 +2,7 @@ package ml.gamemodepvp.management;
 
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
+import ml.gamemodepvp.debugbox.LobbyNotFoundException;
 import ml.gamemodepvp.util.GamemodePvPMessageUtility;
 import ml.gamemodepvp.util.LobbyValidate;
 import org.bukkit.entity.Player;
@@ -39,15 +40,14 @@ public class LobbyManager {
      * @return The lobby requested
      * @throws Exception if lobby returns null, returns error message. Lobby CANNOT return NULL.
      */
-    public Lobby getLobbyInfo(String lobbyName) throws Exception {
+    public Lobby getLobbyInfo(String lobbyName) throws LobbyNotFoundException {
         if(this.lobbyMap.containsKey(lobbyName))
         {
             return this.lobbyMap.get(lobbyName);
         }
         else
         {
-            //throw new Exception(GamemodePvPMessageUtility.returnErrorMessage(this.getClass(), "Lobby name not found!"));
-            throw new Exception("ERROR LOBBY NOT FOUND");
+            throw new LobbyNotFoundException("No such lobby Exists!", lobbyName);
         }
     }
 

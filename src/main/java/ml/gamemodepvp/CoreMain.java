@@ -1,7 +1,6 @@
 package ml.gamemodepvp;
 
 
-import ml.gamemodepvp.Modules.classes.kit.InventoryConstructor;
 
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.database.playerdata.CorePlayerData;
@@ -30,7 +29,7 @@ public class CoreMain extends JavaPlugin {
     private final RegionDataManager regionManager = new RegionDataManager();
     public final PluginManager pm = this.getServer().getPluginManager();
 
-    public final InventoryConstructor menuInventory = new InventoryConstructor();
+
     public final LobbyManager lobbyManager = new LobbyManager(this);
 
 
@@ -40,6 +39,7 @@ public class CoreMain extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
         this.regionManager.loadWorldData(this);
         logger.info("Region data has been successfully loaded");
 
@@ -72,10 +72,7 @@ public class CoreMain extends JavaPlugin {
         return this.regionManager;
     }
 
-    public InventoryConstructor getDefaultInventory()
-    {
-        return this.menuInventory;
-    }
+
 
     public LobbyManager getLobbyManager()
     {
