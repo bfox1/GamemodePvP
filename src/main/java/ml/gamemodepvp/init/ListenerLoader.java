@@ -2,9 +2,10 @@ package ml.gamemodepvp.init;
 
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.classes.WncListener;
-import ml.gamemodepvp.Modules.core.listeners.CoreListener;
+import ml.gamemodepvp.Modules.core.listeners.CoreSubListener;
 import ml.gamemodepvp.Modules.core.listeners.LoadDataListener;
 import ml.gamemodepvp.Modules.economy.EcoListener;
+import ml.gamemodepvp.Modules.gamemodes.listener.LobbyListener;
 import ml.gamemodepvp.Modules.ranks.RankListener;
 import ml.gamemodepvp.Modules.world.WorldListener;
 import org.bukkit.event.Listener;
@@ -25,11 +26,12 @@ public class ListenerLoader {
     public void load()
     {
         setupListeners(new RankListener());
-        setupListeners(new CoreListener(this.main));
+        setupListeners(new CoreSubListener(this.main));
         setupListeners(new WorldListener(this.main));
         setupListeners(new EcoListener());
         setupListeners(new LoadDataListener(this.main));
         setupListeners(new WncListener(this.main));
+        setupListeners(new LobbyListener(main));
 
     }
 

@@ -6,32 +6,36 @@ import ml.gamemodepvp.Modules.core.lib.TitleLib;
 import ml.gamemodepvp.Modules.ranks.Rank;
 import ml.gamemodepvp.database.playerdata.CorePlayerData;
 import ml.gamemodepvp.database.playerdata.PlayerDataHandler;
+import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.util.DebugCore;
+import ml.gamemodepvp.util.LobbyValidate;
 import net.minecraft.server.v1_8_R2.PacketPlayOutTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
 
-public class CoreListener implements Listener {
+public class CoreSubListener implements Listener {
 
     private PlayerDataHandler playerDataHandler;
     private CorePlayerData corePlayerData;
 
     private CoreMain main;
 
-    public CoreListener(CoreMain main)
+    public CoreSubListener(CoreMain main)
     {
         this.main = main;
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void getPlayerJoin(PlayerJoinEvent event)
     {
         displayTitle(event.getPlayer(), event);
@@ -46,11 +50,17 @@ public class CoreListener implements Listener {
                     "access our forums!");
         }
 
+    }
 
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerLeave(PlayerQuitEvent event)
+    {
+        LobbyValidate validate = LobbyManager.getPlayerValidation(event.getPlayer(), this.main.getLobbyManager());
 
-
-
-
+        if(validate.isInLobby())
+        {
+            validate.getLobby().leaveLobby(event.getPlayer());
+        }
     }
 
 

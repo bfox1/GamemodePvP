@@ -1,10 +1,5 @@
 package ml.gamemodepvp.Modules.gamemodes;
 
-import org.bukkit.entity.Player;
-
-import java.util.HashMap;
-import java.util.UUID;
-
 /**
  * Created by bfox1 on 6/5/2015.
  * In God We Trust.
@@ -32,7 +27,13 @@ public abstract class Gamemode {
      * Sets the Type of Mode the Gamemode is
      * @param enumeration the Enumeration to set.
      */
-    public abstract void setModeEnumeration(ModeEnumeration enumeration);
+    public abstract void setModeEnumeration(ModeProperties enumeration);
+
+    public abstract ModeProperties getModeProperties();
+
+    public abstract SpawnLocations getLocations();
+
+    public abstract ScoreManagement getScoreManageMent();
 
 
 
@@ -42,8 +43,9 @@ public abstract class Gamemode {
      * Special Enumeration for the Mode that Stores the specific Data for the Gamemodes. These are Hardcoded to prevent
      * the create of others! an API will be implemented for custom configuration and Mode Creation.
      */
-    public enum ModeEnumeration {
+    public enum ModeProperties {
 
+        TESTLOBBY("TEST", "test", 5, 13, 40, false, 3),
         FREEFORALL("Free For All", "FFA", 5, 12, 30, false, 10),
         TEAMDEATHMATCH("Team Deathmatch", "TDM", 8, 16, 75, true, 15),
         CAPTURETHEFLAG("Capture The Flag", "CTF", 8, 16, 300, true, 30);
@@ -58,8 +60,18 @@ public abstract class Gamemode {
         private int timer;
 
 
-        ModeEnumeration(String modeName, String initials, int minPlayerCount, int maxPlayerCount, int scoreVictory,
-                        boolean team, int timer) {
+        /**
+         * Properties for the Gamemode type.
+         * @param modeName GameModes Name.
+         * @param initials For easy lookup
+         * @param minPlayerCount Minimum count for players to be able to play Game
+         * @param maxPlayerCount Maximum count for players to be in lobby
+         * @param scoreVictory The amount of Score for the game to end.
+         * @param team If gamemode is a Team match. This will also determine if shared score or not.
+         * @param timer In minutes, sets the limit if score isnt reached, timer will end the game.
+         */
+        ModeProperties(String modeName, String initials, int minPlayerCount, int maxPlayerCount, int scoreVictory,
+                       boolean team, int timer) {
             this.modeName = modeName;
             this.initials = initials;
             this.minPlayerCount = minPlayerCount;
@@ -123,6 +135,17 @@ public abstract class Gamemode {
 
         public void setTimer(int timer) {
             this.timer = timer;
+        }
+
+        public void extendTime(int addedMinutes)
+        {
+            this.timer = timer + addedMinutes;
+        }
+
+        public int getTicksPer()
+        {
+
+            return this.timer*60*4;
         }
     }
 }

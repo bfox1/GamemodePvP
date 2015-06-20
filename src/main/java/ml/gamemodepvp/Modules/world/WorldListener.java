@@ -111,9 +111,4 @@ public class WorldListener implements Listener  {
 
     }
 
-    @EventHandler
-    public void onLobbyJoin(LobbyJoinEvent event)
-    {
-
-    }
 }

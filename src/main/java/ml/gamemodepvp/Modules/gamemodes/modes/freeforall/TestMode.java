@@ -1,36 +1,30 @@
 package ml.gamemodepvp.Modules.gamemodes.modes.freeforall;
 
 import ml.gamemodepvp.Modules.gamemodes.Gamemode;
-
 import ml.gamemodepvp.Modules.gamemodes.ScoreManagement;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
 
 /**
- * Created by bfox1 on 6/5/15.
+ * Created by bfox1 on 6/19/2015.
  * In God We Trust.
- * TODO
  */
-public class FreeForAll extends Gamemode {
-
-    private SpawnLocations spawnLocations;
+public class TestMode extends Gamemode
+{
+    private SpawnLocations location;
     private ScoreManagement scoreManagement;
-    private ModeProperties modeProperties;
+    private ModeProperties props;
 
-
-    public FreeForAll( SpawnLocations location, ScoreManagement management, ModeProperties enumeration) {
-        this.setLocations(location);
-        this.setScoreManagement(management);
-        this.setModeEnumeration(enumeration);
-
-
+    public TestMode(SpawnLocations location, ScoreManagement management, ModeProperties props)
+    {
+        setLocations(location);
+        setScoreManagement(management);
+        setModeEnumeration(props);
     }
-
     @Override
     public void setLocations(SpawnLocations locations)
     {
-        this.spawnLocations = locations;
+        this.location = locations;
     }
-
 
     @Override
     public void setScoreManagement(ScoreManagement management)
@@ -39,25 +33,23 @@ public class FreeForAll extends Gamemode {
     }
 
     @Override
-    public void setModeEnumeration(ModeProperties modeProperties)
+    public void setModeEnumeration(ModeProperties enumeration)
     {
-    this.modeProperties = modeProperties;
+        this.props = enumeration;
     }
 
     @Override
     public ModeProperties getModeProperties() {
-        return this.modeProperties;
+        return props;
     }
 
     @Override
     public SpawnLocations getLocations() {
-        return this.spawnLocations;
+        return location;
     }
 
     @Override
     public ScoreManagement getScoreManageMent() {
         return scoreManagement;
     }
-
-
 }

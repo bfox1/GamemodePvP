@@ -15,12 +15,15 @@ import java.util.Map;
  * In God We Trust.
  * <p>Loaded on startup to create a LobbyManager Instance.</p>
  */
-public class LobbyManager {
+public final class LobbyManager {
 
     private CoreMain main;
+
     private final int minLobbyCount = 1;
     private final int maxLobbyCount = 5;
+
     private final Map<String, Lobby> lobbyMap = new HashMap<String, Lobby>();
+
     public LobbyManager(CoreMain main)
     {
         this.main = main;
@@ -57,10 +60,9 @@ public class LobbyManager {
      */
     public void closeLobby(Lobby lobby)
     {
-        if(!lobby.isActiveGame())
-        {
+
             this.lobbyMap.remove(lobby.getLobbyName());
-        }
+
 
     }
 
@@ -84,14 +86,17 @@ public class LobbyManager {
     {
 
         LobbyValidate lobbyValidate = new LobbyValidate();
+
         for(Map.Entry en : lobbyManager.lobbyMap.entrySet())
         {
             if(en.getValue() != null)
             if(((Lobby)en.getValue()).isPlayerInLobby(player))
             {
+
                 lobbyValidate.setLobby((Lobby)en.getValue());
                 lobbyValidate.setPlayer(player);
                 lobbyValidate.setInLobby(true);
+
                 return lobbyValidate;
             }
         }

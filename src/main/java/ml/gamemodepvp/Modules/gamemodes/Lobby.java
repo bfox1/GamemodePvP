@@ -19,7 +19,7 @@ import java.util.UUID;
  */
 public class Lobby  {
 
-    private boolean isActiveGame = false;
+    private boolean isActiveGame;
 
     private String lobbyName;
     private Gamemode gamemode;
@@ -32,6 +32,7 @@ public class Lobby  {
         this.lobbyName = lobbyName;
         this.playerMapData.put(player.getUniqueId(), player);
         this.main = main;
+        this.isActiveGame = false;
     }
 
     public boolean isPlayerInLobby(Player player)
@@ -54,12 +55,19 @@ public class Lobby  {
     public void joinLobby(Player player)
     {
         this.playerMapData.put(player.getUniqueId(), player);
+        //TODO - Teleport Players to the Waiting Lobby for this Lobby or straight into the Match.
+        /**
+         * This will most likely require an additional parameters.
+         * Prefer to Assign the Lobby Locations and Teleport locations to SpawnLocations.
+         */
+        //TODO -
         player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have been added to the Lobby!!"));
     }
 
     public void leaveLobby(Player player)
     {
         this.playerMapData.remove(player.getUniqueId());
+        //TODO - Teleport Players back to Waiting Lobby.
         player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have left the Lobby"));
     }
 
@@ -85,5 +93,9 @@ public class Lobby  {
 
     public void setActiveGame(boolean isActiveGame) {
         this.isActiveGame = isActiveGame;
+    }
+
+    public void setGamemode(Gamemode gamemode) {
+        this.gamemode = gamemode;
     }
 }

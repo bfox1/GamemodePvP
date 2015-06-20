@@ -29,6 +29,13 @@ public class SerializableLocation implements Serializable {
         this.world = loc.getWorld().getName();
     }
 
+    public SerializableLocation(int x, int y, int z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public Location getLocation()
     {
         World w = Bukkit.getWorld(this.world);

@@ -22,26 +22,22 @@ public class LobbyTask extends BukkitRunnable {
         this.main = main;
         this.lobby = lobby;
     }
-    public void shutDownLobby()
-    {
-        if(lobby.isActiveGame())
-        {
-            this.cancel();
-        }
-        else
-        {
-            this.cancel();
-        }
-        LobbyManager.closeLobby(lobby, this.main.getLobbyManager());
-    }
+
+
+
     @Override
     public void run()
     {
+        DebugCore.returnDebugMessage(lobby.getPlayerMapData().size());
+        if(lobby.isLobbyEmpty())
+        {
+            DebugCore.returnDebugMessage("Shutting Down Lobby");
+            this.cancel();
 
-            if (lobby.isLobbyEmpty()) {
-                DebugCore.returnDebugMessage("EMPTY?");
-                shutDownLobby();
-            }
-            GamemodePvPMessageUtility.sendMessageToConsole("Their are " + lobby.getPlayerMapData().size() + "in this lobby!", this.main);
+        }
+        else {
+            DebugCore.returnDebugMessage("Running Waiting Lobby...");
+        }
+
     }
 }

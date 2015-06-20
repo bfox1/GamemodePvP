@@ -1,6 +1,8 @@
 package ml.gamemodepvp.Modules.gamemodes.modes.executor;
 
 import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.events.LobbyJoinEvent;
+import ml.gamemodepvp.events.LobbyLeaveEvent;
 import ml.gamemodepvp.supervision.LobbyTask;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
@@ -8,10 +10,12 @@ import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.LobbyValidate;
 import ml.gamemodepvp.util.ModuleChat;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
@@ -44,24 +48,8 @@ public class FFACommandExecutor implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase("joinLobby") && strings.length == 1)
         {
-            LobbyValidate lobbyValidation = LobbyManager.getPlayerValidation(player, this.main.getLobbyManager());
-            if(lobbyValidation.isInLobby())
-            {
-                lobbyValidation.getLobby().leaveLobby(player);
-            }
-            try {
-                Lobby lobby = this.main.getLobbyManager().getLobbyInfo(strings[0]);
-                lobby.joinLobby(player);
+            Bukkit.getServer().getPluginManager().callEvent(new LobbyJoinEvent(player, strings[0], main));
 
-            } catch (Exception e) {
-
-                System.out.println("Generating Now");
-                Lobby lobby = new Lobby(strings[0], player, this.main);
-                BukkitTask task = new LobbyTask(lobby, this.main).runTaskTimer(this.main, 0, 50L);
-                this.main.getLobbyManager().addLobby(lobby);
-
-                lobby.joinLobby(player);
-            }
             return true;
         }
 
@@ -71,14 +59,10 @@ public class FFACommandExecutor implements CommandExecutor {
             if(!validation.isInLobby())
             {
                 ModuleChat.gamemodePrefixToPlayer("You silly! Your not in a Lobby!");
+                return false;
             }
-            try
-            {
-                Lobby lobby = this.main.getLobbyManager().getLobbyInfo(validation.getLobby().getLobbyName());
-                lobby.leaveLobby(player);
-            } catch (Exception e) {
+                Bukkit.getServer().getPluginManager().callEvent(new LobbyLeaveEvent(player, validation.getLobby().getLobbyName(), main));
 
-            }
             return true;
         }
 
