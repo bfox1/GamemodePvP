@@ -1,5 +1,8 @@
 package ml.gamemodepvp.Modules.gamemodes;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by bfox1 on 6/5/2015.
  * In God We Trust.
@@ -58,6 +61,7 @@ public abstract class Gamemode {
         private int scoreVictory;
         private boolean team;
         private int timer;
+        private int waitingTime;
 
 
         /**
@@ -79,6 +83,7 @@ public abstract class Gamemode {
             this.scoreVictory = scoreVictory;
             this.team = team;
             this.timer = timer;
+            this.waitingTime = 5;
         }
 
         public void setModeName(String name) {
@@ -145,7 +150,18 @@ public abstract class Gamemode {
         public int getTicksPer()
         {
 
-            return this.timer*60*4;
+            return this.timer*60*20;
+        }
+
+        public int getTicksPerWaitingTime()
+        {
+            return this.waitingTime*60*20;
+        }
+
+        public int convertTicksToMinutes(int ticks)
+        {
+
+            return ticks/60/20;
         }
     }
 }

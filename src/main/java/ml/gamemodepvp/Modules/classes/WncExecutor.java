@@ -2,7 +2,7 @@ package ml.gamemodepvp.Modules.classes;
 
 
 import ml.gamemodepvp.CoreMain;
-import ml.gamemodepvp.Modules.classes.handler.KitGuiHandler;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,9 +30,7 @@ public class WncExecutor implements CommandExecutor {
             if (s.equalsIgnoreCase("class") && isPlayer(commandSender)) {
                 Player p = (Player) commandSender;
 
-                KitGuiHandler kit = new KitGuiHandler();
-                kit.createGUI();
-                kit.openGUI(p);
+
                 return true;
            }
 

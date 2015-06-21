@@ -1,6 +1,6 @@
 package ml.gamemodepvp.database.playerdata;
 
-import ml.gamemodepvp.Modules.classes.kit.InventoryConstructor;
+
 import ml.gamemodepvp.Modules.ranks.Rank;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class CorePlayerData implements Serializable{
 
     private Rank rank;
 
-    private InventoryConstructor base;
+
 
     private UUID id;
 
@@ -115,11 +115,5 @@ public class CorePlayerData implements Serializable{
         this.rank = rank;
     }
 
-    public InventoryConstructor getInventoryConstructor() {
-        return base;
-    }
 
-    public void setInventoryConstructor(InventoryConstructor base) {
-        this.base = base;
-    }
 }

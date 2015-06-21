@@ -1,15 +1,15 @@
 package ml.gamemodepvp.Modules.classes.gui
 
-import ml.gamemodepvp.Modules.classes.kit.{DisplayStack, InventoryConstructor}
+
 import org.bukkit.entity.Player
 
 /**
  * Created by bfox1 on 6/3/2015.
  * In God We Trust.
  */
-class InventoryGui(kitConstructor:InventoryConstructor) {
+class InventoryGui() {
 
-  val player = kitConstructor.kitPlayer
+ /** val player = kitConstructor.kitPlayer
 
   val inventory = kitConstructor.inventoryChest
 
@@ -32,6 +32,6 @@ class InventoryGui(kitConstructor:InventoryConstructor) {
     this.displayStackList.add(displayStack)
   }
 
-
+*/
 
 }

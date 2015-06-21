@@ -53,16 +53,22 @@ public class LobbyListener extends CoreListener {
         }catch (LobbyNotFoundException e)
         {
             Lobby lobby = new Lobby(event.getLobbyName(), player, this.getMain());
-            lobby.joinLobby(player);
-            this.getMain().getLobbyManager().addLobby(lobby);
-        }
-        event.getLobby().setGamemode(
-                new TestMode(new SpawnLocations(player.getWorld()),
-                new ScoreManagement(new Scoreboard()),
-                Gamemode.ModeProperties.TESTLOBBY));
 
-        BukkitTask task = new LobbyTask(event.getLobby(),
-                this.getMain()).runTaskTimer(this.getMain(), 0, event.getLobby().getGamemode().getModeProperties().getTicksPer()/4);
+            lobby.joinLobby(player);
+
+            lobby.setGamemode(
+                    new TestMode(new SpawnLocations(player.getWorld()),
+                            new ScoreManagement(new Scoreboard()),
+                            Gamemode.ModeProperties.TESTLOBBY));
+
+            this.getMain().getLobbyManager().addLobby(lobby);
+
+            BukkitTask task = new LobbyTask(lobby,
+                    this.getMain()).runTaskTimerAsynchronously(this.getMain(), 0, (lobby.getGamemode().getModeProperties().getTicksPerWaitingTime()));
+
+
+        }
+
 
 
     }

@@ -3,8 +3,7 @@ package ml.gamemodepvp.Modules.classes;
 
 import ml.gamemodepvp.CoreMain;
 
-import ml.gamemodepvp.Modules.classes.kit.InventoryConstructor;
-import ml.gamemodepvp.Modules.classes.kit.DisplayStack;
+
 import ml.gamemodepvp.Modules.classes.event.ItemAction;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,9 +32,7 @@ public class WncListener implements Listener {
     public void onInventoryAction(InventoryClickEvent e)
     {
        // InventoryConstructor gui = this.main.menuInventory.kitGui();
-        DisplayStack stack;
-        ItemStack clickedStack = e.getCurrentItem();
-        InventoryConstructor innerInventoryGui;
+
         boolean clickedType = false;
        // if(e.getInventory().getName() == gui.customName())
         {
