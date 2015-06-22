@@ -16,7 +16,15 @@ import java.util.Random;
 public class FFASpawnLocations extends SpawnLocations {
 
 
-    public FFASpawnLocations(World world) {
+    public FFASpawnLocations(World world)
+    {
         super(world);
+        this.setTeam(false);
+
     }
+
+
+
+
+
 }

@@ -3,8 +3,11 @@ package ml.gamemodepvp.management;
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.debugbox.LobbyNotFoundException;
+import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.GamemodePvPMessageUtility;
 import ml.gamemodepvp.util.LobbyValidate;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -43,14 +46,14 @@ public final class LobbyManager {
      * @return The lobby requested
      * @throws Exception if lobby returns null, returns error message. Lobby CANNOT return NULL.
      */
-    public Lobby getLobbyInfo(String lobbyName) throws LobbyNotFoundException {
+    public Lobby getLobbyInfo(String lobbyName) {
         if(this.lobbyMap.containsKey(lobbyName))
         {
             return this.lobbyMap.get(lobbyName);
         }
         else
         {
-            throw new LobbyNotFoundException("No such lobby Exists!", lobbyName);
+            throw new IllegalArgumentException("No such lobby Exists!" + lobbyName);
         }
     }
 
@@ -61,6 +64,8 @@ public final class LobbyManager {
     public void closeLobby(Lobby lobby)
     {
 
+        CommandSender sender = Bukkit.getServer().getConsoleSender();
+        sender.sendMessage("Lobby has been Closed.");
             this.lobbyMap.remove(lobby.getLobbyName());
 
 
