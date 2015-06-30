@@ -3,14 +3,16 @@ package ml.gamemodepvp.Modules.world.util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Created by bfox1 on 5/20/2015.
  * In God We Trust.
  */
-public class SerializableLocation implements Serializable {
+public class SerializableLocation implements Serializable, ConfigurationSerializable {
 
     static final long serialVersionUID = 1337L;
 
@@ -60,4 +62,8 @@ public class SerializableLocation implements Serializable {
     }
 
 
+    @Override
+    public Map<String, Object> serialize() {
+        return null;
+    }
 }

@@ -21,8 +21,12 @@ public class LobbyTask extends BukkitRunnable {
 
     private CoreMain main;
     private Lobby lobby;
+
     private int counter;
+
     private int taskID;
+
+
 
 
     public LobbyTask(Lobby lobby, CoreMain main)
@@ -45,25 +49,26 @@ public class LobbyTask extends BukkitRunnable {
 
         }
         else {
-            beginWaitingLobbyCountdown(lobby.getGamemode().getModeProperties().getTicksPerWaitingTime(), 0 , lobby);
+            beginWaitingLobbyCountdown(lobby.getGamemode().getModeProperties().getWaitingTime()*60, 0 , lobby);
             DebugCore.returnDebugMessage("Running Waiting Lobby...");
         }
 
     }
 
-    public void beginWaitingLobbyCountdown(int start, final int end, Lobby lobby)
+    public void beginWaitingLobbyCountdown(int start, final int end, final Lobby lobby)
     {
+
 
         if(start < end) return;
         this.counter = start;
-        Bukkit.broadcastMessage(ChatColor.BLUE + "Time: " + counter);
         taskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
             @Override
             public void run()
             {
                 counter--;
+
                 Bukkit.broadcastMessage(ChatColor.BLUE + "Time: " + counter);
-                if(counter == end)
+                if(counter == end || lobby.isLobbyEmpty())
                 {
                     Bukkit.getScheduler().cancelTask(taskID);
                 }

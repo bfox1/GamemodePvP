@@ -1,4 +1,4 @@
-package ml.gamemodepvp.database.regiondata;
+package ml.gamemodepvp.management;
 
 
 import ml.gamemodepvp.CoreMain;
@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by bfox1 on 5/17/2015.
@@ -46,9 +47,17 @@ public final class RegionDataManager {
 
     }
 
-    public Region getCurrentRegion(Player player)
-    {
-        return RegionTestUtility.getInRegion(this, player);
+    public Region getCurrentRegion(Player player) throws Exception {
+
+        if(RegionTestUtility.getInRegion(this, player) != null)
+        {
+            return RegionTestUtility.getInRegion(this, player);
+        }
+        else
+        {
+            throw new Exception(" ");
+        }
+
     }
 
 
@@ -131,6 +140,30 @@ public final class RegionDataManager {
 
         }
         return hasLoaded;
+    }
+
+    public Region getRegion(String regionName)
+    {
+        for(Map.Entry worldEntry : worldRegionList.entrySet())
+        {
+            if(worldEntry != null)
+            {
+                HashMap<String, Region> regionMap = (HashMap<String, Region>) worldEntry.getValue();
+                for(Map.Entry regionEntry : regionMap.entrySet())
+                {
+                    if(regionEntry != null)
+                    {
+                        String entryName = (String) regionEntry.getKey();
+                        if(entryName.equalsIgnoreCase(regionName))
+                        {
+                            return (Region)regionEntry.getValue();
+                        }
+                    }
+                }
+            }
+        }
+
+        return null;
     }
 
 

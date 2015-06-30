@@ -92,6 +92,11 @@ public class WeaponBuilder {
         return stack.getItemMeta().getDisplayName();
     }
 
+    public int getItemAmount()
+    {
+        return stack.getAmount();
+    }
+
 
 
     public boolean isAvailable() {
@@ -104,7 +109,7 @@ public class WeaponBuilder {
      */
     public void addWeaponEnchants(WeaponEnchants e)
     {
-
+            if(e.getEnchantment() != null)
             this.stack.getItemMeta().addEnchant(e.getEnchantment(), e.getStrength(), e.isActive());
 
     }
@@ -147,5 +152,11 @@ public class WeaponBuilder {
 
     public void setHasOthers(boolean hasOthers) {
         this.hasOthers = hasOthers;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.getItemName();
     }
 }

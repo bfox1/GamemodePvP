@@ -2,6 +2,7 @@ package ml.gamemodepvp.management;
 
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
+import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
 import ml.gamemodepvp.debugbox.LobbyNotFoundException;
 import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.GamemodePvPMessageUtility;
@@ -10,7 +11,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import javax.persistence.Lob;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,7 +50,7 @@ public final class LobbyManager {
      * @return The lobby requested
      * @throws Exception if lobby returns null, returns error message. Lobby CANNOT return NULL.
      */
-    public Lobby getLobbyInfo(String lobbyName) {
+    public Lobby getLobbyInfo(String lobbyName) throws IllegalArgumentException{
         if(this.lobbyMap.containsKey(lobbyName))
         {
             return this.lobbyMap.get(lobbyName);
@@ -63,13 +67,43 @@ public final class LobbyManager {
      */
     public void closeLobby(Lobby lobby)
     {
-
         CommandSender sender = Bukkit.getServer().getConsoleSender();
         sender.sendMessage("Lobby has been Closed.");
-            this.lobbyMap.remove(lobby.getLobbyName());
-
-
+        this.lobbyMap.remove(lobby.getLobbyName());
     }
+
+    /**
+     * To addLobby to the LobbyMap.
+     * @param lobby
+     */
+    public void addLobby(Lobby lobby)
+    {
+        if(this.lobbyMap.size() <=maxLobbyCount)
+        {
+            this.lobbyMap.put(lobby.getLobbyName(), lobby);
+        }
+    }
+
+    /**
+     * Get the Max amount of Lobbies.
+     * @return maxLobbyCount
+     */
+    public int getMaxLobbyCount()
+    {
+        return maxLobbyCount;
+    }
+
+    public List<Lobby> getOpenLobbies()
+    {
+        List<Lobby> lobbyList = new ArrayList<Lobby>();
+        for(Map.Entry entry : lobbyMap.entrySet())
+        {
+            if(entry != null)
+                lobbyList.add((Lobby)entry.getValue());
+        }
+        return lobbyList;
+    }
+
 
     /**
      * Close a lobby by Static reference.
@@ -108,18 +142,5 @@ public final class LobbyManager {
         return lobbyValidate;
     }
 
-    /**
-     * To addLobby to the LobbyMap.
-     * @param lobby
-     */
-    public void addLobby(Lobby lobby)
-    {
-        if(this.lobbyMap.size() <=maxLobbyCount)
-        {
 
-            this.lobbyMap.put(lobby.getLobbyName(), lobby);
-        }
-
-
-    }
 }

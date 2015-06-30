@@ -1,10 +1,12 @@
 package ml.gamemodepvp.init;
 
+import ml.gamemodepvp.CommandList;
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.classes.WncExecutor;
 
 import ml.gamemodepvp.Modules.core.CoreExecutor;
 import ml.gamemodepvp.Modules.economy.EcoExecutor;
+import ml.gamemodepvp.Modules.gamemodes.executor.LobbyRegionExecutor;
 import ml.gamemodepvp.Modules.gamemodes.modes.executor.FFACommandExecutor;
 import ml.gamemodepvp.Modules.world.WorldExecutor;
 import org.bukkit.command.CommandExecutor;
@@ -53,11 +55,14 @@ public class CommandLoader{
 
         //Classes Commands
         setupCommands("class", new WncExecutor(main));
-        setupCommands("classMenu", new WorldExecutor(main));
+        setupCommands("classMenu", new WncExecutor(main));
 
         setupCommands("setlocation", new FFACommandExecutor(main));
         setupCommands("joinLobby", new FFACommandExecutor(main));
         setupCommands("leaveLobby", new FFACommandExecutor(main));
+
+        setupCommands(CommandList.LobbyCommands.SETLOBBYZONE, new LobbyRegionExecutor(main));
+        setupCommands(CommandList.LobbyCommands.CREATELOBBYZONE, new LobbyRegionExecutor(main));
     }
 
     public void setupCommands(String name, CommandExecutor executor)

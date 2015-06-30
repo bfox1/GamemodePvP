@@ -1,23 +1,25 @@
 package ml.gamemodepvp.Modules.classes.gui
 
 
+import java.util
+
+import ml.gamemodepvp.Modules.classes.InventoryConstructor
+import ml.gamemodepvp.Modules.classes.kit.KitBuilder
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
 /**
  * Created by bfox1 on 6/3/2015.
  * In God We Trust.
  */
-class InventoryGui() {
+class InventoryGui(inventoryConstructor:InventoryConstructor, player:Player) {
 
- /** val player = kitConstructor.kitPlayer
 
-  val inventory = kitConstructor.inventoryChest
 
-  val displayStackList = kitConstructor.displayStackList
 
-  def openGui(player:Player): Unit =
+  def openGui(): Unit =
   {
-    player.openInventory(kitConstructor.inventoryChest)
+    player.openInventory(inventoryConstructor.getInventory)
   }
 
   def closeGui(player:Player): Unit =
@@ -26,12 +28,8 @@ class InventoryGui() {
   }
 
 
-  def setInventoryDisplay(displayStack :DisplayStack): Unit =
-  {
-    this.inventory.addItem(displayStack.getItemStack)
-    this.displayStackList.add(displayStack)
-  }
 
-*/
+
+
 
 }

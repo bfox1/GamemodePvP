@@ -1,17 +1,19 @@
 package ml.gamemodepvp.database.regiondata
 
 import ml.gamemodepvp.Modules.world.region.Region
+import ml.gamemodepvp.PlayerWrapper
 import org.bukkit.entity.Player
 
 /**
  * Created by bfox1 on 5/24/2015.
  * In God We Trust.
  */
- class RegionPlayerProperties(player:Player, region:Region) extends Serializable {
+@deprecated
+ class RegionPlayerProperties(player: PlayerWrapper, region:Region) extends Serializable {
   var isBuilder: Boolean = false
 
 
-  val nPlayer:Player = player
+  val nPlayer: PlayerWrapper = player
   val nRegion:Region = region
 
   var isMember:Boolean = false

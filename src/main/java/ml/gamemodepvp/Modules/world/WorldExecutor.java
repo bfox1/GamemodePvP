@@ -5,9 +5,9 @@ import ml.gamemodepvp.Modules.world.handler.RegionHandler;
 import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.Modules.world.util.SerializableLocation;
 import ml.gamemodepvp.Modules.world.util.WorldController;
-import ml.gamemodepvp.database.regiondata.RegionDataManager;
+import ml.gamemodepvp.PlayerWrapper;
+import ml.gamemodepvp.management.RegionDataManager;
 import ml.gamemodepvp.database.worlddata.WorldDataHandler;
-import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.ModuleChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,6 +41,7 @@ this.core = worldCore;
 
 
     @Override
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
 
         Player player = (Player)commandSender;
@@ -53,7 +54,6 @@ this.core = worldCore;
             WorldDataHandler hd = new WorldDataHandler(wConfig);
             hd.createWorldData(strings[0]);
 
-            hd.saveWorldData();
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You have created a new world arena!"));
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You can now use /teleportToWorld " + strings[0]));
             return true;
@@ -98,11 +98,6 @@ this.core = worldCore;
             {
                 return false;
             }
-
-
-            WorldDataHandler hd = new WorldDataHandler(new WorldController());
-            hd.generateData(player.getWorld().getName());
-            hd.saveWorldData();
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You have created a " + strings[0] + " region for your Arena!"));
             return true;
         }
@@ -111,9 +106,6 @@ this.core = worldCore;
         {
             Region rg = new Region(player.getWorld().getName(), new RegionHandler(player.getWorld()));
             rg.getHandler().removeMapArena();
-            WorldDataHandler hd = new WorldDataHandler(new WorldController());
-            hd.generateData(player.getWorld().getName());
-            hd.saveWorldData();
             player.sendMessage(ModuleChat.worldPrefixToPlayer("Removed Arena Region!"));
             return true;
             
@@ -123,7 +115,6 @@ this.core = worldCore;
         {
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You are now in Region Building Mode!"));
             this.core.getDataManager().setRegionBuildingMode(true, player);
-            //player.sendMessage(ModuleChat.worldPrefixToPlayer("Use /pos1 and /pos2 to set Positions"));
             ItemStack wand = new ItemStack(Material.STICK);
             ItemMeta meta = wand.getItemMeta();
             meta.setDisplayName(ChatColor.DARK_PURPLE + "wand");
@@ -150,7 +141,7 @@ this.core = worldCore;
             for(int i = 0; i< player.getInventory().getSize(); i++)
             {
                 if(player.getInventory().getItem(i) != null)
-                if(player.getInventory().getItem(i).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand"))
+                if(player.getInventory().getItem(i).getItemMeta().hasDisplayName() && player.getInventory().getItem(i).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.DARK_PURPLE + "wand"))
                 {
                     ItemStack stack = player.getInventory().getItem(i);
                     player.getInventory().removeItem(stack);
@@ -197,11 +188,14 @@ this.core = worldCore;
         if(command.getName().equalsIgnoreCase("getRegionList"))
         {
             HashMap<String, Region> hashMap;
+
             if(!isConsole(commandSender))
             {hashMap = this.manager.loadRegionList(player); player.sendMessage(ModuleChat.worldPrefixToPlayer(player.getWorld().getName()));}
             else if(strings.length == 1) {hashMap = this.manager.loadRegionList(strings[0]);player.sendMessage(ModuleChat.worldPrefixToPlayer(strings[0]));}
             else return false;
+
             ArrayList<String> ls = new ArrayList<String>();
+            if(hashMap.entrySet() != null)
             for(Map.Entry me : hashMap.entrySet())
             {
                 ls.add( (String)me.getKey());
@@ -216,11 +210,11 @@ this.core = worldCore;
         //Sets playerFlags
         if(command.getName().equalsIgnoreCase("setPlayerFlag") && strings.length == 3)
         {
-            HashMap<String, Region> hashMap = new HashMap<String, Region>();
-            hashMap = this.core.getDataManager().loadRegionList(player);
+            HashMap<String, Region> hashMap = this.core.getDataManager().loadRegionList(player);
             if(hashMap.containsKey(strings[0]))
             {
                 hashMap.get(strings[0]).setPlayerProperties(player, hashMap.get(strings[0]));
+                Bukkit.broadcastMessage(hashMap.get(strings[0]).getPlayerProperties().get(PlayerWrapper.getPlayerWrapper(player)).nPlayer().getPlayerName());
                 if(hashMap.get(strings[0]).setPlayerFlag(strings[1], strings[2], player))
                 {
                     player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for " + strings[1] + " flag to " + strings[2] + "!"));
@@ -236,11 +230,12 @@ this.core = worldCore;
         return false;
     }
 
+    //NON-Related command methods//
+
     private boolean isConsole(CommandSender sender)
     {
-        if(sender instanceof Player) return false;
+        return !(sender instanceof Player);
 
-        return true;
     }
 
     private boolean onCommandCreation(Command command,String commandName,Player player)

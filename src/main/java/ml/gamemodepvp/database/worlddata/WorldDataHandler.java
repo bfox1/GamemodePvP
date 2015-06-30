@@ -25,94 +25,6 @@ public class WorldDataHandler {
 
     }
 
-
-    public void saveWorldData()
-    {
-
-        try {
-            System.out.println("TRY??");
-            File file = new File("plugins/GamemodePVP/worlddata/" + this.wc.getWorldName() + ".ser");
-            File parentDir = file.getParentFile();
-            if(!parentDir.exists())
-            {
-                parentDir.mkdirs();
-
-            }
-            ObjectOutputStream bw = new ObjectOutputStream(new FileOutputStream(file));
-            bw.writeObject(this.wc);
-            System.out.println("SAVED");
-            bw.close();
-
-
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void loadWorldDatas(String string, WorldCreator creator)
-    {
-        try{
-            ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File("plugins/GamemodePvP/worlddata" + string + ".ser")));
-            this.wc = (WorldController)stream.readObject();
-            this.wc.setWc(creator, string);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    public void loadWorldData()
-    {
-        final File file = new File("plugins/GamemodePVP/worlddata");
-        if(!file.exists())
-        {
-            file.mkdirs();
-
-        }
-        //listFilesForFolder(file);
-    }
-
-    public World listFilesForFolder(final File folder, String name)
-    {
-        for(final File fileEntry : folder.listFiles())
-        {
-            if(fileEntry.isDirectory())
-            {
-                listFilesForFolder(fileEntry, name);
-            }
-            else if(fileEntry.getName().equalsIgnoreCase(name))
-            {
-                System.out.println(fileEntry.getName());
-                try
-                {
-                    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("plugins/GamemodePVP/worlddata/" + fileEntry.getName() + ".ser"));
-                    this.wc = (WorldController)ois.readObject();
-                    this.wc.setWorldName(fileEntry.getName());
-                    this.wc.setWc(new WorldCreator(fileEntry.getName()), fileEntry.getName());
-                    this.wc.getWc().environment(World.Environment.NORMAL);
-                    this.wc.getWc().generator(new ArenaChunkGenerator());
-                    this.wc.setWorld(Bukkit.createWorld(this.wc.getWc()));
-                    ois.close();
-                    return this.wc.getWorld();
-                    //Bukkit.unloadWorld(this.worldConfiguration.getWorld(), true);
-
-                } catch (IOException e)
-                {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
-
     public void createWorldData(String name)
     {
         this.wc.setWc(new WorldCreator(name), name);
@@ -121,11 +33,7 @@ public class WorldDataHandler {
         Bukkit.createWorld(this.wc.getWc());
     }
 
-    public World generateData(String name)
-    {
-        final File file = new File("plugins/GamemodePVP/worlddata");
-        return listFilesForFolder(file, name);
-    }
+
 
     public WorldController returnWorldControl()
     {

@@ -89,6 +89,10 @@ commands:
 
   leaveLobby:
 
+  setLobbyZone:
+
+  createLobbyZone:
+
 permissions:
   gamemodepvp.*:
     description: Gives access to all GamemodePVP Permissions

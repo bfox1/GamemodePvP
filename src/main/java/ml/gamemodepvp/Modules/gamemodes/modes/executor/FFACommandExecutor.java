@@ -1,6 +1,8 @@
 package ml.gamemodepvp.Modules.gamemodes.modes.executor;
 
 import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
+import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.events.LobbyJoinEvent;
 import ml.gamemodepvp.events.LobbyLeaveEvent;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
@@ -8,11 +10,15 @@ import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.util.DebugCore;
 import ml.gamemodepvp.util.LobbyValidate;
 import ml.gamemodepvp.util.ModuleChat;
+import org.apache.commons.lang.ObjectUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by bfox1 on 6/8/2015.
@@ -32,8 +38,9 @@ public class FFACommandExecutor implements CommandExecutor {
     {
 
         Player player = (Player)sender;
-        if(command.getName().equalsIgnoreCase("setLocation") && sender instanceof Player && player.isOp())
+        if(command.getName().equalsIgnoreCase("setLocation") && sender instanceof Player )
         {
+
             SpawnLocations loc = new SpawnLocations(player.getWorld());
             loc.loadLocations();
             loc.setLocations(player.getLocation());
@@ -42,9 +49,22 @@ public class FFACommandExecutor implements CommandExecutor {
             return true;
         }
 
-        if(command.getName().equalsIgnoreCase("joinLobby") && strings.length == 1)
+        if(command.getName().equalsIgnoreCase("joinLobby"))
         {
-            Bukkit.getServer().getPluginManager().callEvent(new LobbyJoinEvent(player, strings[0], main));
+
+            try {
+
+
+                String name = LobbyRegion.findLobbyRegion(this.main.getDataManager()).getRegionName();
+                Bukkit.getServer().getPluginManager().callEvent(new LobbyJoinEvent(player, name, main));
+            } catch (NullPointerException e)
+            {
+                e.getMessage();
+            }
+
+
+
+
 
             return true;
         }

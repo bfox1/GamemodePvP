@@ -37,6 +37,8 @@ public class SpawnLocations {
 
     private Region region;
 
+
+
     private Map<World, List<Location>> locationsMap = new HashMap<World, List<Location>>();
 
     public SpawnLocations(World world)
@@ -68,20 +70,16 @@ public class SpawnLocations {
         {
             loc = new ArrayList<Location>();
         }
-        int it = 0;
         try
         {
-            while(loc.size() >= it)
-            {
-                it++;
-            }
-            loc.add(0,locations);
+
+            loc.add(locations);
             this.locationsMap.put(this.getWorld(), loc);
         }catch (NullPointerException e)
         {
 
-            DebugCore.returnDebugMessage("SOMETING HAPPENED" + it + locations);
-            loc.add(it,locations);
+            DebugCore.returnDebugMessage("SOMETING HAPPENED"  + locations);
+            loc.add(locations);
             this.locationsMap.put(this.getWorld(), loc);
         }
 
@@ -116,14 +114,9 @@ public class SpawnLocations {
             }
         }
         FileConfiguration config = new YamlConfiguration().loadConfiguration(locationFile);
-        for(int i = 0; i < this.getLocationList().size(); i++)
-        {
-            config.set("SpawnCoordinates", "");
-            config.set("SpawnCoordinates." + this.getWorld().getName(), "WorldCoords");
-            config.set("SpawnCoordinates." + this.getWorld().getName() + "." + String.valueOf(i) + ".X", this.getLocationList().get(i).getX());
-            config.set("SpawnCoordinates." + this.getWorld().getName() + "." + String.valueOf(i) + ".Y", this.getLocationList().get(i).getY());
-            config.set("SpawnCoordinates." + this.getWorld().getName() + "." + String.valueOf(i) + ".Z", this.getLocationList().get(i).getZ());
-        }
+
+            config.set("SpawnLocation", this.getLocationList());
+
 
         try {
             config.save(locationFile);
@@ -146,6 +139,7 @@ public class SpawnLocations {
     public void loadLocations()
     {
         File locationFile = new File("plugins/GamemodePvP/arenadata/", this.getWorld().getName() + ".yml");
+
         if(!locationFile.exists())
         {
             try
@@ -158,66 +152,11 @@ public class SpawnLocations {
                 e.printStackTrace();
             }
         }
-
         FileConfiguration config = YamlConfiguration.loadConfiguration(locationFile);
 
-        if(config.get("SpawnCoordinates") != null)
-        {
-            DebugCore.returnDebugMessage("Not null");
+        List<Location> list = (List<Location>) config.get("SpawnLocation");
 
-            List<Location> list = new ArrayList<Location>();
-
-            boolean isSingler = false;
-
-            if(validatePath("SpawnCoordinates." + this.getWorld().getName(), config))
-            {
-                isSingler = true;
-
-            }
-            if(validateIntListPath("SpawnCoordinates." + this.getWorld().getName(), config) )
-            {
-                if (!isSingler)
-                for (int i = 0; i < config.getIntegerList("SpawnCoordinates." + this.getWorld().getName()).size(); i++)
-                {
-                    DebugCore.returnDebugMessage("Still made it :)");
-
-                    int index = (Integer) config.getList("SpawnCoordinates." + this.getWorld().getName()).get(i);
-
-                    List<Integer> coords = config.getIntegerList(
-                            "SpawnCoordinates." + this.getWorld().getName() + "." + index);
-
-                    if (coords.size() == 3) {
-
-                        SerializableLocation location =
-                                new SerializableLocation(coords.get(0), coords.get(1), coords.get(2));
-
-                        list.add(i, location.getLocation());
-                    }
-                }
-            }
-            else
-            {
-                if(isSingler)
-                {
-                    int index = (Integer)config.getInt("SpawnCoordinates." + this.getWorld().getName());
-                    List<Integer> coords = config.getIntegerList(
-                            "SpawnCoordinates." + this.getWorld().getName() + "." + index);
-
-                    if(coords.size() == 3)
-                    {
-                        SerializableLocation location =
-                                new SerializableLocation(coords.get(0), coords.get(1), coords.get(2));
-
-                        list.add(index, location.getLocation());
-                    }
-                }
-            }
-            this.locationsMap.put(this.world, list);
-        }
-        else
-        {
-            this.locationsMap = new HashMap<World, List<Location>>();
-        }
+        this.locationsMap.put(this.world, list);
     }
 
     private boolean validateIntListPath(String path, FileConfiguration configuration)

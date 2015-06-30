@@ -2,20 +2,17 @@ package ml.gamemodepvp;
 
 
 
-import ml.gamemodepvp.Modules.gamemodes.Lobby;
-import ml.gamemodepvp.database.playerdata.CorePlayerData;
-import ml.gamemodepvp.database.regiondata.RegionDataManager;
+
+import ml.gamemodepvp.management.RegionDataManager;
 import ml.gamemodepvp.init.CommandLoader;
 import ml.gamemodepvp.init.ListenerLoader;
 import ml.gamemodepvp.management.LobbyManager;
-import org.bukkit.Bukkit;
+import ml.gamemodepvp.menu.MainMenu;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -29,12 +26,11 @@ public class CoreMain extends JavaPlugin {
     private final RegionDataManager regionManager = new RegionDataManager();
     public final PluginManager pm = this.getServer().getPluginManager();
 
+    //private final InventoryConstructor defaultKits = new InventoryConstructor("Default Kit",9);
+    private final MainMenu menu = new MainMenu(this);
+
 
     public final LobbyManager lobbyManager = new LobbyManager(this);
-
-
-
-    private List<CorePlayerData> data;
 
 
     @Override
@@ -53,6 +49,9 @@ public class CoreMain extends JavaPlugin {
         CommandLoader ld = new CommandLoader(this);
         ld.load();
         logger.info("Commands have been successfully loaded");
+
+
+       // defaultKits.setKitInventory(defaultKits.buildDefaultInventory());
 
 
 
@@ -80,4 +79,7 @@ public class CoreMain extends JavaPlugin {
     }
 
 
+    public MainMenu getMenu() {
+        return menu;
+    }
 }

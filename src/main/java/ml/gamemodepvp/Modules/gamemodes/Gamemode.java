@@ -40,6 +40,8 @@ public abstract class Gamemode {
 
 
 
+
+
     /**
      * Created by bfox1 on 6/11/2015.
      * In God We Trust.
@@ -156,6 +158,11 @@ public abstract class Gamemode {
         public int getTicksPerWaitingTime()
         {
             return this.waitingTime*60*20;
+        }
+
+        public int getWaitingTime()
+        {
+            return waitingTime;
         }
 
         public int convertTicksToMinutes(int ticks)

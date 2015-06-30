@@ -37,4 +37,10 @@ public class Perks {
     public void setPotionEffect(PotionEffect potionEffect) {
         this.potionEffect = potionEffect;
     }
+
+    @Override
+    public String toString()
+    {
+        return this.type.toString();
+    }
 }

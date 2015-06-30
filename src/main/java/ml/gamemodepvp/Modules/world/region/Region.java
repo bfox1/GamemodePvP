@@ -2,6 +2,7 @@ package ml.gamemodepvp.Modules.world.region;
 
 import ml.gamemodepvp.Modules.core.lib.InternalVersionID;
 import ml.gamemodepvp.Modules.world.handler.RegionHandler;
+import ml.gamemodepvp.PlayerWrapper;
 import ml.gamemodepvp.database.regiondata.RegionPlayerProperties;
 import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.World;
@@ -24,7 +25,7 @@ public class Region implements Serializable, InternalVersionID{
 
     private String regionName;
 
-    private boolean canBuild = true;
+    private boolean canPlace = true;
 
     private boolean canUse = true;
 
@@ -32,20 +33,15 @@ public class Region implements Serializable, InternalVersionID{
 
     private boolean canEnter = true;
 
+    private boolean canBreak = true;
 
-
-
-    private HashMap<Player, RegionPlayerProperties> playerProperties = new HashMap<Player, RegionPlayerProperties>();
-
-
-
-
+    private HashMap<PlayerWrapper, RegionPlayerProperties> playerProperties = new HashMap<PlayerWrapper, RegionPlayerProperties>();
 
     public Region(String regionName, RegionHandler handler)
     {
         this.handler = handler;
         this.regionName = regionName;
-        this.playerProperties = new HashMap<Player, RegionPlayerProperties>();
+        this.playerProperties = new HashMap<PlayerWrapper, RegionPlayerProperties>();
     }
 
     public String getRegionName() {
@@ -64,7 +60,7 @@ public class Region implements Serializable, InternalVersionID{
         this.handler = handler;
     }
 
-    public Map<Player, RegionPlayerProperties> getPlayerProperties() {
+    public Map<PlayerWrapper, RegionPlayerProperties> getPlayerProperties() {
         return playerProperties;
     }
 
@@ -73,11 +69,13 @@ public class Region implements Serializable, InternalVersionID{
      * @param player
      * @param region
      */
+    @Deprecated
     public void setPlayerProperties(Player player, Region region) {
 
-        RegionPlayerProperties prop = new RegionPlayerProperties(player, region);
+
+        RegionPlayerProperties prop = new RegionPlayerProperties(PlayerWrapper.getPlayerWrapper(player), region);
         DebugCore.returnDebugMessage(region.getRegionName() + prop.toString());
-        this.playerProperties.put(player, prop);
+        this.playerProperties.put(PlayerWrapper.getPlayerWrapper(player), prop);
     }
 
     /**
@@ -116,16 +114,16 @@ public class Region implements Serializable, InternalVersionID{
      * This is a Region Flag, To access Player, use getPlayerProperties()
      * @return
      */
-    public boolean isCanBuild() {
-        return canBuild;
+    public boolean isCanBreak() {
+        return canBreak;
     }
 
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
      * @return
      */
-    public void setCanBuild(boolean canBuild) {
-        this.canBuild = canBuild;
+    public void setCanBreak(boolean canBreak) {
+        this.canBreak = canBreak;
     }
 
     /**
@@ -158,13 +156,20 @@ public class Region implements Serializable, InternalVersionID{
         this.canEnter = canEnter;
     }
 
+    public void setCanPlace(boolean canPlace){this.canBreak = canPlace;}
+
+    public boolean isCanPlace()
+    {
+        return this.canBreak;
+    }
+
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
      * @return
      */
     public RegionPlayerProperties getPlayerProperties(Player player)
     {
-        return playerProperties.get(player);
+        return playerProperties.get(PlayerWrapper.getPlayerWrapper(player));
     }
 
     /**
@@ -179,7 +184,8 @@ public class Region implements Serializable, InternalVersionID{
         else return false;
 
         if(string.equalsIgnoreCase("canuse")) {this.canUse = flag; return true;}
-        else if(string.equalsIgnoreCase("canbuild")){setCanBuild(flag); return true;}
+        else if(string.equalsIgnoreCase("canPlace")){setCanPlace(flag); return true;}
+        else if(string.equalsIgnoreCase("canBreak")){setCanPlace(flag); return true;}
         else if(string.equalsIgnoreCase("canenter")){this.canEnter = flag; return true;}
         else if(string.equalsIgnoreCase("canleave")){setCanLeave(flag); return true;}
 
@@ -190,10 +196,11 @@ public class Region implements Serializable, InternalVersionID{
      * Removes Player data from Map.
      * @param player
      */
+    @Deprecated
     public void removePlayerFromRegion(Player player)
     {
-        if(getPlayerProperties().containsKey(player))
-            getPlayerProperties().remove(player);
+        if(getPlayerProperties().containsKey(PlayerWrapper.getPlayerWrapper(player)))
+            getPlayerProperties().remove(PlayerWrapper.getPlayerWrapper(player));
     }
 
     /**
@@ -203,12 +210,17 @@ public class Region implements Serializable, InternalVersionID{
      * @param player
      * @return
      */
+    @Deprecated
     public boolean setPlayerFlag(String string, String string1, Player player) {
         boolean flag;
 
-        if(string1.equalsIgnoreCase("true")) flag = true;
-        if(string1.equalsIgnoreCase("false")) flag = true;
-        else return false;
+        if(string1.equalsIgnoreCase("true"))
+        {
+            flag = true;
+        }
+        else if(string1.equalsIgnoreCase("false")) {
+            flag = false;
+        } else return false;
 
         if(string.equalsIgnoreCase("canbuild")) {getPlayerProperties(player).canBuild_$eq(flag); return true;}
         if(string.equalsIgnoreCase("canenter")) {getPlayerProperties(player).canEnter_$eq(flag); return true;}
@@ -218,6 +230,7 @@ public class Region implements Serializable, InternalVersionID{
         return false;
     }
 
+    @Deprecated
     public boolean getPlayerFlag(String flagName, Player player)
     {
 
@@ -228,4 +241,6 @@ public class Region implements Serializable, InternalVersionID{
 
         return false;
     }
+
+
 }

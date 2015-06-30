@@ -5,14 +5,19 @@ import ml.gamemodepvp.CoreMain;
 
 
 import ml.gamemodepvp.Modules.classes.event.ItemAction;
+import ml.gamemodepvp.Modules.classes.kit.KitBuilder;
+import ml.gamemodepvp.menu.MainMenu;
+import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by bfox1 on 4/24/2015.
+ * In God We Trust.
  */
 public class WncListener implements Listener {
 
@@ -28,29 +33,78 @@ public class WncListener implements Listener {
     {
     }
 
+
+    /**
+     * This Listener is for Kit Actions
+     * @param e
+     */
     @EventHandler
-    public void onInventoryAction(InventoryClickEvent e)
+    public void onKitAction(InventoryClickEvent e)
     {
-       // InventoryConstructor gui = this.main.menuInventory.kitGui();
+       InventoryConstructor constructor = main.getMenu();
 
-        boolean clickedType = false;
-       // if(e.getInventory().getName() == gui.customName())
+
+
+        if(e.getClickedInventory() != null && constructor.getKitInventory() != null)
         {
-        //    for(int i = 0; i < gui.displayStackList().size(); i++)
+            if (e.getClickedInventory().getName().equals(constructor.getInventory().getName()))
             {
-          //      stack = gui.displayStackList().get(i);
-
-             //   if(clickedStack.equals(stack) && e.getClick().isLeftClick() && stack.getAction().equals(ItemAction.INVENTORY))
+                if (e.isLeftClick() && e.getCurrentItem() != null)
                 {
-                   // gui.closeGui((Player)e.getWhoClicked());
-                  //  innerInventoryGui = (InventoryConstructor)stack.getActionPerameters();
-                   // innerInventoryGui.kitPlayer_$eq((Player)e.getWhoClicked());
-                  //  stack.setActionPerameters(innerInventoryGui);
-                  //  gui.fireItemAction(stack);
-                  //  e.setCancelled(true);
-                  //  break;
+                    for (KitBuilder kits : constructor.getKitInventory()) {
+
+                        if (e.getCurrentItem().getItemMeta().getDisplayName().equals(kits.getStack().getDisplayStack().getItemMeta().getDisplayName()))
+                        {
+                            ItemAction.KIT.fireAction(kits, (Player) e.getWhoClicked());
+                        }
+
+                    }
+                    e.setCancelled(true);
                 }
             }
+        }
+
+
+    }
+
+    @EventHandler
+    public void onInventoryAction(InventoryClickEvent event)
+    {
+
+        MainMenu inventoryConstructor = main.getMenu();
+
+        /**
+         * Manages MainMenu Event
+         */
+        if(event.getClickedInventory() != null)
+        if(event.getClickedInventory().getName().equals(inventoryConstructor.getInventory().getName()))
+        {
+            if(event.isLeftClick() && event.getCurrentItem() != null)
+            {
+                for(int i = 0; i < inventoryConstructor.getInventory().getSize(); i++)
+                {
+                    String displayItem = " ";
+                    String currentItem = ".";
+                    if(inventoryConstructor.getInventory().getItem(i) != null)
+                    {
+                         displayItem = inventoryConstructor.getInventory().getItem(i).getItemMeta().getDisplayName();
+                         currentItem = event.getCurrentItem().getItemMeta().getDisplayName();
+                    }
+
+                    if(currentItem.equals(displayItem))
+                    {
+
+
+                        inventoryConstructor.getDisplayStackBuilderByItemStack(
+                                event.getCurrentItem()).fireAction((Player)event.getWhoClicked());
+                    }
+                }
+            }
+            event.setCancelled(true);
+        }
+        else if(inventoryConstructor.getInventoryConstructorByString(event.getClickedInventory().getName()) != null)
+        {
+            //TODO
         }
     }
 

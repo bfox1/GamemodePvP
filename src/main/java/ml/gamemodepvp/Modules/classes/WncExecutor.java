@@ -3,6 +3,7 @@ package ml.gamemodepvp.Modules.classes;
 
 import ml.gamemodepvp.CoreMain;
 
+import ml.gamemodepvp.Modules.classes.gui.InventoryGui;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,7 +39,8 @@ public class WncExecutor implements CommandExecutor {
         if(command.getName().equalsIgnoreCase("classMenu") && isPlayer(commandSender))
         {
 
-           //this.plugin.menuInventory.kitGui().openGui((Player)commandSender);
+           InventoryGui gui = new InventoryGui(this.plugin.getMenu(), (Player)commandSender);
+            gui.openGui();
             return true;
         }
 

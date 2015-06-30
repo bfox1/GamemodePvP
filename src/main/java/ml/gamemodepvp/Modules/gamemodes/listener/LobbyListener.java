@@ -7,6 +7,7 @@ import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.Modules.gamemodes.ScoreManagement;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
 import ml.gamemodepvp.Modules.gamemodes.modes.freeforall.TestMode;
+import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
 import ml.gamemodepvp.events.LobbyJoinEvent;
 import ml.gamemodepvp.events.LobbyLeaveEvent;
 import ml.gamemodepvp.management.LobbyManager;
@@ -35,35 +36,51 @@ public class LobbyListener extends CoreListener {
     public void onLobbyJoin(LobbyJoinEvent event)
     {
         Player player = event.getPlayer();
-        LobbyValidate lobbyValidation = LobbyManager.getPlayerValidation(player, this.getMain().getLobbyManager());
-        if(lobbyValidation.isInLobby())
-        {
-            lobbyValidation.getLobby().leaveLobby(player);
-        }
 
 
-        try
-        {
-            Lobby lobby = event.getLobby();
-            lobby.joinLobby(player);
-        }catch (IllegalArgumentException e)
-        {
-            Lobby lobby = new Lobby(event.getLobbyName(), player, this.getMain());
 
-            lobby.joinLobby(player);
+            //Validates if Player is in lobby.//
 
-            lobby.setGamemode(
-                    new TestMode(new SpawnLocations(player.getWorld()),
-                            new ScoreManagement(new Scoreboard()),
-                            Gamemode.ModeProperties.TESTLOBBY));
+            LobbyValidate lobbyValidation = LobbyManager.getPlayerValidation(player, this.getMain().getLobbyManager());
 
-            this.getMain().getLobbyManager().addLobby(lobby);
+            if (lobbyValidation.isInLobby())
+            {
 
-            BukkitTask task = new LobbyTask(lobby,
-                    this.getMain()).runTaskTimerAsynchronously(this.getMain(), 0, (lobby.getGamemode().getModeProperties().getTicksPerWaitingTime()));
+                lobbyValidation.getLobby().leaveLobby(player);
+            }
 
 
-        }
+        // Will attempt to add Player to Lobby if exists. //
+
+            try {
+
+                Lobby lobby = event.getLobby();
+                lobby.joinLobby(player);
+
+            } catch (IllegalArgumentException e)
+            {
+
+                // Creates Default Lobby //
+
+                Lobby lobby = new Lobby(event.getLobbyName(), player, this.getMain());
+
+                lobby.setGamemode(
+                        new TestMode(new SpawnLocations(player.getWorld()),
+                                new ScoreManagement(new Scoreboard()),
+                                Gamemode.ModeProperties.TESTLOBBY));
+
+                lobby.joinLobby(player);
+
+
+                this.getMain().getLobbyManager().addLobby(lobby);
+
+                BukkitTask task = new LobbyTask(lobby,
+                        this.getMain()).runTaskTimerAsynchronously(this.getMain(), 0, (lobby.getGamemode().getModeProperties().getTicksPerWaitingTime()));
+
+
+            }
+
+
 
 
 

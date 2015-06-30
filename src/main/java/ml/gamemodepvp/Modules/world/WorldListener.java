@@ -2,7 +2,6 @@ package ml.gamemodepvp.Modules.world;
 
 import ml.gamemodepvp.CoreMain;
 import ml.gamemodepvp.Modules.world.region.Region;
-import ml.gamemodepvp.events.LobbyJoinEvent;
 import ml.gamemodepvp.util.ModuleChat;
 import ml.gamemodepvp.util.RegionTestUtility;
 import net.md_5.bungee.api.ChatColor;
@@ -10,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -56,17 +56,22 @@ public class WorldListener implements Listener  {
     }
 
     @EventHandler
-    public void isPlayerPlacedBlock(BlockPlaceEvent e)
+    public void playerPlaceBlock(BlockPlaceEvent e)
     {
         Player player = e.getPlayer();
         //region.setPlayerProperties(player, new RegionPlayerProperties(player, region));
         if(!player.isOp())
         {
-            Region region = this.core.getDataManager().getCurrentRegion(player);
-            if (!region.isCanBuild()) {
+            Region region = null;
+            try {
+                region = this.core.getDataManager().getCurrentRegion(player);
+            } catch (Exception e1) {
+
+            }
+            if (!region.isCanPlace()) {
                 try {
                     if (!region.getPlayerProperties(player).canBuild()) {
-                        e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
+                        e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to place here!"));
 
                     } else {
                         e.setCancelled(false);
@@ -76,6 +81,28 @@ public class WorldListener implements Listener  {
                 }
                 e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to build here!"));
                 e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void playerBreakBlock(BlockBreakEvent event)
+    {
+        Player player = event.getPlayer();
+
+        if(!player.isOp())
+        {
+            Region region = null;
+            try {
+                region = this.core.getDataManager().getCurrentRegion(player);
+            } catch (Exception e) {
+
+            }
+
+            if(!region.isCanPlace())
+            {
+                player.sendMessage(ModuleChat.worldPrefixToPlayer("Sorry, but you are not allowed to break here!"));
+                event.setCancelled(true);
             }
         }
     }

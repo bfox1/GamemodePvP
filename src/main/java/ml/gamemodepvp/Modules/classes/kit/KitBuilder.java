@@ -5,7 +5,11 @@ package ml.gamemodepvp.Modules.classes.kit;
 import ml.gamemodepvp.Modules.classes.classadditives.DisplayStackBuilder;
 import ml.gamemodepvp.Modules.classes.classadditives.Perks;
 import ml.gamemodepvp.Modules.classes.classadditives.WeaponBuilder;
+import ml.gamemodepvp.Modules.classes.event.ItemAction;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bfox1 on 4/24/2015.
@@ -16,9 +20,9 @@ public class KitBuilder {
     private ItemStack[] otherAdditives;
     private Perks perks;
     private DisplayStackBuilder stack;
-    protected KitBuilder(DisplayStackBuilder stack,WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical, WeaponBuilder lethal, Perks perks, ItemStack[] otherAdditives)
+    public KitBuilder(ItemStack stack, WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical, WeaponBuilder lethal, Perks perks, ItemStack... otherAdditives)
     {
-        this.stack = stack;
+        this.stack = buildDisplayStack(stack,primary, secondary, tactical, lethal, perks, otherAdditives);
         this.primary = primary;
         this.secondary  = secondary;
         this.tactical = tactical;
@@ -27,9 +31,24 @@ public class KitBuilder {
         this.otherAdditives = otherAdditives;
     }
 
-    public KitBuilder()
+    private DisplayStackBuilder buildDisplayStack(
+            ItemStack dStack,WeaponBuilder primary, WeaponBuilder secondary, WeaponBuilder tactical,
+            WeaponBuilder lethal, Perks perks, ItemStack[] otherAdditives)
     {
-
+        DisplayStackBuilder stack = new DisplayStackBuilder(dStack, true, ItemAction.KIT, null);
+        List<String> loreList = new ArrayList<String>();
+        loreList.add(0,primary.toString() + primary.getItemAmount());
+        loreList.add(1, secondary.toString() + secondary.getItemAmount());
+        loreList.add(2, tactical.toString() + tactical.getItemAmount());
+        loreList.add(3, lethal.toString() + tactical.getItemAmount());
+        loreList.add(4, perks.toString());
+        for(int i = 0; i < otherAdditives.length; i++)
+        {
+            int y = i + 5;
+            loreList.add(y, otherAdditives[i].toString());
+        }
+        stack.setLore(loreList);
+        return stack;
     }
 
 

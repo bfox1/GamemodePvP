@@ -1,7 +1,8 @@
 package ml.gamemodepvp.util
 
 import ml.gamemodepvp.Modules.world.region.Region
-import ml.gamemodepvp.database.regiondata.{RegionDataManager, RegionPlayerProperties}
+import ml.gamemodepvp.database.regiondata.RegionPlayerProperties
+import ml.gamemodepvp.management.RegionDataManager
 import org.bukkit.entity.Player
 
 import scala.collection.JavaConversions._
@@ -39,7 +40,7 @@ object RegionTestUtility {
         return region.isCanLeave
       }
 
-      region.isCanBuild || playerProp.canBuild
+      region.isCanBreak || playerProp.canBuild
   }
 
   def canUse(region:Region, playerProp:RegionPlayerProperties):Boolean ={
@@ -80,7 +81,7 @@ object RegionTestUtility {
       if(manager.checkIfRegion(jmap._2, player.getLocation))
       {return jmap._2})
 
-    return null
+    null
   }
 
 
