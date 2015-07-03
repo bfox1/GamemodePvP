@@ -103,7 +103,7 @@ public class LobbyGuiConstructor extends InventoryConstructor {
                 setInventforySlot(buildItemIcon(
                         new ItemStack(Material.WOOL, 1, DyeColor.GREEN.getData()),
                         ItemAction.COMMAND,
-                        "/joinLobby ",
+                        "joinLobby ",
                         lobby.getLobbyName(),
                         " "
                 ));
@@ -117,7 +117,7 @@ public class LobbyGuiConstructor extends InventoryConstructor {
                 setInventforySlot(buildItemIcon(
                         new ItemStack(Material.WOOL, 1, DyeColor.RED.getData()),
                         ItemAction.COMMAND,
-                        "/joinLobby ",
+                        "joinLobby ",
                         "Lobby." + it,
                         " "
                 ));
@@ -133,7 +133,7 @@ public class LobbyGuiConstructor extends InventoryConstructor {
                 setInventforySlot(buildItemIcon(
                         new ItemStack(Material.WOOL, 1, DyeColor.RED.getData()),
                         ItemAction.COMMAND,
-                        "/joinLobby ",
+                        "joinLobby ",
                         "Lobby." + it,
                         " "
                 ));
@@ -141,6 +141,20 @@ public class LobbyGuiConstructor extends InventoryConstructor {
             }
         }
     }
+
+
+    public DisplayStackBuilder getDiplayFromItemStack(ItemStack stack)
+    {
+        for(DisplayStackBuilder builder : displayStackBuilderList)
+        {
+            if(builder.getDisplayStack().equals(stack))
+            {
+                return builder;
+            }
+        }
+        return null;
+    }
+
 
     private void setInventforySlot(DisplayStackBuilder builder)
     {

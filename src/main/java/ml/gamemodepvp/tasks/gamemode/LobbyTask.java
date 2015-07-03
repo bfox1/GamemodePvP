@@ -46,6 +46,7 @@ public class LobbyTask extends BukkitRunnable {
         {
             DebugCore.returnDebugMessage("Shutting Down Lobby");
             this.cancel();
+            Bukkit.getScheduler().cancelTask(this.getTaskId());
 
         }
         else {

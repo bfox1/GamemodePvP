@@ -6,6 +6,7 @@ import ml.gamemodepvp.CoreMain;
 
 import ml.gamemodepvp.Modules.classes.event.ItemAction;
 import ml.gamemodepvp.Modules.classes.kit.KitBuilder;
+import ml.gamemodepvp.menu.LobbyGuiConstructor;
 import ml.gamemodepvp.menu.MainMenu;
 import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.entity.Player;
@@ -102,9 +103,15 @@ public class WncListener implements Listener {
             }
             event.setCancelled(true);
         }
+        /**
+         * Manages Internal Guis from MainMenu
+         */
         else if(inventoryConstructor.getInventoryConstructorByString(event.getClickedInventory().getName()) != null)
         {
-            //TODO
+            InventoryConstructor constructor = inventoryConstructor.getInventoryConstructorByString(event.getClickedInventory().getName());
+            if(constructor instanceof LobbyGuiConstructor)
+                ((LobbyGuiConstructor) constructor).getDiplayFromItemStack(event.getCurrentItem()).fireAction((Player) event.getWhoClicked());
+            event.setCancelled(true);
         }
     }
 

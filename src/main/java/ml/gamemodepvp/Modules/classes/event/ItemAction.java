@@ -8,6 +8,7 @@ import ml.gamemodepvp.Modules.classes.kit.KitBuilder;
 import ml.gamemodepvp.menu.LobbyGuiConstructor;
 import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +30,7 @@ public enum ItemAction
                 public void fireAction(Object object, Player player)
                 {
                     if(object instanceof String)
-                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), (String)object);
+                    Bukkit.getServer().dispatchCommand(player, (String)object);
                     else
                     {
                         new Exception("Object wasnt instance of String!");
