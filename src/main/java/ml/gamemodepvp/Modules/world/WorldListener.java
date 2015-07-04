@@ -1,10 +1,11 @@
 package ml.gamemodepvp.Modules.world;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.util.ModuleChat;
 import ml.gamemodepvp.util.RegionTestUtility;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -42,7 +43,8 @@ public class WorldListener implements Listener  {
                 if (!rg.getHandler().checkBoundary((int)e.getTo().getX(), (int)e.getTo().getY(), (int)e.getTo().getZ()))
                 {
 
-                   rg.getHandler().bounceBack(e.getFrom(), e.getTo(), e.getPlayer());
+                   //rg.getHandler().bounceBack(e.getFrom(), e.getTo(), e.getPlayer());
+                    e.getPlayer().teleport(new Location(e.getPlayer().getWorld(), e.getFrom().getX(), e.getFrom().getY(), e.getFrom().getZ()));
                     e.getPlayer().sendMessage(ModuleChat.worldPrefixToPlayer(ChatColor.RED + "" + "Sorry, you are not allowed to leave this region!"));
                     e.setCancelled(true);
 

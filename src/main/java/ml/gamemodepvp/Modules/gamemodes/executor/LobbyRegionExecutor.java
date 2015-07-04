@@ -1,22 +1,18 @@
 package ml.gamemodepvp.Modules.gamemodes.executor;
 
 import ml.gamemodepvp.CommandList;
-import ml.gamemodepvp.CoreListener;
-import ml.gamemodepvp.CoreMain;
-import ml.gamemodepvp.Modules.core.CoreExecutor;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
 import ml.gamemodepvp.Modules.world.handler.RegionHandler;
 import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.Modules.world.util.SerializableLocation;
 import ml.gamemodepvp.util.ModuleChat;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 

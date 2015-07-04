@@ -1,7 +1,7 @@
 package ml.gamemodepvp.Modules.core;
 
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.ranks.Rank;
 import ml.gamemodepvp.database.playerdata.CorePlayerData;
 import ml.gamemodepvp.database.playerdata.PlayerDataHandler;

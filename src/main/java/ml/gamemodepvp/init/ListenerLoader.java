@@ -1,6 +1,6 @@
 package ml.gamemodepvp.init;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.classes.WncListener;
 import ml.gamemodepvp.Modules.core.listeners.CoreSubListener;
 import ml.gamemodepvp.Modules.core.listeners.LoadDataListener;

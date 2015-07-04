@@ -26,14 +26,13 @@ public class Region implements Serializable, InternalVersionID{
     private String regionName;
 
     private boolean canPlace = true;
-
     private boolean canUse = true;
-
     private boolean canLeave = true;
-
     private boolean canEnter = true;
-
     private boolean canBreak = true;
+    private boolean canPvp = false;
+
+
 
     private HashMap<PlayerWrapper, RegionPlayerProperties> playerProperties = new HashMap<PlayerWrapper, RegionPlayerProperties>();
 
@@ -80,7 +79,7 @@ public class Region implements Serializable, InternalVersionID{
 
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
-     * @return
+     * @return canUse boolean
      */
     public boolean isCanUse() {
         return canUse;
@@ -88,7 +87,7 @@ public class Region implements Serializable, InternalVersionID{
 
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
-     * @return
+     * @param canUse to set the boolean flag
      */
     public void setCanUse(boolean canUse) {
         this.canUse = canUse;
@@ -96,7 +95,7 @@ public class Region implements Serializable, InternalVersionID{
 
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
-     * @return
+     * @return canLeave boolean
      */
     public boolean isCanLeave() {
         return canLeave;
@@ -104,7 +103,7 @@ public class Region implements Serializable, InternalVersionID{
 
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
-     * @return
+     * @param canLeave to set the boolean flag
      */
     public void setCanLeave(boolean canLeave) {
         this.canLeave = canLeave;
@@ -126,6 +125,15 @@ public class Region implements Serializable, InternalVersionID{
         this.canBreak = canBreak;
     }
 
+    public void setCanPvp(boolean b)
+    {
+        this.canPvp = b;
+    }
+
+    public boolean isCanPvp()
+    {
+        return canPvp;
+    }
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
      * @return
@@ -156,11 +164,11 @@ public class Region implements Serializable, InternalVersionID{
         this.canEnter = canEnter;
     }
 
-    public void setCanPlace(boolean canPlace){this.canBreak = canPlace;}
+    public void setCanPlace(boolean canPlace){this.canPlace = canPlace;}
 
     public boolean isCanPlace()
     {
-        return this.canBreak;
+        return this.canPlace;
     }
 
     /**
@@ -241,6 +249,5 @@ public class Region implements Serializable, InternalVersionID{
 
         return false;
     }
-
 
 }

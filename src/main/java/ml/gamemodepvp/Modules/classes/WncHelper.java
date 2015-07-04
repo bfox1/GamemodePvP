@@ -1,6 +1,6 @@
 package ml.gamemodepvp.Modules.classes;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;

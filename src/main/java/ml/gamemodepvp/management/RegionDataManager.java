@@ -1,7 +1,9 @@
 package ml.gamemodepvp.management;
 
 
-import ml.gamemodepvp.CoreMain;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+import ml.gamemodepvp.bukkit.CoreMain;
 
 import ml.gamemodepvp.util.RegionTestUtility;
 import ml.gamemodepvp.Modules.world.region.PlayerBuildingMode;
@@ -88,24 +90,12 @@ public final class RegionDataManager {
      */
     public void saveWorldData(CoreMain main) {
 
+        File file = new File("plugins/GamemodePVP/regionData/regionData.xml"  );
+
+        XStream stream = new XStream(new StaxDriver());
 
         try {
-            File file = new File("plugins/GamemodePVP/regionData/" + "WorldRegionData" + ".ser");
-            File parentDir = file.getParentFile();
-            if (!parentDir.exists()) {
-                parentDir.mkdirs();
-
-            }
-            ObjectOutputStream bw = new ObjectOutputStream(new FileOutputStream(file));
-            bw.writeObject(this.worldRegionList);
-
-            main.getLogger().info("Region Data has been successfully saved.");
-
-            bw.close();
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            stream.toXML(worldRegionList, new FileWriter(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,25 +106,22 @@ public final class RegionDataManager {
      * NEVER forcefully load data!! Could kill all regions!
      * @param main
      */
+    @SuppressWarnings("unchecked")
     public void loadWorldData(CoreMain main) {
-                     //File file = new File("plugins/GamemodePVP/regionData");
-                    try {
-                        ObjectInputStream ois = new ObjectInputStream(new FileInputStream("plugins/GamemodePVP/regionData/" + "WorldRegionData" + ".ser"));
-                        this.worldRegionList = (HashMap<String, HashMap<String, Region>>) ois.readObject();
-                        main.getLogger().info("Region Data has been successfully loaded.");
-                        ois.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+        File file = new File("plugins/GamemodePVP/regionData/regionData.xml"  );
+
+        XStream stream = new XStream(new StaxDriver());
+
+        HashMap<String, HashMap<String, Region>> map = (HashMap<String, HashMap<String, Region>>) stream.fromXML(file);
+        if(map != null)
+        this.worldRegionList = map;
     }
 
 
 
     public HashMap<String, Region> loadRegionList(String worldName)
     {
-        HashMap<String, Region> hasLoaded = null;
+        HashMap<String, Region> hasLoaded = new HashMap<String, Region>();
         if(this.worldRegionList.get(worldName) != null) {
             hasLoaded = this.worldRegionList.get(worldName);
 

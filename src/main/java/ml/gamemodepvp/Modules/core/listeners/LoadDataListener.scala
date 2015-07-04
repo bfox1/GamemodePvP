@@ -1,6 +1,6 @@
 package ml.gamemodepvp.Modules.core.listeners
 
-import ml.gamemodepvp.CoreMain
+import ml.gamemodepvp.bukkit.CoreMain
 import ml.gamemodepvp.database.playerdata.{CorePlayerData, PlayerDataHandler}
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerJoinEvent

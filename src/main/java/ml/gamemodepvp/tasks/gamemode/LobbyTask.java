@@ -1,16 +1,11 @@
 package ml.gamemodepvp.tasks.gamemode;
 
-import ml.gamemodepvp.CoreMain;
-import ml.gamemodepvp.Modules.gamemodes.Gamemode;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
-import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.util.DebugCore;
-import ml.gamemodepvp.util.GamemodePvPMessageUtility;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 
 /**
  * Created by bfox1 on 6/13/2015.
@@ -69,10 +64,18 @@ public class LobbyTask extends BukkitRunnable {
                 counter--;
 
                 Bukkit.broadcastMessage(ChatColor.BLUE + "Time: " + counter);
-                if(counter == end || lobby.isLobbyEmpty())
+                if(lobby.isLobbyEmpty())
                 {
                     Bukkit.getScheduler().cancelTask(taskID);
                 }
+                if(counter == end)
+                {
+                    if(lobby.requirementsMet())
+                    {
+
+                    }
+                }
+
 
             }
         }, 0, 20);

@@ -1,21 +1,15 @@
 package ml.gamemodepvp.Modules.gamemodes;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.modes.freeforall.TestMode;
 import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
-import ml.gamemodepvp.Modules.world.region.Region;
-import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.tasks.gamemode.LobbyTask;
-import ml.gamemodepvp.util.ChatUtility;
-import ml.gamemodepvp.util.GamemodePvPMessageUtility;
 import ml.gamemodepvp.util.ModuleChat;
 import net.minecraft.server.v1_8_R2.Scoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -34,6 +28,10 @@ public class Lobby  {
 
     private HashMap<UUID, Player> playerMapData = new HashMap<UUID, Player>();
 
+    private HashMap<UUID, Player> redTeam = new HashMap<UUID, Player>();
+
+    private HashMap<UUID, Player> blueTeam = new HashMap<UUID, Player>();
+
     public Lobby(String lobbyName, Player player, CoreMain main)
     {
         this.lobbyName = lobbyName;
@@ -42,23 +40,42 @@ public class Lobby  {
         this.isActiveGame = false;
     }
 
+    /**
+     * Checks if the Player is in the Lobby.
+     * @param player The Player to be searched.
+     * @return boolean
+     */
     public boolean isPlayerInLobby(Player player)
     {
         return playerMapData.containsKey(player.getUniqueId());
     }
 
+    /**
+     * Returns the PlayerMapData.
+     * @return Map.
+     */
+    @Deprecated
     public Map<UUID, Player> getPlayerMapData()
     {
         return this.playerMapData;
     }
 
-
-
+    /**
+     * Checks to see if the Lobby is empty.
+     * @return boolean
+     */
     public boolean isLobbyEmpty()
     {
       return this.playerMapData.isEmpty();
     }
 
+    /**
+     * Adds the Player to the Lobby. This method will create a new Lobby if the Lobby the player attempted
+     * to join is not found. This Method will teleport player to location in which the Lobby has set spawn to be
+     * If game is active, it will send player to Waiting Lobby. and When Lobby is in Game, Send player to
+     * the ArenaMap Spawn.
+     * @param player The player to join Lobby.
+     */
     public void joinLobby(Player player)
     {
         if(gamemode.getModeProperties().getMaxPlayerCount() == playerMapData.size())
@@ -73,15 +90,19 @@ public class Lobby  {
             } catch (IllegalArgumentException e)
             {
                 Lobby lobby = new Lobby("Lobby." + id, player, main);
+
                 lobby.setGamemode(
-                        new TestMode(new SpawnLocations(player.getWorld()),
+                        new TestMode(
+                                new SpawnLocations(player.getWorld()),
                                 new ScoreManagement(new Scoreboard()),
-                                Gamemode.ModeProperties.TESTLOBBY));
+                                Gamemode.ModeProperties.TESTLOBBY)
+                );
 
                 this.main.getLobbyManager().addLobby(lobby);
 
                 BukkitTask task = new LobbyTask(lobby,
-                        this.main).runTaskTimerAsynchronously(this.main, 0, (lobby.getGamemode().getModeProperties().getTicksPerWaitingTime()));
+                        this.main).runTaskTimerAsynchronously(
+                        this.main, 0, (lobby.getGamemode().getModeProperties().getTicksPerWaitingTime()));
             }
         }
         this.playerMapData.put(player.getUniqueId(), player);
@@ -103,6 +124,10 @@ public class Lobby  {
         player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have been added to the Lobby!!"));
     }
 
+    /**
+     * Will pull the player out of the Lobby, and teleport him back to spawn.
+     * @param player The player.
+     */
     public void leaveLobby(Player player)
     {
         this.playerMapData.remove(player.getUniqueId());
@@ -111,31 +136,71 @@ public class Lobby  {
         player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have left the Lobby"));
     }
 
-    public void setLobbyName(String name)
-    {
-        this.lobbyName = name;
-    }
 
+    /**
+     * Returns the LobbyName
+     * @return The Lobby Name.
+     */
     public String getLobbyName()
     {
         return this.lobbyName;
     }
 
+    /**
+     * Returns the Gamemode of the Lobby.
+     * @return The Gamemode.
+     */
     public Gamemode getGamemode()
     {
         return this.gamemode;
     }
 
-
+    /**
+     * Returns true if Game is active, and false if it isnt.
+     * @return boolean
+     */
     public boolean isActiveGame() {
         return isActiveGame;
     }
 
+    /**
+     * Sets the Active Game
+     * @param isActiveGame boolean
+     */
     public void setActiveGame(boolean isActiveGame) {
         this.isActiveGame = isActiveGame;
     }
 
+    /**
+     * Sets the Gamemode. This is most valuable for player choice to decide what Gamemode They wish to
+     * Play on which Map.
+     * @param gamemode The Gamemode.
+     */
     public void setGamemode(Gamemode gamemode) {
         this.gamemode = gamemode;
+    }
+
+    /**
+     * Checks to see if the Current Gamemode and Map have the met Player Requirements to Play the Match.
+     * @return boolean
+     */
+    public boolean requirementsMet()
+    {
+        return gamemode.getModeProperties().isTeam() || playerMapData.size() >= gamemode.getModeProperties().getMinPlayerCount();
+
+    }
+
+    /**
+     * For Team matches only, will check to see if the Player Count on both teams are Even.
+     * @return boolean
+     */
+    private boolean isBalanced()
+    {
+        int minPlayers = gamemode.getModeProperties().getMinPlayerCount();
+        int teamSize = redTeam.size() + blueTeam.size();
+
+
+        return teamSize >= minPlayers || teamSize >= minPlayers - 1;
+
     }
 }

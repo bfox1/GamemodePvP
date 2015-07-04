@@ -1,6 +1,6 @@
 package ml.gamemodepvp.Modules.economy;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.economy.handler.MoneyHandler;
 import ml.gamemodepvp.database.playerdata.CorePlayerData;
 import ml.gamemodepvp.database.playerdata.PlayerDataHandler;

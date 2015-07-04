@@ -1,20 +1,18 @@
 package ml.gamemodepvp.Modules.classes;
 
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 
 
-import ml.gamemodepvp.Modules.classes.event.ItemAction;
-import ml.gamemodepvp.Modules.classes.kit.KitBuilder;
-import ml.gamemodepvp.menu.LobbyGuiConstructor;
+import ml.gamemodepvp.bukkit.action.ItemAction;
+import ml.gamemodepvp.Modules.classes.kit.Kit;
+import ml.gamemodepvp.menu.LobbyGuiGmpvp;
 import ml.gamemodepvp.menu.MainMenu;
 import ml.gamemodepvp.util.DebugCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by bfox1 on 4/24/2015.
@@ -42,7 +40,7 @@ public class WncListener implements Listener {
     @EventHandler
     public void onKitAction(InventoryClickEvent e)
     {
-       InventoryConstructor constructor = main.getMenu();
+       GmpvpInventory constructor = main.getMenu();
 
 
 
@@ -52,7 +50,7 @@ public class WncListener implements Listener {
             {
                 if (e.isLeftClick() && e.getCurrentItem() != null)
                 {
-                    for (KitBuilder kits : constructor.getKitInventory()) {
+                    for (Kit kits : constructor.getKitInventory()) {
 
                         if (e.getCurrentItem().getItemMeta().getDisplayName().equals(kits.getStack().getDisplayStack().getItemMeta().getDisplayName()))
                         {
@@ -77,6 +75,24 @@ public class WncListener implements Listener {
         /**
          * Manages MainMenu Event
          */
+
+        if(event.getClickedInventory() != null && event.getCurrentItem() != null)
+        {
+            GmpvpInventory inventory = main.getGmpvpInventoryByName(event.getClickedInventory().getName());
+            if(inventory != null && event.isLeftClick())
+                if(inventory.getInventory().contains(event.getCurrentItem()))
+                {
+                   // DebugCore.returnDebugMessage(inventory.getInventory().getName() + " : " + event.getClickedInventory().getName());
+                    DisplayStack stack = inventory.getDisplayStackBuilderByItemStack(event.getCurrentItem());
+                    if(stack != null)
+                    {
+                        stack.fireAction((Player)event.getWhoClicked());
+                        event.setCancelled(true);
+                    }
+
+                }
+        }
+        /*
         if(event.getClickedInventory() != null)
         if(event.getClickedInventory().getName().equals(inventoryConstructor.getInventory().getName()))
         {
@@ -105,14 +121,16 @@ public class WncListener implements Listener {
         }
         /**
          * Manages Internal Guis from MainMenu
-         */
+         *
         else if(inventoryConstructor.getInventoryConstructorByString(event.getClickedInventory().getName()) != null)
         {
-            InventoryConstructor constructor = inventoryConstructor.getInventoryConstructorByString(event.getClickedInventory().getName());
-            if(constructor instanceof LobbyGuiConstructor)
-                ((LobbyGuiConstructor) constructor).getDiplayFromItemStack(event.getCurrentItem()).fireAction((Player) event.getWhoClicked());
+            GmpvpInventory constructor = inventoryConstructor.getInventoryConstructorByString(event.getClickedInventory().getName());
+            if(constructor instanceof LobbyGuiGmpvp)
+                ((LobbyGuiGmpvp) constructor).getDiplayFromItemStack(event.getCurrentItem()).fireAction((Player) event.getWhoClicked());
             event.setCancelled(true);
-        }
+        }*/
+
+
     }
 
 

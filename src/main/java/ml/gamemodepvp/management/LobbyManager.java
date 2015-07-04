@@ -1,17 +1,12 @@
 package ml.gamemodepvp.management;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
-import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
-import ml.gamemodepvp.debugbox.LobbyNotFoundException;
-import ml.gamemodepvp.util.DebugCore;
-import ml.gamemodepvp.util.GamemodePvPMessageUtility;
 import ml.gamemodepvp.util.LobbyValidate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

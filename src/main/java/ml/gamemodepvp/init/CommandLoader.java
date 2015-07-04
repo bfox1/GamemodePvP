@@ -1,7 +1,7 @@
 package ml.gamemodepvp.init;
 
 import ml.gamemodepvp.CommandList;
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.classes.WncExecutor;
 
 import ml.gamemodepvp.Modules.core.CoreExecutor;

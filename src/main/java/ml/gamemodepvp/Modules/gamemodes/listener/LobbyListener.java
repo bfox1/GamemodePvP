@@ -1,15 +1,14 @@
 package ml.gamemodepvp.Modules.gamemodes.listener;
 
-import ml.gamemodepvp.CoreListener;
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.listener.CoreListener;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.Gamemode;
 import ml.gamemodepvp.Modules.gamemodes.Lobby;
 import ml.gamemodepvp.Modules.gamemodes.ScoreManagement;
 import ml.gamemodepvp.Modules.gamemodes.SpawnLocations;
 import ml.gamemodepvp.Modules.gamemodes.modes.freeforall.TestMode;
-import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
-import ml.gamemodepvp.events.LobbyJoinEvent;
-import ml.gamemodepvp.events.LobbyLeaveEvent;
+import ml.gamemodepvp.bukkit.events.LobbyJoinEvent;
+import ml.gamemodepvp.bukkit.events.LobbyLeaveEvent;
 import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.tasks.gamemode.LobbyTask;
 import ml.gamemodepvp.util.LobbyValidate;
@@ -43,7 +42,7 @@ public class LobbyListener extends CoreListener {
 
             LobbyValidate lobbyValidation = LobbyManager.getPlayerValidation(player, this.getMain().getLobbyManager());
 
-            if (lobbyValidation.isInLobby())
+            if (lobbyValidation.isInLobby() && getMain().getLobbyManager().getLobbyInfo(event.getLobbyName()) != null)
             {
 
                 lobbyValidation.getLobby().leaveLobby(player);
@@ -55,6 +54,7 @@ public class LobbyListener extends CoreListener {
             try {
 
                 Lobby lobby = event.getLobby();
+                if(getMain().getLobbyManager().getLobbyInfo(event.getLobbyName()) != null)
                 lobby.joinLobby(player);
 
             } catch (IllegalArgumentException e)

@@ -19,6 +19,11 @@ public class LobbyRegion extends Region {
     {
         super("Lobby." + id, handler);
         this.LOBBYID = id;
+        this.setCanLeave(false);
+        this.setCanUse(false);
+        this.setCanBreak(false);
+        this.setCanPvp(false);
+        this.setCanPlace(false);
 
     }
 

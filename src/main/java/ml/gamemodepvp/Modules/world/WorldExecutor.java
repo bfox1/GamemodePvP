@@ -1,6 +1,6 @@
 package ml.gamemodepvp.Modules.world;
 
-import ml.gamemodepvp.CoreMain;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.world.handler.RegionHandler;
 import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.Modules.world.util.SerializableLocation;
