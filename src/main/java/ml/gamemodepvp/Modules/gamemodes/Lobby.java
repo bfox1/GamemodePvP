@@ -1,8 +1,10 @@
 package ml.gamemodepvp.Modules.gamemodes;
 
+import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.gamemodes.modes.freeforall.TestMode;
 import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
+import ml.gamemodepvp.debugbox.RegionNotValidException;
 import ml.gamemodepvp.tasks.gamemode.LobbyTask;
 import ml.gamemodepvp.util.ModuleChat;
 import net.minecraft.server.v1_8_R2.Scoreboard;
@@ -54,7 +56,7 @@ public class Lobby  {
      * Returns the PlayerMapData.
      * @return Map.
      */
-    @Deprecated
+
     public Map<UUID, Player> getPlayerMapData()
     {
         return this.playerMapData;
@@ -78,18 +80,19 @@ public class Lobby  {
      */
     public void joinLobby(Player player)
     {
+
         if(gamemode.getModeProperties().getMaxPlayerCount() == playerMapData.size())
         {
-            LobbyRegion rg = (LobbyRegion)main.getDataManager().getRegion(lobbyName);
+            Region rg = main.getDataManager().getLobbyRegion(lobbyName);
             assert rg != null;
-            int id = rg.getLOBBYID() + 1;
+            int id = rg.getRegionID() + 1;
             try
             {
-                Lobby lb = main.getLobbyManager().getLobbyInfo("Lobby." + id);
+                Lobby lb = main.getLobbyManager().getLobbyInfo("Lobby-" + id);
                 lb.joinLobby(player);
             } catch (IllegalArgumentException e)
             {
-                Lobby lobby = new Lobby("Lobby." + id, player, main);
+                Lobby lobby = new Lobby("Lobby-" + id, player, main);
 
                 lobby.setGamemode(
                         new TestMode(
@@ -109,8 +112,14 @@ public class Lobby  {
         //TODO - Teleport Players to the Waiting Lobby for this Lobby or straight into the Match.
         if(!isActiveGame)
         {
-            LobbyRegion region = (LobbyRegion)main.getDataManager().getRegion(lobbyName);
-            player.teleport(region.getHandler().getPosition1());
+            Region region = main.getDataManager().getRegion(lobbyName);
+            assert region != null;
+            if(isRegionReady(region))
+            {
+                player.teleport(region.getLobbySpawnLocation().getLocation());
+            }
+            else
+            throw new RegionNotValidException("Region does not meet requirements! May need Spawn Location", lobbyName);
         }
         else
         {
@@ -121,6 +130,7 @@ public class Lobby  {
          * Prefer to Assign the Lobby Locations and Teleport locations to SpawnLocations.
          */
         //TODO -
+        this.playerMapData.put(player.getUniqueId(), player);
         player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have been added to the Lobby!!"));
     }
 
@@ -134,6 +144,17 @@ public class Lobby  {
         //TODO - Teleport Players back to Waiting Lobby.
         player.teleport(Bukkit.getWorld("world").getSpawnLocation());
         player.sendMessage(ModuleChat.gamemodePrefixToPlayer("You have left the Lobby"));
+    }
+
+    public void purgeAllPlayers()
+    {
+        if(playerMapData.size() > 0)
+        {
+            for(Map.Entry entry : playerMapData.entrySet())
+            {
+                leaveLobby((Player)entry.getValue());
+            }
+        }
     }
 
 
@@ -202,5 +223,15 @@ public class Lobby  {
 
         return teamSize >= minPlayers || teamSize >= minPlayers - 1;
 
+    }
+
+    /**
+     * This Method pertains to the Waiting Lobby Region.
+     * @param region
+     * @return
+     */
+    private boolean isRegionReady(Region region)
+    {
+        return region.isLobbyFlag() && region.getLobbySpawnLocation() != null;
     }
 }

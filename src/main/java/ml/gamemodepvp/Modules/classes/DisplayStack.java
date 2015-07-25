@@ -23,6 +23,7 @@ public class DisplayStack implements DisplayStackBuilder {
 
     private final Object actionParams;
 
+
     private String[] lorePrefix =
             {
               "Primary: ", "Secondary: ", "Tactical: ", "Lethal: ", "Others: "

@@ -19,11 +19,11 @@ import org.bukkit.entity.Player;
  * Created by bfox1 on 6/8/2015.
  * In God We Trust.
  */
-public class FFACommandExecutor implements CommandExecutor {
+public class LobbyCommandExecutor implements CommandExecutor {
 
     private CoreMain main;
 
-    public FFACommandExecutor(CoreMain main)
+    public LobbyCommandExecutor(CoreMain main)
     {
         this.main = main;
     }
@@ -33,7 +33,7 @@ public class FFACommandExecutor implements CommandExecutor {
     {
 
         Player player = (Player)sender;
-        if(command.getName().equalsIgnoreCase("setLocation") && sender instanceof Player )
+        if(command.getName().equalsIgnoreCase("setLocation") && sender != null )
         {
 
             SpawnLocations loc = new SpawnLocations(player.getWorld());
@@ -44,22 +44,20 @@ public class FFACommandExecutor implements CommandExecutor {
             return true;
         }
 
+        //Not needed Anymore//
+        //TODO
         if(command.getName().equalsIgnoreCase("joinLobby"))
         {
 
-            try {
-
-
-                String name = LobbyRegion.findLobbyRegion(this.main.getDataManager()).getRegionName();
+            try
+            {
+                //String name = LobbyRegion.findLobbyRegion(main).getRegionName();
+                String name = main.getDataManager().getLobbyRegion().getRegionName();
                 Bukkit.getServer().getPluginManager().callEvent(new LobbyJoinEvent(player, name, main));
             } catch (NullPointerException e)
             {
                 e.getMessage();
             }
-
-
-
-
 
             return true;
         }
@@ -76,8 +74,8 @@ public class FFACommandExecutor implements CommandExecutor {
 
             return true;
         }
-
-        DebugCore.returnDebugMessage(command.getName() + " " + s);
+    //Not needed//
+        //TODO
         if(command.getName().equalsIgnoreCase("startGame"))
         {
 

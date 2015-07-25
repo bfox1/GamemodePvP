@@ -1,22 +1,25 @@
 package ml.gamemodepvp.Modules.world.handler;
 
+import com.sun.javafx.beans.annotations.NonNull;
+import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.Modules.world.util.SerializableLocation;
+import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.util.DirectionVector;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by bfox1 on 5/10/2015.
  */
-public class RegionHandler implements Serializable{
+public class RegionHandler {
 
-    static final long serialVersionUID = 1337L;
 
     private transient World world;
+
+
 
     private SerializableLocation position1;
 
@@ -30,7 +33,10 @@ public class RegionHandler implements Serializable{
     public RegionHandler(World world)
     {
         this.world = world;
+
     }
+
+
 
 
     public Location getPosition1() {

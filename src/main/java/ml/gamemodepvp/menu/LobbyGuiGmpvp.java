@@ -59,23 +59,8 @@ public class LobbyGuiGmpvp extends GmpvpInventory {
             @Override
             public void run() {
 
-
-               /* if (lobbiesOpened != main.getLobbyManager().getOpenLobbies().size())
-                {
-                    establishLobbyGui(main);
-                    DebugCore.returnDebugMessage("Testing Past");
-                    Bukkit.getScheduler().cancelTask(taskID);
-                } else if(main.getLobbyManager().getOpenLobbies().size() == 0)
-                {
-                    DebugCore.returnDebugMessage("Testing Failed");
-                    establishLobbyGui(main);
-                    Bukkit.getScheduler().cancelTask(taskID);
-
-                }*/
                 establishLobbyGui(getMain());
                 Bukkit.getScheduler().cancelTask(taskID);
-                StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-                DebugCore.returnDebugMessage(stackTraceElements);
             }
         }, 0, 50);
     }
@@ -89,14 +74,14 @@ public class LobbyGuiGmpvp extends GmpvpInventory {
         }
         LobbyManager manger = main.getLobbyManager();
         List<Lobby> lobbyList = manger.getOpenLobbies();
-        int it = 0;
+        int it = 1;
         DebugCore.returnDebugMessage("In LobbyGui" + lobbyList.size());
         if(lobbyList.size() != 0)
         {
             for (Lobby lobby : lobbyList) {
                 setInventforySlot(buildItemIcon(
                         new ItemStack(Material.WOOL, 1, DyeColor.GREEN.getData()),
-                        ItemAction.COMMAND,
+                        ItemAction.TELEPORT,
                         "joinLobby ",
                         lobby.getLobbyName(),
                         " "
@@ -106,13 +91,13 @@ public class LobbyGuiGmpvp extends GmpvpInventory {
             }
 
             for (int i = 0; i < manger.getMaxLobbyCount() - lobbyList.size(); i++) {
-                Map<String, Lobby> mp = manger.getLobbyMapInfo();
+                //Map<String, Lobby> mp = manger.getLobbyMapInfo();
 
                 setInventforySlot(buildItemIcon(
                         new ItemStack(Material.WOOL, 1, DyeColor.RED.getData()),
                         ItemAction.COMMAND,
                         "joinLobby ",
-                        "Lobby." + it,
+                        "Lobby-" + it,
                         " "
                 ));
                 it++;
@@ -122,13 +107,13 @@ public class LobbyGuiGmpvp extends GmpvpInventory {
         else
         {
             for (int i = 0; i < manger.getMaxLobbyCount(); i++) {
-                Map<String, Lobby> mp = manger.getLobbyMapInfo();
+                //Map<String, Lobby> mp = manger.getLobbyMapInfo();
 
                 setInventforySlot(buildItemIcon(
                         new ItemStack(Material.WOOL, 1, DyeColor.RED.getData()),
                         ItemAction.COMMAND,
                         "joinLobby ",
-                        "Lobby." + it,
+                        "Lobby-" + it,
                         " "
                 ));
                 it++;

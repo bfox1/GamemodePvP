@@ -4,7 +4,10 @@ package ml.gamemodepvp.bukkit.action;
 import ml.gamemodepvp.Modules.classes.GmpvpInventory;
 import ml.gamemodepvp.Modules.classes.classadditives.Weapon;
 import ml.gamemodepvp.Modules.classes.kit.Kit;
+import ml.gamemodepvp.Modules.gamemodes.Lobby;
+import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.menu.LobbyGuiGmpvp;
+import ml.gamemodepvp.util.LobbyValidate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,6 +41,7 @@ public enum ItemAction
                 @Override
                 public void fireAction(Object object, Player player)
                 {
+
                     if(object instanceof Kit)
                     {
                         Kit builder = (Kit)object;
@@ -89,6 +93,13 @@ public enum ItemAction
             {
                 @Override
                 public void fireAction(Object obj,Player player)
+                {
+
+                }
+            },
+    TELEPORT{
+                @Override
+                public void fireAction(Object obj, Player player)
                 {
 
                 }

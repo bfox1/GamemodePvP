@@ -28,7 +28,8 @@ public class MainMenu extends GmpvpInventory {
                 new LobbyGuiGmpvp("Lobby Menu", 9,main),
                 ChatColor.DARK_RED + "Lobby Selection", "To find a lobby to join.", "Just testing"));
         GmpvpInventory con = new GmpvpInventory("Class", 9, main);
-        con.buildDefaultInventory();
+        con.setKitInventory(con.buildDefaultInventory());
+
         setInventforySlot(buildItemIcon(new ItemStack(Material.DIAMOND_SWORD), ItemAction.INVENTORY,
                 con,
                 ChatColor.DARK_AQUA + "Classes",  "To select a class to use."));

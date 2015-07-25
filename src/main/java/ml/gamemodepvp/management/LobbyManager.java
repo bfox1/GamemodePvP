@@ -62,6 +62,10 @@ public final class LobbyManager {
      */
     public void closeLobby(Lobby lobby)
     {
+        if(lobby.getPlayerMapData().size() > 0)
+        {
+            lobby.purgeAllPlayers();
+        }
         CommandSender sender = Bukkit.getServer().getConsoleSender();
         sender.sendMessage("Lobby has been Closed.");
         this.lobbyMap.remove(lobby.getLobbyName());
@@ -107,6 +111,10 @@ public final class LobbyManager {
      */
     public static void closeLobby(Lobby lobby, LobbyManager mng)
     {
+        if(lobby.getPlayerMapData().size() > 0)
+        {
+            lobby.purgeAllPlayers();
+        }
         mng.closeLobby(lobby);
     }
 

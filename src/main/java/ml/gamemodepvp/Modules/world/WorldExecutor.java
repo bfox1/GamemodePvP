@@ -1,13 +1,17 @@
 package ml.gamemodepvp.Modules.world;
 
+import ml.gamemodepvp.Modules.gamemodes.Lobby;
+import ml.gamemodepvp.Modules.gamemodes.region.LobbyRegion;
 import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.Modules.world.handler.RegionHandler;
 import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.Modules.world.util.SerializableLocation;
 import ml.gamemodepvp.Modules.world.util.WorldController;
 import ml.gamemodepvp.PlayerWrapper;
+import ml.gamemodepvp.management.LobbyManager;
 import ml.gamemodepvp.management.RegionDataManager;
 import ml.gamemodepvp.database.worlddata.WorldDataHandler;
+import ml.gamemodepvp.util.LobbyValidate;
 import ml.gamemodepvp.util.ModuleChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.persistence.Lob;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,7 +161,12 @@ this.core = worldCore;
             if(hasPermission(player, "gamemodepvp.world.removeregion"))
             if(hm.containsKey(strings[0]))
             {
-                player.sendMessage(ModuleChat.worldPrefixToPlayer("Successfully Removed Region!"));
+                Region region = hm.get(strings[0]);
+                if(region.isLobbyFlag())
+                {
+
+                    core.getLobbyManager().closeLobby(core.getLobbyManager().getLobbyInfo(strings[0]));
+                }
                 this.manager.removeWorldRegion(hm.get(strings[0]).getRegionName(), player.getWorld().getName());
                 return true;
             }
@@ -213,13 +223,6 @@ this.core = worldCore;
             HashMap<String, Region> hashMap = this.core.getDataManager().loadRegionList(player);
             if(hashMap.containsKey(strings[0]))
             {
-                hashMap.get(strings[0]).setPlayerProperties(player, hashMap.get(strings[0]));
-                Bukkit.broadcastMessage(hashMap.get(strings[0]).getPlayerProperties().get(PlayerWrapper.getPlayerWrapper(player)).nPlayer().getPlayerName());
-                if(hashMap.get(strings[0]).setPlayerFlag(strings[1], strings[2], player))
-                {
-                    player.sendMessage(ModuleChat.worldPrefixToPlayer("You have set the " + strings[0] + " for " + strings[1] + " flag to " + strings[2] + "!"));
-                    return true;
-                }
             }
             player.sendMessage(ModuleChat.worldPrefixToPlayer(ChatColor.RED + "No region Found"));
             return false;

@@ -37,18 +37,19 @@ public class LobbyRegionExecutor implements CommandExecutor {
 
         if(command.getName().equalsIgnoreCase(CommandList.LobbyCommands.CREATELOBBYZONE) && player != null )
         {
-            int index = 0;
+            int index = 1;
             HashMap<String, Region> hm = this.main.getDataManager().loadRegionList(player);
-            while(this.main.getDataManager().getRegion("Lobby." + index) != null)
+            while(this.main.getDataManager().getRegion("Lobby-" + index) != null)
             {
                 index++;
             }
             if(index >=5)
             {
+                player.sendMessage(ModuleChat.worldPrefixToPlayer("Cannot create lobby! Only limited to 5!"));
                 return false;
             }
-            LobbyRegion rg = new LobbyRegion(index, new RegionHandler(player.getWorld()));
-            rg.setLocation(player.getLocation());
+            Region rg = new Region(index, new RegionHandler(player.getWorld()));
+
 
             rg.getHandler().setPosition1(new SerializableLocation(this.main.getDataManager().getRegionCuboid(player)[0]));
             rg.getHandler().setPosition2(new SerializableLocation(this.main.getDataManager().getRegionCuboid(player)[1]));
@@ -62,6 +63,7 @@ public class LobbyRegionExecutor implements CommandExecutor {
             player.sendMessage(ModuleChat.worldPrefixToPlayer("You have create a new Lobby Region"));
 
             this.main.getDataManager().setRegionBuildingMode(false, player);
+            rg.setLobbySpawnLocation(new SerializableLocation(player.getLocation()));
             for(int i = 0; i< player.getInventory().getSize(); i++)
             {
                 if(player.getInventory().getItem(i) != null)

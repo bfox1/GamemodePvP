@@ -129,6 +129,12 @@ public final class RegionDataManager {
         return hasLoaded;
     }
 
+    /**
+     * Returns the Region by Region Name.
+     * @param regionName The region name searching for.
+     * @return Region.
+     */
+    @SuppressWarnings("unchecked")
     public Region getRegion(String regionName)
     {
         for(Map.Entry worldEntry : worldRegionList.entrySet())
@@ -153,7 +159,50 @@ public final class RegionDataManager {
         return null;
     }
 
+    /**
+     * Gets the Specified Lobby Region
+     * @param name The Region name. Do note that if the name isnt a Lobby Region
+     *             it will always return null!
+     * @return Region if any.
+     */
+    @SuppressWarnings("unchecked")
+    public Region getLobbyRegion(String name)
+    {
+        if(name.contains("Lobby"))
+        for(Map.Entry wEntry : worldRegionList.entrySet())
+        {
+            if(wEntry != null)
+            {
+                HashMap<String, Region> rMap = (HashMap<String, Region>)wEntry.getValue();
+                for(Map.Entry rEntry : rMap.entrySet())
+                {
+                    if(rEntry != null && rMap.containsKey(name) && ((Region)rEntry.getValue()).isLobbyFlag())
+                        return(Region)rEntry.getValue() ;
+                }
+            }
 
+        }
+        return null;
+    }
+
+    /**
+     * Will return Lobby Region by Index. ei: 1, 2, 3, 4
+     * @param index The Lobby Index number.
+     * @return Region if any.
+     */
+    public Region getLobbyRegion(int index)
+    {
+        return index != 0 ? getLobbyRegion("Lobby-" + index) : null;
+    }
+
+    /**
+     * Will return Lobby Region by default.
+     * @return Region if any are found.
+     */
+    public Region getLobbyRegion()
+    {
+        return getLobbyRegion(1);
+    }
 
 
     /**

@@ -4,6 +4,7 @@ package ml.gamemodepvp.bukkit;
 
 
 import ml.gamemodepvp.Modules.classes.GmpvpInventory;
+import ml.gamemodepvp.PlayerWrapper;
 import ml.gamemodepvp.management.RegionDataManager;
 import ml.gamemodepvp.init.CommandLoader;
 import ml.gamemodepvp.init.ListenerLoader;
@@ -27,7 +28,7 @@ public class CoreMain extends JavaPlugin {
     public  YamlConfiguration permission;
     private final RegionDataManager regionManager = new RegionDataManager();
     public final PluginManager pm = this.getServer().getPluginManager();
-
+    public GmpvpPlayer player = new GmpvpPlayer(this);
 
     private final HashMap<String, GmpvpInventory> inventoryHashMap = new HashMap<String, GmpvpInventory>();
 

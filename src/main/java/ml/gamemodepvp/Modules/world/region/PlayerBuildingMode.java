@@ -1,5 +1,6 @@
 package ml.gamemodepvp.Modules.world.region;
 
+import ml.gamemodepvp.Modules.world.util.SerializableLocation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -12,6 +13,7 @@ public class PlayerBuildingMode
     private Player player;
     private Location pos1;
     private Location pos2;
+    private SerializableLocation location;
     private boolean buildMode = false;
     public PlayerBuildingMode(Player player)
     {
@@ -49,5 +51,13 @@ public class PlayerBuildingMode
 
     public void setBuildMode(boolean buildMode) {
         this.buildMode = buildMode;
+    }
+
+    public SerializableLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(SerializableLocation location) {
+        this.location = location;
     }
 }

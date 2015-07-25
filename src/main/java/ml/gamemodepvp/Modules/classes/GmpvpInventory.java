@@ -34,7 +34,7 @@ public class GmpvpInventory implements InventoryGui {
 
     private List<Kit> kitInventory;
 
-    private final CoreMain main;
+    private CoreMain main;
 
     private List<DisplayStack> displayStackList;
 
@@ -62,6 +62,7 @@ public class GmpvpInventory implements InventoryGui {
     {
         setInventorySlot(builder.getStack());
         this.kitInventory.add(builder);
+        this.displayStackList.add(builder.getStack());
     }
 
     /**
@@ -106,13 +107,13 @@ public class GmpvpInventory implements InventoryGui {
     }
 
 
-    public Kit buildDefaultInventory()
+    public void buildDefaultInventory()
     {
         //GmpvpInventory ic = main.getDefaultKits();
 
         //Display Stacks
 
-        return new Kit(
+         setKitInventory(new Kit(
                 createDisplayStack(new ItemStack(Material.DIAMOND_SWORD), "Assault"),
                 createWeaponBuilder(
                         new Weapon(new ItemStack(Material.WOOD_SWORD), "Assault", true),
@@ -133,7 +134,11 @@ public class GmpvpInventory implements InventoryGui {
                 new Perks(PotionEffectType.SPEED, 1, 100),
                 new ItemStack(Material.BREAD, 5),
                 new ItemStack(Material.COOKED_BEEF, 2)
-        );
+        ));
+
+        setKitInventory(new Kit(
+                createDisplayStack(new ItemStack(Material.DIAMOND_SWORD))
+        ));
 
 
 

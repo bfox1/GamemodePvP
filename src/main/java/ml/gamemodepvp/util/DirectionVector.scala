@@ -13,16 +13,16 @@ object DirectionVector {
   def getDirectionPath(getFrom:Location, getTo:Location, player:Player, string:String):Unit=
   {
     if(string.eq("x"))
-    if(getFrom.getX  < getTo.getX ) player.setVelocity(new Vector(-0.7, 0.0, 0.0))
-    else if(getFrom.getX > getTo.getX ) player.setVelocity(new Vector(0.7, 0.0,0.0))
+    if(getFrom.getX.toInt  < getTo.getX.toInt ) player.setVelocity(new Vector(-0.7, 0.0, 0.0))
+    else if(getFrom.getX.toInt > getTo.getX.toInt ) player.setVelocity(new Vector(0.7, 0.0,0.0))
 
     if(string.eq("y"))
-    if(getFrom.getY  < getTo.getY )player.setVelocity(new Vector(0.0, -0.7, 0.0))
-    else if(getFrom.getY  > getTo.getY )  player.setVelocity(new Vector(0.0, 0.7, 0.0))
+    if(getFrom.getY.toInt  < getTo.getY.toInt )player.setVelocity(new Vector(0.0, -0.7, 0.0))
+    else if(getFrom.getY.toInt  > getTo.getY.toInt )  player.setVelocity(new Vector(0.0, 0.7, 0.0))
 
     if(string.eq("z"))
-    if(getFrom.getZ < getTo.getZ ) player.setVelocity(new Vector(0.0, 0.0, -0.7))
-    else if(getFrom.getZ > getTo.getZ ) player.setVelocity(new Vector(0.0, 0.0, 0.7))
+    if(getFrom.getZ.toInt < getTo.getZ.toInt ) player.setVelocity(new Vector(0.0, 0.0, -0.7))
+    else if(getFrom.getZ.toInt > getTo.getZ.toInt ) player.setVelocity(new Vector(0.0, 0.0, 0.7))
 
 
 

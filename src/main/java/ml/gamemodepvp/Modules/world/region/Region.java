@@ -2,6 +2,7 @@ package ml.gamemodepvp.Modules.world.region;
 
 import ml.gamemodepvp.Modules.core.lib.InternalVersionID;
 import ml.gamemodepvp.Modules.world.handler.RegionHandler;
+import ml.gamemodepvp.Modules.world.util.SerializableLocation;
 import ml.gamemodepvp.PlayerWrapper;
 import ml.gamemodepvp.database.regiondata.RegionPlayerProperties;
 import ml.gamemodepvp.util.DebugCore;
@@ -16,9 +17,7 @@ import java.util.Map;
 /**
  * Created by bfox1 on 5/10/2015.
  */
-public class Region implements Serializable, InternalVersionID{
-
-    static final long serialVersionUID = 5042014L;
+public class Region {
 
 
     private RegionHandler handler;
@@ -32,15 +31,45 @@ public class Region implements Serializable, InternalVersionID{
     private boolean canBreak = true;
     private boolean canPvp = false;
 
+    private final boolean lobbyFlag;
+
+    private SerializableLocation lobbySpawnLocation;
+
+    private final int regionID;
 
 
     private HashMap<PlayerWrapper, RegionPlayerProperties> playerProperties = new HashMap<PlayerWrapper, RegionPlayerProperties>();
 
-    public Region(String regionName, RegionHandler handler)
-    {
+    /**
+     * This is the Constructor to handle the Basic Regions as normal
+     * @param regionName set region Name.
+     * @param handler set RegionHandler.
+     */
+    public Region(String regionName, RegionHandler handler) {
         this.handler = handler;
         this.regionName = regionName;
         this.playerProperties = new HashMap<PlayerWrapper, RegionPlayerProperties>();
+        this.lobbyFlag = false;
+        this.regionID = 0;
+    }
+
+    /**
+     * This is the Constructor to handle Lobby Region data Only
+     * @param index set the Lobby Index.
+     * @param handler set RegionHandler.
+     */
+    public Region(int index, RegionHandler handler)
+    {
+        if(index == 0) throw new IllegalArgumentException("Lobby Region Cant have 0 as index!");
+        this.handler = handler;
+        this.regionName = "Lobby-" + index;
+        this.lobbyFlag = true;
+        this.regionID = index;
+        this.canBreak = false;
+        this.canLeave = false;
+        this.canPlace = false;
+        this.canUse = false;
+        this.canPvp = false;
     }
 
     public String getRegionName() {
@@ -65,8 +94,8 @@ public class Region implements Serializable, InternalVersionID{
 
     /**
      * Sets player properties into Map.
-     * @param player
-     * @param region
+     * @param player Set the Player
+     * @param region Set the Region.
      */
     @Deprecated
     public void setPlayerProperties(Player player, Region region) {
@@ -143,10 +172,6 @@ public class Region implements Serializable, InternalVersionID{
         return this.getHandler().getWorld();
     }
 
-    @Override
-    public long getInternalVersionID() {
-        return this.INTERNAL_VERSION_ID;
-    }
 
     /**
      * This is a Region Flag, To access Player, use getPlayerProperties()
@@ -250,4 +275,19 @@ public class Region implements Serializable, InternalVersionID{
         return false;
     }
 
+    public boolean isLobbyFlag() {
+        return lobbyFlag;
+    }
+
+    public int getRegionID() {
+        return regionID;
+    }
+
+    public SerializableLocation getLobbySpawnLocation() {
+        return lobbySpawnLocation;
+    }
+
+    public void setLobbySpawnLocation(SerializableLocation lobbySpawnLocation) {
+        this.lobbySpawnLocation = lobbySpawnLocation;
+    }
 }

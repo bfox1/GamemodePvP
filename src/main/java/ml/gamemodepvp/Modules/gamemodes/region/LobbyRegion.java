@@ -3,13 +3,14 @@ package ml.gamemodepvp.Modules.gamemodes.region;
 import ml.gamemodepvp.Modules.world.handler.RegionHandler;
 import ml.gamemodepvp.Modules.world.region.Region;
 import ml.gamemodepvp.Modules.world.util.SerializableLocation;
-import ml.gamemodepvp.management.RegionDataManager;
+import ml.gamemodepvp.bukkit.CoreMain;
 import org.bukkit.Location;
 
 /**
  * Created by bfox1 on 6/21/2015.
  * In God We Trust.
  */
+@Deprecated
 public class LobbyRegion extends Region {
 
     public final int LOBBYID;
@@ -27,20 +28,22 @@ public class LobbyRegion extends Region {
 
     }
 
+
     public int getLOBBYID()
     {
         return LOBBYID;
     }
 
 
-    public static LobbyRegion findLobbyRegion(RegionDataManager manager)
+    public static LobbyRegion findLobbyRegion(CoreMain main)
     {
+
         for(LobbyRegionName name : LobbyRegionName.values())
         {
 
-            if(manager.getRegion(name.getLobbyName()) != null)
+            if(main.getDataManager().getRegion(name.getLobbyName()) != null)
             {
-                return (LobbyRegion)manager.getRegion(name.getLobbyName());
+                return (LobbyRegion)main.getDataManager().getRegion(name.getLobbyName());
             }
         }
         throw new NullPointerException("No Lobby found! ");
@@ -60,6 +63,7 @@ public class LobbyRegion extends Region {
 /**
  * The Lobby Names for the Region. The Lobby Task will assign a player to a designated region.
  */
+@Deprecated
  enum LobbyRegionName
 {
     LOBBYIDONE("Lobby.0"),

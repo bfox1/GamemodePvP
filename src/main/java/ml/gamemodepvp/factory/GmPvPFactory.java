@@ -4,10 +4,15 @@ import ml.gamemodepvp.Modules.classes.DisplayStack;
 import ml.gamemodepvp.Modules.classes.GmpvpInventory;
 import ml.gamemodepvp.bukkit.CoreMain;
 import ml.gamemodepvp.bukkit.action.ItemAction;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
+import java.net.IDN;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by bfox1 on 7/4/2015.
@@ -30,6 +35,15 @@ public class GmPvPFactory
                                            ItemAction action, Object actionParams)
     {
         return new DisplayStack(material, displayName, lore, action, actionParams);
+    }
+
+    public static boolean isOfflinePlayer(UUID id)
+    {
+        return Bukkit.getServer().getOfflinePlayer(id) != null;
+    }
+    public static boolean isOnlinePlayer(UUID id)
+    {
+        return Bukkit.getServer().getPlayer(id) != null;
     }
 
 

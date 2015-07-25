@@ -23,27 +23,15 @@ public class WncExecutor implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings)
     {
 
-        if(command.getName().equalsIgnoreCase("wnc"))
-        {
-            return true;
-        }
-            if (s.equalsIgnoreCase("class") && isPlayer(commandSender)) {
-                Player p = (Player) commandSender;
-
-
-                return true;
-           }
-
 
         if(command.getName().equalsIgnoreCase("classMenu") && isPlayer(commandSender))
         {
-
-           //InventoryGui gui = new InventoryGui(this.plugin.getMenu(), (Player)commandSender);
-           // gui.openGui();
             plugin.getMenu().openGui((Player)commandSender);
 
             return true;
         }
+
+
 
 
         return false;

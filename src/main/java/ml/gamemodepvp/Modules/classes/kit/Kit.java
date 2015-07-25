@@ -23,13 +23,13 @@ public class Kit implements KitBuilder {
     private DisplayStack stack;
     public Kit(ItemStack stack, Weapon primary, Weapon secondary, Weapon tactical, Weapon lethal, Perks perks, ItemStack... otherAdditives)
     {
-        this.stack = buildDisplayStack(stack,primary, secondary, tactical, lethal, perks, otherAdditives);
         this.primary = primary;
         this.secondary  = secondary;
         this.tactical = tactical;
         this.lethal = lethal;
         this.perks = perks;
         this.otherAdditives = otherAdditives;
+        this.stack = buildDisplayStack(stack,primary, secondary, tactical, lethal, perks, otherAdditives);
     }
 
 
@@ -37,7 +37,7 @@ public class Kit implements KitBuilder {
             ItemStack dStack,Weapon primary, Weapon secondary, Weapon tactical,
             Weapon lethal, Perks perks, ItemStack[] otherAdditives)
     {
-        DisplayStack stack = new DisplayStack(dStack, true, ItemAction.KIT, null);
+        DisplayStack stack = new DisplayStack(dStack, true, ItemAction.KIT, this);
         List<String> loreList = new ArrayList<String>();
         loreList.add(0,primary.toString() + primary.getItemAmount());
         loreList.add(1, secondary.toString() + secondary.getItemAmount());
